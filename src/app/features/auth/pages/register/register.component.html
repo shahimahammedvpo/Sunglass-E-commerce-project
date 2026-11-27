@@ -1,0 +1,322 @@
+<section class="auth-page">
+
+  <div class="auth-card">
+
+    <!-- Heading -->
+    <div class="auth-heading">
+      <h1>Create Account</h1>
+      <p>Join SUNSTYLE and discover your favourite eyewear.</p>
+    </div>
+
+
+    <!-- Error Message -->
+    @if (errorMessage) {
+      <div class="error-message">
+        <i class="bi bi-exclamation-circle"></i>
+        {{ errorMessage }}
+      </div>
+    }
+
+
+    <!-- Success Message -->
+    @if (successMessage) {
+      <div class="success-message">
+        <i class="bi bi-check-circle"></i>
+        {{ successMessage }}
+      </div>
+    }
+
+
+    <!-- Register Form -->
+    <form
+      #registerForm="ngForm"
+      (ngSubmit)="register()">
+
+
+      <!-- Full Name -->
+      <div class="form-group">
+
+        <label for="fullName">Full Name</label>
+
+        <input
+          id="fullName"
+          type="text"
+          name="fullName"
+          [(ngModel)]="fullName"
+          #fullNameControl="ngModel"
+          required
+          minlength="3"
+          maxlength="50"
+          pattern="^[a-zA-Z\s]+$"
+          placeholder="Enter your full name"
+          autocomplete="name"
+        />
+
+        <app-form-error
+          [control]="fullNameControl.control"
+          fieldName="Full name"
+        />
+
+      </div>
+
+
+      <!-- Email -->
+      <div class="form-group">
+
+        <label for="email">Email Address</label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          #emailControl="ngModel"
+          required
+          email
+          placeholder="Enter your email"
+          autocomplete="email"
+        />
+
+        <app-form-error
+          [control]="emailControl.control"
+          fieldName="Email"
+        />
+
+      </div>
+
+
+      <!-- Password -->
+      <div class="form-group">
+
+        <label for="password">Password</label>
+
+        <div class="password-input">
+
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            name="password"
+            [(ngModel)]="password"
+            #passwordControl="ngModel"
+            required
+            minlength="8"
+            [pattern]="passwordPattern"
+            placeholder="Create a password"
+            autocomplete="new-password"
+          />
+
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="togglePassword()">
+
+            <i
+              class="bi"
+              [class.bi-eye]="!showPassword"
+              [class.bi-eye-slash]="showPassword">
+            </i>
+
+          </button>
+
+        </div>
+
+
+        <!-- Password Error -->
+        @if (passwordControl.touched && passwordControl.invalid) {
+
+          @if (passwordControl.errors?.['required']) {
+
+            <div class="form-error">
+              <i class="bi bi-exclamation-circle"></i>
+              Password is required
+            </div>
+
+          } @else if (passwordControl.errors?.['minlength']) {
+
+            <div class="form-error">
+              <i class="bi bi-exclamation-circle"></i>
+              Password must contain at least 8 characters
+            </div>
+
+          } @else if (passwordControl.errors?.['pattern']) {
+
+            <div class="form-error">
+              <i class="bi bi-exclamation-circle"></i>
+              Password does not meet the requirements
+            </div>
+
+          }
+
+        }
+
+
+        <!-- Password Requirements -->
+        @if (passwordControl.dirty) {
+
+          <div class="password-requirements">
+
+            <p>Password must contain:</p>
+
+            <div [class.requirement-met]="hasMinimumLength()">
+
+              <i
+                class="bi"
+                [class.bi-check-circle-fill]="hasMinimumLength()"
+                [class.bi-circle]="!hasMinimumLength()">
+              </i>
+
+              At least 8 characters
+
+            </div>
+
+
+            <div [class.requirement-met]="hasUppercase()">
+
+              <i
+                class="bi"
+                [class.bi-check-circle-fill]="hasUppercase()"
+                [class.bi-circle]="!hasUppercase()">
+              </i>
+
+              One uppercase letter
+
+            </div>
+
+
+            <div [class.requirement-met]="hasLowercase()">
+
+              <i
+                class="bi"
+                [class.bi-check-circle-fill]="hasLowercase()"
+                [class.bi-circle]="!hasLowercase()">
+              </i>
+
+              One lowercase letter
+
+            </div>
+
+
+            <div [class.requirement-met]="hasNumber()">
+
+              <i
+                class="bi"
+                [class.bi-check-circle-fill]="hasNumber()"
+                [class.bi-circle]="!hasNumber()">
+              </i>
+
+              One number
+
+            </div>
+
+
+            <div [class.requirement-met]="hasSpecialCharacter()">
+
+              <i
+                class="bi"
+                [class.bi-check-circle-fill]="hasSpecialCharacter()"
+                [class.bi-circle]="!hasSpecialCharacter()">
+              </i>
+
+              One special character
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+
+        <label for="confirmPassword">Confirm Password</label>
+
+        <div class="password-input">
+
+          <input
+            id="confirmPassword"
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            #confirmPasswordControl="ngModel"
+            required
+            placeholder="Confirm your password"
+            autocomplete="new-password"
+          />
+
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="toggleConfirmPassword()">
+
+            <i
+              class="bi"
+              [class.bi-eye]="!showConfirmPassword"
+              [class.bi-eye-slash]="showConfirmPassword">
+            </i>
+
+          </button>
+
+        </div>
+
+
+        <!-- Password Match -->
+        @if (confirmPasswordControl.touched && confirmPassword) {
+
+          @if (password !== confirmPassword) {
+
+            <div class="form-error">
+              <i class="bi bi-exclamation-circle"></i>
+              Passwords do not match
+            </div>
+
+          } @else {
+
+            <div class="password-match">
+              <i class="bi bi-check-circle-fill"></i>
+              Passwords match
+            </div>
+
+          }
+
+        }
+
+      </div>
+
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        [disabled]="
+          registerForm.invalid ||
+          password !== confirmPassword ||
+          isLoading
+        ">
+
+        @if (isLoading) {
+
+          <span class="spinner-border spinner-border-sm"></span>
+          Creating Account...
+
+        } @else {
+
+          Create Account
+
+        }
+
+      </button>
+
+    </form>
+
+
+    <!-- Login Link -->
+    <p class="auth-footer">
+      Already have an account?
+      <a routerLink="/login">Login</a>
+    </p>
+
+  </div>
+
+</section>

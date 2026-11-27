@@ -1,0 +1,919 @@
+<div class="checkout-page">
+
+  <div class="checkout-container">
+
+    <!-- PAGE HEADER -->
+    <div class="checkout-header">
+      <h1>Checkout</h1>
+
+      <p>
+        Complete your order and enjoy shopping with SUNSTYLE.
+      </p>
+    </div>
+
+
+    <!-- ERROR MESSAGE -->
+    @if (errorMessage) {
+      <div class="alert alert-danger">
+        <i class="bi bi-exclamation-circle"></i>
+        {{ errorMessage }}
+      </div>
+    }
+
+
+    <!-- SUCCESS MESSAGE -->
+    @if (successMessage) {
+      <div class="alert alert-success">
+        <i class="bi bi-check-circle"></i>
+        {{ successMessage }}
+      </div>
+    }
+
+
+    <div class="checkout-layout">
+
+
+      <!-- LEFT SECTION -->
+      <div class="checkout-left">
+
+
+        <!-- DELIVERY INFORMATION -->
+        <div class="checkout-card">
+
+          <div class="card-header">
+
+            <div class="header-icon">
+              <i class="bi bi-geo-alt"></i>
+            </div>
+
+            <div>
+              <h2>Delivery Information</h2>
+              <p>Select your saved delivery address</p>
+            </div>
+
+          </div>
+
+
+          <!-- LOADING ADDRESSES -->
+          @if (loadingAddresses) {
+
+            <div class="loading-message">
+              <span class="spinner"></span>
+              Loading saved addresses...
+            </div>
+
+          }
+
+
+          <!-- SAVED ADDRESSES -->
+          @if (!loadingAddresses && addresses.length > 0) {
+
+            <div class="saved-addresses">
+
+              @for (address of addresses; track address.id) {
+
+                <div
+                  class="address-card"
+                  [class.selected]="selectedAddressId === address.id"
+                  (click)="selectAddress(address.id!)"
+                >
+
+                  <div class="address-card-header">
+
+                    <div class="address-radio">
+
+                      <input
+                        type="radio"
+                        name="selectedAddress"
+                        [value]="address.id"
+                        [checked]="selectedAddressId === address.id"
+                        (change)="selectAddress(address.id!)"
+                      />
+
+                    </div>
+
+
+                    <div class="address-name">
+
+                      <h3>
+                        {{ address.fullName }}
+                      </h3>
+
+                      @if (address.isDefault) {
+                        <span class="default-badge">
+                          Default
+                        </span>
+                      }
+
+                    </div>
+
+                  </div>
+
+
+                  <div class="address-details">
+
+                    <p>
+                      <i class="bi bi-telephone"></i>
+                      {{ address.phone }}
+                    </p>
+
+                    <p>
+                      <i class="bi bi-geo-alt"></i>
+
+                      {{
+                        address.addressLine1
+                      }}
+
+                      @if (address.addressLine2) {
+                        ,
+                        {{ address.addressLine2 }}
+                      }
+                    </p>
+
+                    <p>
+                      {{ address.city }},
+                      {{ address.state }}
+                      - {{ address.postalCode }}
+                    </p>
+
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+
+
+            <!-- SELECTED ADDRESS VALIDATION -->
+            @if (selectedAddress && !validateSelectedAddress()) {
+
+              <div class="validation-message">
+                <small>
+                  The selected address contains invalid information.
+                  Please update your saved address.
+                </small>
+              </div>
+
+            }
+
+
+            <!-- MANAGE ADDRESSES -->
+            <div class="address-actions">
+
+              <a
+                routerLink="/profile/saved-addresses"
+                class="manage-address-link"
+              >
+                <i class="bi bi-plus-circle"></i>
+                Add or manage addresses
+              </a>
+
+            </div>
+
+          }
+
+
+          <!-- NO ADDRESSES -->
+          @if (!loadingAddresses && addresses.length === 0) {
+
+            <div class="no-addresses">
+
+              <div class="no-address-icon">
+                <i class="bi bi-geo-alt"></i>
+              </div>
+
+              <h3>No saved addresses</h3>
+
+              <p>
+                Please add a delivery address before placing your order.
+              </p>
+
+              <a
+                routerLink="/profile/saved-addresses"
+                class="add-address-btn"
+              >
+                <i class="bi bi-plus-circle"></i>
+                Add Address
+              </a>
+
+            </div>
+
+          }
+
+        </div>
+
+
+        <!-- PAYMENT METHOD -->
+        <div class="checkout-card payment-card">
+
+
+          <!-- PAYMENT HEADER -->
+          <div class="card-header">
+
+            <div class="header-icon">
+              <i class="bi bi-credit-card"></i>
+            </div>
+
+            <div>
+              <h2>Payment Method</h2>
+              <p>Choose your preferred payment method</p>
+            </div>
+
+          </div>
+
+
+          <!-- COD -->
+          <div
+            class="payment-option"
+            [class.selected]="paymentMethod === 'COD'"
+            (click)="selectPaymentMethod('COD')"
+          >
+
+            <div class="payment-option-left">
+
+              <input
+                type="radio"
+                name="paymentMethod"
+                [checked]="paymentMethod === 'COD'"
+                (change)="selectPaymentMethod('COD')"
+              />
+
+              <div class="payment-info">
+
+                <h3>Cash on Delivery</h3>
+
+                <p>
+                  Pay when your order arrives.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="payment-icon cod-icon">
+              <i class="bi bi-cash"></i>
+            </div>
+
+          </div>
+
+
+          <!-- UPI -->
+          <div
+            class="payment-option"
+            [class.selected]="paymentMethod === 'UPI'"
+            (click)="selectPaymentMethod('UPI')"
+          >
+
+            <div class="payment-option-left">
+
+              <input
+                type="radio"
+                name="paymentMethod"
+                [checked]="paymentMethod === 'UPI'"
+                (change)="selectPaymentMethod('UPI')"
+              />
+
+              <div class="payment-info">
+
+                <h3>UPI Payment</h3>
+
+                <p>
+                  Pay using your UPI ID.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="payment-icon upi-icon">
+              <i class="bi bi-phone"></i>
+            </div>
+
+          </div>
+
+
+          <!-- UPI DETAILS -->
+          @if (paymentMethod === 'UPI') {
+
+            <div
+              class="payment-details"
+              [formGroup]="paymentForm"
+            >
+
+              <div class="form-group">
+
+                <label for="upiId">
+                  UPI ID
+                </label>
+
+                <input
+                  type="text"
+                  id="upiId"
+                  formControlName="upiId"
+                  placeholder="example@upi"
+                  class="form-control"
+                />
+
+
+                <!-- UPI VALIDATION -->
+                <app-form-error
+                  [control]="paymentForm.get('upiId')!"
+                  fieldName="UPI ID"
+                />
+
+
+                @if (
+                  paymentForm.get('upiId')?.touched &&
+                  paymentForm.get('upiId')?.invalid
+                ) {
+
+                  <div class="validation-message">
+
+                    @if (
+                      paymentForm.get('upiId')?.errors?.['required']
+                    ) {
+                      <small>
+                        UPI ID is required.
+                      </small>
+                    }
+
+                    @if (
+                      paymentForm.get('upiId')?.errors?.['pattern']
+                    ) {
+                      <small>
+                        Please enter a valid UPI ID.
+                      </small>
+                    }
+
+                  </div>
+
+                }
+
+              </div>
+
+            </div>
+
+          }
+
+
+          <!-- CARD -->
+          <div
+            class="payment-option"
+            [class.selected]="paymentMethod === 'CARD'"
+            (click)="selectPaymentMethod('CARD')"
+          >
+
+            <div class="payment-option-left">
+
+              <input
+                type="radio"
+                name="paymentMethod"
+                [checked]="paymentMethod === 'CARD'"
+                (change)="selectPaymentMethod('CARD')"
+              />
+
+              <div class="payment-info">
+
+                <h3>Credit / Debit Card</h3>
+
+                <p>
+                  Pay using your card.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="payment-icon card-icon">
+              <i class="bi bi-credit-card-2-front"></i>
+            </div>
+
+          </div>
+
+
+          <!-- CARD DETAILS -->
+          @if (paymentMethod === 'CARD') {
+
+            <div
+              class="payment-details"
+              [formGroup]="paymentForm"
+            >
+
+
+              <!-- CARD HOLDER -->
+              <div class="form-group">
+
+                <label for="cardHolderName">
+                  Card Holder Name
+                </label>
+
+                <input
+                  type="text"
+                  id="cardHolderName"
+                  formControlName="cardHolderName"
+                  placeholder="Name on card"
+                  class="form-control"
+                />
+
+
+                <app-form-error
+                  [control]="paymentForm.get('cardHolderName')!"
+                  fieldName="Card holder name"
+                />
+
+
+                @if (
+                  paymentForm.get('cardHolderName')?.touched &&
+                  paymentForm.get('cardHolderName')?.invalid
+                ) {
+
+                  <div class="validation-message">
+
+                    @if (
+                      paymentForm.get('cardHolderName')?.errors?.['required']
+                    ) {
+                      <small>
+                        Card holder name is required.
+                      </small>
+                    }
+
+                    @if (
+                      paymentForm.get('cardHolderName')?.errors?.['invalidName']
+                    ) {
+                      <small>
+                        Please enter a valid card holder name.
+                      </small>
+                    }
+
+                    @if (
+                      paymentForm.get('cardHolderName')?.errors?.['minlength']
+                    ) {
+                      <small>
+                        Card holder name must contain at least 3 characters.
+                      </small>
+                    }
+
+                  </div>
+
+                }
+
+              </div>
+
+
+              <!-- CARD NUMBER -->
+              <div class="form-group">
+
+                <label for="cardNumber">
+                  Card Number
+                </label>
+
+                <input
+                  type="text"
+                  id="cardNumber"
+                  formControlName="cardNumber"
+                  maxlength="19"
+                  placeholder="1234 5678 9012 3456"
+                  class="form-control"
+                />
+
+
+                <app-form-error
+                  [control]="paymentForm.get('cardNumber')!"
+                  fieldName="Card number"
+                />
+
+
+                @if (
+                  paymentForm.get('cardNumber')?.touched &&
+                  paymentForm.get('cardNumber')?.invalid
+                ) {
+
+                  <div class="validation-message">
+
+                    @if (
+                      paymentForm.get('cardNumber')?.errors?.['required']
+                    ) {
+                      <small>
+                        Card number is required.
+                      </small>
+                    }
+
+                    @if (
+                      paymentForm.get('cardNumber')?.errors?.['pattern']
+                    ) {
+                      <small>
+                        Please enter a valid 16-digit card number.
+                      </small>
+                    }
+
+                  </div>
+
+                }
+
+              </div>
+
+
+              <!-- EXPIRY AND CVV -->
+              <div class="form-row">
+
+
+                <!-- EXPIRY DATE -->
+                <div class="form-group">
+
+                  <label for="expiryDate">
+                    Expiry Date
+                  </label>
+
+                  <input
+                    type="text"
+                    id="expiryDate"
+                    formControlName="expiryDate"
+                    maxlength="5"
+                    placeholder="MM/YY"
+                    class="form-control"
+                  />
+
+
+                  <app-form-error
+                    [control]="paymentForm.get('expiryDate')!"
+                    fieldName="Expiry date"
+                  />
+
+
+                  @if (
+                    paymentForm.get('expiryDate')?.touched &&
+                    paymentForm.get('expiryDate')?.invalid
+                  ) {
+
+                    <div class="validation-message">
+
+                      @if (
+                        paymentForm.get('expiryDate')?.errors?.['required']
+                      ) {
+                        <small>
+                          Expiry date is required.
+                        </small>
+                      }
+
+                      @if (
+                        paymentForm.get('expiryDate')?.errors?.['pattern']
+                      ) {
+                        <small>
+                          Please enter expiry date in MM/YY format.
+                        </small>
+                      }
+
+                    </div>
+
+                  }
+
+                </div>
+
+
+                <!-- CVV -->
+                <div class="form-group">
+
+                  <label for="cvv">
+                    CVV
+                  </label>
+
+                  <input
+                    type="password"
+                    id="cvv"
+                    formControlName="cvv"
+                    maxlength="4"
+                    placeholder="CVV"
+                    class="form-control"
+                  />
+
+
+                  <app-form-error
+                    [control]="paymentForm.get('cvv')!"
+                    fieldName="CVV"
+                  />
+
+
+                  @if (
+                    paymentForm.get('cvv')?.touched &&
+                    paymentForm.get('cvv')?.invalid
+                  ) {
+
+                    <div class="validation-message">
+
+                      @if (
+                        paymentForm.get('cvv')?.errors?.['required']
+                      ) {
+                        <small>
+                          CVV is required.
+                        </small>
+                      }
+
+                      @if (
+                        paymentForm.get('cvv')?.errors?.['pattern']
+                      ) {
+                        <small>
+                          Please enter a valid 3 or 4-digit CVV.
+                        </small>
+                      }
+
+                    </div>
+
+                  }
+
+                </div>
+
+              </div>
+
+            </div>
+
+          }
+
+
+          <!-- PAYMENT SECURITY -->
+          <div class="payment-security">
+
+            <i class="bi bi-shield-check"></i>
+
+            <span>
+              Secure checkout experience.
+              All online payment options are currently
+              simulated for demonstration purposes.
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- RIGHT SECTION -->
+      <div class="checkout-right">
+
+
+        <!-- ORDER SUMMARY -->
+        <div class="checkout-card order-summary">
+
+
+          <!-- HEADER -->
+          <div class="card-header">
+
+            <div class="header-icon">
+              <i class="bi bi-bag"></i>
+            </div>
+
+            <div>
+              <h2>Order Summary</h2>
+
+             <p>
+              {{ cartItems.length }}
+              @if (directPurchaseMode) {
+                item(s) selected for purchase
+              } @else {
+                item(s) in your cart
+              }
+            </p>
+            </div>
+
+          </div>
+
+
+          <!-- CART ITEMS -->
+          <div class="summary-items">
+
+            @for (item of cartItems; track item.product.id) {
+
+              <div class="summary-item">
+
+
+                <!-- PRODUCT IMAGE -->
+                <div class="item-image">
+
+                  <img
+                    [src]="item.product.image"
+                    [alt]="item.product.name"
+                  />
+
+                </div>
+
+
+                <!-- PRODUCT DETAILS -->
+                <div class="item-details">
+
+                  <h4>
+                    {{ item.product.name }}
+                  </h4>
+
+                  <p>
+                    Quantity: {{ item.quantity }}
+                  </p>
+
+                </div>
+
+
+                <!-- PRODUCT PRICE -->
+                <div class="item-price">
+
+                  ₹{{ item.product.price * item.quantity }}
+
+                </div>
+
+              </div>
+
+            }
+
+          </div>
+
+
+          <!-- COUPON -->
+          <div class="coupon-section">
+
+            <label>
+              Coupon Code
+            </label>
+
+            <div class="coupon-input">
+
+              <input
+                type="text"
+                name="couponCode"
+                [(ngModel)]="couponCode"
+                placeholder="Enter coupon code"
+                [disabled]="couponApplied"
+              />
+
+
+              @if (!couponApplied) {
+
+                <button
+                    type="button"
+                    class="coupon-btn"
+                    (click)="applyCoupon()"
+                    [disabled]="applyingCoupon"
+                  >
+                    @if (applyingCoupon) {
+                      Applying...
+                    } @else {
+                      Apply
+                    }
+                </button>
+
+              } @else {
+
+                <button
+                  type="button"
+                  class="coupon-btn remove-btn"
+                  (click)="removeCoupon()"
+                >
+                  Remove
+                </button>
+
+              }
+
+            </div>
+
+
+            @if (couponApplied) {
+
+              <div class="coupon-success">
+                <i class="bi bi-check-circle"></i>
+                {{ couponCode }} applied successfully!
+              </div>
+
+            }
+
+          </div>
+
+
+          <!-- TOTALS -->
+          <div class="summary-total">
+
+
+            <!-- SUBTOTAL -->
+            <div class="summary-row">
+
+              <span>
+                Subtotal
+              </span>
+
+              <span>
+                ₹{{ subtotal | number:'1.2-2' }}
+              </span>
+
+            </div>
+
+
+            <!-- SHIPPING -->
+            <div class="summary-row">
+
+              <span>
+                Shipping
+              </span>
+
+              <span>
+
+                @if (shipping === 0) {
+
+                  <span class="free-shipping">
+                    FREE
+                  </span>
+
+                } @else {
+
+                  ₹{{ shipping | number:'1.2-2' }}
+
+                }
+
+              </span>
+
+            </div>
+
+
+            <!-- DISCOUNT -->
+            @if (discount > 0) {
+
+              <div class="summary-row discount-row">
+
+                <span>
+                  Discount
+                </span>
+
+                <span>
+                  -₹{{ discount | number:'1.2-2' }}
+                </span>
+
+              </div>
+
+            }
+
+
+            <!-- TOTAL -->
+            <div class="summary-row total-row">
+
+              <span>
+                Total
+              </span>
+
+              <span>
+                ₹{{ total | number:'1.2-2' }}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- PLACE ORDER -->
+          <button
+            type="button"
+            class="place-order-btn"
+            [disabled]="
+              placingOrder ||
+              loadingCart ||
+              loadingAddresses ||
+              cartItems.length === 0 ||
+              !selectedAddress ||
+              !validateSelectedAddress() ||
+              !isPaymentValid
+            "
+            (click)="placeOrder()"
+          >
+
+            @if (placingOrder) {
+
+              <span class="spinner"></span>
+
+              Processing Order...
+
+            } @else {
+
+              <i class="bi bi-lock"></i>
+
+              Place Order
+
+            }
+
+          </button>
+
+
+          <!-- FOOTER -->
+          <div class="checkout-footer">
+
+            <i class="bi bi-shield-check"></i>
+
+            <span>
+              Your information is protected.
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,32 @@
+
+<section class="benefits-section">
+
+  <div class="container">
+
+    <div class="row g-4">
+
+      @for (benefit of benefits; track benefit.title) {
+
+        <div class="col-6 col-lg-3">
+
+          <div class="benefit-card">
+
+            <div class="benefit-icon">
+              <i [class]="'bi ' + benefit.icon"></i>
+            </div>
+
+            <h5>{{ benefit.title }}</h5>
+
+            <p>{{ benefit.description }}</p>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  </div>
+
+</section>

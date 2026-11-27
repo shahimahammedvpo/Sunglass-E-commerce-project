@@ -1,0 +1,516 @@
+<section class="my-orders-page container">
+
+
+  <!-- PAGE HEADING -->
+  <div class="page-heading">
+
+    <h1>My Orders</h1>
+
+    <p>
+      View your purchases and track your deliveries.
+    </p>
+
+  </div>
+
+
+  <!-- SUCCESS MESSAGE -->
+  @if (successMessage) {
+
+    <div class="success-message">
+
+      <i class="bi bi-check-circle"></i>
+
+      {{ successMessage }}
+
+    </div>
+
+  }
+
+
+  <!-- ERROR MESSAGE -->
+  @if (errorMessage) {
+
+    <div class="error-message">
+
+      <i class="bi bi-exclamation-circle"></i>
+
+      {{ errorMessage }}
+
+    </div>
+
+  }
+
+
+  <!-- LOADING -->
+  @if (loading) {
+
+    <div class="empty-state">
+
+      <div class="loading-spinner"></div>
+
+      <p>Loading your orders...</p>
+
+    </div>
+
+  } @else if (orders.length === 0) {
+
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state">
+
+      <div class="empty-icon">
+        📦
+      </div>
+
+      <h2>No orders yet!</h2>
+
+      <p>
+        Your SUNSTYLE purchases will appear here.
+      </p>
+
+      <a
+        routerLink="/"
+        class="shop-btn"
+      >
+        Start Shopping
+      </a>
+
+    </div>
+
+  } @else {
+
+
+    <!-- ORDERS COUNT -->
+    <div class="orders-count">
+
+      {{ orders.length }} order(s) found
+
+    </div>
+
+
+    <!-- ORDERS LIST -->
+    <div class="orders-list">
+
+      @for (order of orders; track order.id) {
+
+        <article class="order-card">
+
+
+          <!-- ORDER HEADER -->
+          <div class="order-header">
+
+
+            <!-- ORDER NUMBER -->
+            <div>
+
+              <span class="label">
+                Order Number
+              </span>
+
+              <h3>
+                #{{ order.orderNumber }}
+              </h3>
+
+            </div>
+
+
+            <!-- ORDER DATE -->
+            <div>
+
+              <span class="label">
+                Order Date
+              </span>
+
+              <strong>
+                {{ order.createdAt | date:'dd MMM yyyy' }}
+              </strong>
+
+            </div>
+
+
+            <!-- ORDER STATUS -->
+            <span
+              class="status"
+              [ngClass]="order.status.toLowerCase()"
+            >
+
+              {{ order.status }}
+
+            </span>
+
+          </div>
+
+
+          <!-- ORDER PRODUCTS -->
+          <div class="order-products">
+
+            @for (
+              item of order.items;
+              track item.product.id
+            ) {
+
+              <div class="order-product">
+
+
+                <!-- PRODUCT IMAGE -->
+                <img
+                  [src]="item.product.image"
+                  [alt]="item.product.name"
+                />
+
+
+                <!-- PRODUCT DETAILS -->
+                <div class="product-details">
+
+                  <strong>
+                    {{ item.product.name }}
+                  </strong>
+
+                  <span>
+                    Quantity: {{ item.quantity }}
+                  </span>
+
+                  <span>
+                    ₹{{ item.product.price }} each
+                  </span>
+
+                </div>
+
+
+                <!-- PRODUCT PRICE -->
+                <strong>
+                  ₹{{ item.product.price * item.quantity }}
+                </strong>
+
+              </div>
+
+            }
+
+          </div>
+
+
+          <!-- ORDER FOOTER -->
+          <div class="order-footer">
+
+
+            <!-- TOTAL AMOUNT -->
+            <div>
+
+              <span class="label">
+                Total Amount
+              </span>
+
+              <strong class="total">
+                ₹{{ order.totalAmount }}
+              </strong>
+
+            </div>
+
+
+            <!-- ORDER ACTIONS -->
+            <div class="order-actions">
+
+
+              <!-- ORDER DETAILS -->
+              <a
+                [routerLink]="['/orders', order.id]"
+                class="order-action-btn details-btn"
+              >
+
+                Order Details
+
+              </a>
+
+
+              <!-- TRACK ORDER -->
+              <a
+                [routerLink]="['/track-order', order.id]"
+                class="order-action-btn track-btn"
+              >
+
+                Track Order
+
+              </a>
+
+
+              <!-- CANCEL ORDER -->
+              @if (order.status === 'Pending') {
+
+                <button
+                  type="button"
+                  class="cancel-btn"
+                  (click)="cancelOrder(order)"
+                >
+
+                  <i class="bi bi-x-circle"></i>
+
+                  Cancel Order
+
+                </button>
+
+              }
+
+            </div>
+
+          </div>
+
+          <!-- CANCELLATION INFORMATION -->
+@if (order.status === 'Cancelled') {
+
+  <div class="cancellation-info">
+
+    <div class="cancellation-info-header">
+
+      <i class="bi bi-info-circle"></i>
+
+      <strong>Cancellation Information</strong>
+
+    </div>
+
+
+    @if (order.cancellationReason) {
+
+      <div class="cancellation-detail">
+
+        <span>Reason:</span>
+
+        <strong>
+          {{ order.cancellationReason }}
+        </strong>
+
+      </div>
+
+    }
+
+
+    @if (order.cancellationComments) {
+
+      <div class="cancellation-detail">
+
+        <span>Comments:</span>
+
+        <p>
+          {{ order.cancellationComments }}
+        </p>
+
+      </div>
+
+    }
+
+
+    @if (order.cancelledAt) {
+
+      <div class="cancellation-detail">
+
+        <span>Cancelled on:</span>
+
+        <strong>
+          {{ order.cancelledAt | date:'dd MMM yyyy, hh:mm a' }}
+        </strong>
+
+      </div>
+
+    }
+
+  </div>
+
+}
+
+        </article>
+
+      }
+
+    </div>
+
+  }
+
+</section>
+
+
+<!-- ==================================================
+     CANCEL ORDER CONFIRMATION MODAL
+================================================== -->
+
+<!-- ==================================================
+     CANCEL ORDER CONFIRMATION MODAL
+================================================== -->
+
+@if (showCancelModal && selectedOrder) {
+
+  <div
+    class="modal-overlay"
+    (click)="closeCancelModal()"
+  >
+
+    <div
+      class="confirmation-modal"
+      (click)="$event.stopPropagation()"
+    >
+
+
+      <!-- MODAL ICON -->
+      <div class="modal-icon">
+
+        <i class="bi bi-exclamation-triangle"></i>
+
+      </div>
+
+
+      <!-- MODAL HEADER -->
+      <div class="modal-content">
+
+        <h2>
+          Cancel Order?
+        </h2>
+
+        <p>
+          Are you sure you want to cancel order
+          <strong>#{{ selectedOrder.orderNumber }}</strong>?
+        </p>
+
+      </div>
+
+
+      <!-- CANCELLATION FORM -->
+      <div class="cancellation-form">
+
+
+        <!-- REASON -->
+        <div class="form-group">
+
+          <label for="cancellationReason">
+            Reason for cancellation
+            <span class="optional-label">(Optional)</span>
+          </label>
+
+          <select
+            id="cancellationReason"
+            [(ngModel)]="cancellationReason"
+            class="form-control"
+          >
+
+            <option value="">
+              Select a reason
+            </option>
+
+            <option value="Ordered by mistake">
+              Ordered by mistake
+            </option>
+
+            <option value="Found a better price">
+              Found a better price
+            </option>
+
+            <option value="Delivery is taking too long">
+              Delivery is taking too long
+            </option>
+
+            <option value="Changed my mind">
+              Changed my mind
+            </option>
+
+            <option value="Product no longer needed">
+              Product no longer needed
+            </option>
+
+            <option value="Payment issue">
+              Payment issue
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- ADDITIONAL COMMENTS -->
+        <div class="form-group">
+
+          <label for="cancellationComments">
+            Additional comments
+            <span class="optional-label">(Optional)</span>
+          </label>
+
+          <textarea
+            id="cancellationComments"
+            [(ngModel)]="cancellationComments"
+            class="form-control"
+            rows="3"
+            maxlength="250"
+            placeholder="Tell us more about your cancellation..."
+          ></textarea>
+
+          <div class="character-count">
+
+            {{ cancellationComments.length }}/250
+
+          </div>
+
+        </div>
+
+
+        <!-- WARNING -->
+        <div class="modal-warning">
+
+          <i class="bi bi-info-circle"></i>
+
+          <span>
+            Once cancelled, this order cannot be restored.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- MODAL ACTIONS -->
+      <div class="modal-actions">
+
+
+        <!-- KEEP ORDER -->
+        <button
+          type="button"
+          class="keep-order-btn"
+          [disabled]="cancellingOrder"
+          (click)="closeCancelModal()"
+        >
+
+          Keep Order
+
+        </button>
+
+
+        <!-- CONFIRM CANCEL -->
+        <button
+          type="button"
+          class="confirm-cancel-btn"
+          [disabled]="cancellingOrder"
+          (click)="confirmCancellation()"
+        >
+
+          @if (cancellingOrder) {
+
+            <span class="button-spinner"></span>
+
+            Cancelling...
+
+          } @else {
+
+            <i class="bi bi-x-circle"></i>
+
+            Confirm Cancellation
+
+          }
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

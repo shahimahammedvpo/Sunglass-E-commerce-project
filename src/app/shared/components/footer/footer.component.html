@@ -1,0 +1,167 @@
+<footer class="main-footer">
+
+  <div class="container py-5">
+
+    <div class="row g-4">
+
+      <!-- BRAND -->
+      <div class="col-lg-4 col-md-6 footer-brand-section">
+
+        <h3 class="footer-logo">
+          SUN<span>STYLE</span>
+        </h3>
+
+        <p class="footer-description">
+          Discover premium sunglasses that combine
+          comfort, protection and timeless fashion.
+          Find your perfect style with SUNSTYLE.
+        </p>
+
+        <!-- SOCIAL LINKS -->
+        <div class="social-links">
+
+          <a
+            href="https://www.instagram.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <i class="bi bi-instagram"></i>
+          </a>
+
+          <a
+            href="https://www.facebook.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+          >
+            <i class="bi bi-facebook"></i>
+          </a>
+
+          <a
+            href="https://www.pinterest.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Pinterest"
+          >
+            <i class="bi bi-pinterest"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- SHOP -->
+      <div class="col-lg-2 col-md-6 col-6 footer-column">
+
+        <h5>Shop</h5>
+
+        <a routerLink="/products"
+           [queryParams]="{ category: 'Men' }">
+          Men
+        </a>
+
+        <a routerLink="/products"
+           [queryParams]="{ category: 'Women' }">
+          Women
+        </a>
+
+        <a routerLink="/products"
+           [queryParams]="{ category: 'Unisex' }">
+          Unisex
+        </a>
+        <a routerLink="/products"
+        [queryParams]="{ category: 'All', view: 'all' }">
+          All Sunglasses
+        </a>
+       
+
+        
+
+      </div>
+
+
+      <!-- POPULAR BRANDS -->
+      <div class="col-lg-3 col-md-6 col-6 footer-column">
+
+        <h5>Popular Brands</h5>
+
+        <a routerLink="/products"
+           [queryParams]="{ brand: 'Ray-Ban' }">
+          Ray-Ban
+        </a>
+
+        <a routerLink="/products"
+           [queryParams]="{ brand: 'Fastrack' }">
+          Fastrack
+        </a>
+
+        <a routerLink="/products"
+           [queryParams]="{ brand: 'Vincent Chase' }">
+          Vincent Chase
+        </a>
+
+        <a routerLink="/products"
+           [queryParams]="{ brand: 'Oakley' }">
+          Oakley
+        </a>
+        <a routerLink="/products"
+           [queryParams]="{ brand: 'Titan' }">
+          Titan
+        </a>
+     
+
+      </div>
+
+
+      <!-- DISCOVER -->
+      <div class="col-lg-3 col-md-6 col-6 footer-column">
+
+        <h5>Discover</h5>
+
+        <a routerLink="/">
+          Home
+        </a>
+
+      
+
+        <a routerLink="/wishlist">
+          Wishlist
+        </a>
+
+        <a routerLink="/cart">
+          Shopping Cart
+        </a>
+
+        <a routerLink="/profile">
+          My Account
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- DIVIDER -->
+    <hr class="footer-divider">
+
+
+    <!-- FOOTER BOTTOM -->
+    <div class="footer-bottom">
+
+      <p>
+        © {{ currentYear }} SUNSTYLE.
+        All Rights Reserved.
+      </p>
+
+      <p class="footer-tagline">
+        Designed for your everyday style
+        <i class="bi bi-sunglasses"></i>
+      </p>
+
+    </div>
+
+  </div>
+
+</footer>

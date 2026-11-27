@@ -1,0 +1,589 @@
+
+<div class="orders-page">
+
+  <!-- PAGE HEADING -->
+  <div class="page-heading">
+    <div>
+      <h1>Orders Management</h1>
+      <p>View and manage customer orders.</p>
+    </div>
+
+    <button
+      type="button"
+      class="refresh-button"
+      [disabled]="loading"
+      (click)="loadOrders()">
+      <i class="bi bi-arrow-clockwise"></i>
+      Refresh
+    </button>
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <div class="orders-summary-grid">
+
+    <div class="summary-card">
+      <div class="summary-icon total-icon">
+        <i class="bi bi-bag-check"></i>
+      </div>
+      <div>
+        <span>Total Orders</span>
+        <h2>{{ totalOrders }}</h2>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon pending-icon">
+        <i class="bi bi-clock-history"></i>
+      </div>
+      <div>
+        <span>Pending Orders</span>
+        <h2>{{ pendingOrders }}</h2>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon delivered-icon">
+        <i class="bi bi-check-circle"></i>
+      </div>
+      <div>
+        <span>Delivered Orders</span>
+        <h2>{{ deliveredOrders }}</h2>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon cancelled-icon">
+        <i class="bi bi-x-circle"></i>
+      </div>
+      <div>
+        <span>Cancelled Orders</span>
+        <h2>{{ cancelledOrders }}</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MESSAGES -->
+  <div class="message success-message" *ngIf="successMessage">
+    <i class="bi bi-check-circle"></i>
+    {{ successMessage }}
+
+    <button type="button" (click)="clearMessages()">
+      <i class="bi bi-x"></i>
+    </button>
+  </div>
+
+  <div class="message error-message" *ngIf="errorMessage && !showStatusModal">
+    <i class="bi bi-exclamation-circle"></i>
+    {{ errorMessage }}
+  </div>
+
+  <!-- ORDERS TABLE -->
+  <section class="orders-table-card">
+
+    <div class="table-card-heading">
+      <div>
+        <h3>All Orders</h3>
+        <p>Track customer purchases and order status.</p>
+      </div>
+
+      <span class="order-count">
+        {{ filteredOrders.length }} Orders
+      </span>
+    </div>
+
+    <!-- SEARCH AND CUSTOM FILTERS -->
+    <div class="table-toolbar">
+
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+
+        <input
+          type="text"
+          placeholder="Search order ID, customer or email..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onFilterChange()">
+      </div>
+
+      <!-- STATUS FILTER -->
+      <div class="custom-filter">
+
+        <button
+          type="button"
+          class="filter-trigger"
+          [attr.aria-expanded]="isStatusDropdownOpen"
+          (click)="toggleStatusDropdown()">
+
+          <i class="bi bi-funnel"></i>
+
+          <span>
+            {{ selectedStatus === 'all' ? 'All Status' : selectedStatus }}
+          </span>
+
+          <i
+            class="bi bi-chevron-down filter-chevron"
+            [class.rotate-chevron]="isStatusDropdownOpen">
+          </i>
+        </button>
+
+        @if (isStatusDropdownOpen) {
+
+          <div
+            class="filter-dismiss"
+            (click)="closeAllDropdowns()">
+          </div>
+
+          <div class="filter-options">
+
+            <button
+              type="button"
+              class="filter-option"
+              [class.selected-option]="selectedStatus === 'all'"
+              (click)="selectStatus('all')">
+              <span>All Status</span>
+              <i *ngIf="selectedStatus === 'all'" class="bi bi-check2"></i>
+            </button>
+
+            <button
+              type="button"
+              class="filter-option"
+              *ngFor="let status of orderStatuses"
+              [class.selected-option]="selectedStatus === status"
+              (click)="selectStatus(status)">
+              <span>{{ status }}</span>
+              <i *ngIf="selectedStatus === status" class="bi bi-check2"></i>
+            </button>
+
+          </div>
+        }
+      </div>
+
+     
+      
+
+    </div>
+
+    <!-- LOADING -->
+    <div class="table-loading" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Loading orders...</p>
+    </div>
+
+    <ng-container *ngIf="!loading">
+
+      <div class="table-responsive">
+
+        <table class="orders-table">
+
+          <thead>
+            <tr>
+              <th>ORDER ID</th>
+              <th>CUSTOMER</th>
+              <th>DATE</th>
+              <th>ITEMS</th>
+              <th>TOTAL</th>
+              <th>PAYMENT</th>
+              <th>STATUS</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let order of paginatedOrders">
+
+              <td class="order-id">
+                {{ getOrderDisplayNumber(order) }}
+              </td>
+
+              <td>
+                <div class="customer-info">
+                  <strong>{{ order.customerName }}</strong>
+                  <small>{{ order.email }}</small>
+                </div>
+              </td>
+
+              <td class="date-cell">
+                {{ order.createdAt | date:'dd MMM yyyy' }}
+              </td>
+
+              <td>
+                <span class="items-count">
+                  {{ order.items.length }}
+                  {{ order.items.length === 1 ? 'Item' : 'Items' }}
+                </span>
+              </td>
+
+              <td>
+                <strong class="amount">
+                  ₹{{ order.totalAmount | number:'1.0-0' }}
+                </strong>
+              </td>
+
+              <td>
+                <span class="payment-method">
+                  {{ order.paymentMethod }}
+                </span>
+              </td>
+
+              <td>
+                <span
+                  class="status-badge"
+                  [ngClass]="'status-' + order.status.toLowerCase()">
+
+                  <span class="status-dot"></span>
+                  {{ order.status }}
+
+                </span>
+              </td>
+
+              <td>
+                <div class="order-actions">
+
+                  <button
+                    type="button"
+                    class="view-button"
+                    title="View order"
+                    (click)="openOrderDetails(order)">
+                    <i class="bi bi-eye"></i>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="update-button"
+                    title="Update order status"
+                    [disabled]="order.status.toLowerCase() === 'cancelled'"
+                    (click)="openStatusModal(order)">
+                    <i class="bi bi-pencil-square"></i>
+                  </button>
+
+                </div>
+              </td>
+
+            </tr>
+
+            <tr *ngIf="filteredOrders.length === 0">
+              <td colspan="8">
+                <div class="empty-orders">
+                  <i class="bi bi-bag-x"></i>
+                  <h4>No orders found</h4>
+                  <p>Try changing your search or filters.</p>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+      <!-- PAGINATION -->
+      <div
+        class="pagination-container"
+        *ngIf="filteredOrders.length > 0">
+
+        <div class="pagination-info">
+          Showing <strong>{{ startItem }}</strong> to
+          <strong>{{ endItem }}</strong> of
+          <strong>{{ filteredOrders.length }}</strong> orders
+        </div>
+
+        <div class="pagination-controls">
+
+          <button
+            type="button"
+            class="pagination-button"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+
+          <button
+            type="button"
+            class="pagination-button"
+            *ngFor="let page of pageNumbers"
+            [class.current-page]="currentPage === page"
+            (click)="changePage(page)">
+            {{ page }}
+          </button>
+
+          <button
+            type="button"
+            class="pagination-button"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+
+        </div>
+
+      </div>
+
+    </ng-container>
+
+  </section>
+</div>
+
+<!-- ORDER DETAILS MODAL -->
+@if (showDetailsModal && selectedOrder) {
+
+  <div class="modal-overlay" (click)="closeOrderDetails()">
+
+    <div
+      class="details-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="details-title"
+      (click)="$event.stopPropagation()">
+
+      <div class="modal-heading">
+        <div>
+          <h3 id="details-title">Order Details</h3>
+          <p>{{ getOrderDisplayNumber(selectedOrder) }}</p>
+        </div>
+
+        <button
+          type="button"
+          class="close-modal"
+          (click)="closeOrderDetails()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <!-- CUSTOMER INFORMATION -->
+      <div class="details-section">
+        <h4>Customer Information</h4>
+
+        <div class="details-grid">
+          <div>
+            <span>Customer Name</span>
+            <strong>{{ selectedOrder.customerName }}</strong>
+          </div>
+
+          <div>
+            <span>Email Address</span>
+            <strong>{{ selectedOrder.email }}</strong>
+          </div>
+
+          <div>
+            <span>Order Date</span>
+            <strong>{{ selectedOrder.createdAt | date:'dd MMM yyyy, hh:mm a' }}</strong>
+          </div>
+
+          <div>
+            <span>Payment Method</span>
+            <strong>{{ selectedOrder.paymentMethod }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHIPPING ADDRESS -->
+      <div class="details-section">
+        <h4>Shipping Address</h4>
+
+        <div class="address-details">
+          <strong>{{ selectedOrder.shippingAddress.fullName }}</strong>
+          <p>{{ selectedOrder.shippingAddress.phone }}</p>
+          <p>{{ selectedOrder.shippingAddress.addressLine }}</p>
+          <p>
+            {{ selectedOrder.shippingAddress.city }},
+            {{ selectedOrder.shippingAddress.state }}
+            - {{ selectedOrder.shippingAddress.postalCode }}
+          </p>
+        </div>
+      </div>
+
+      <!-- ORDERED ITEMS -->
+      <div class="details-section">
+        <h4>Ordered Products</h4>
+
+        <div class="ordered-items">
+
+          <div
+            class="ordered-item"
+            *ngFor="let item of selectedOrder.items">
+
+            <div class="item-information">
+                <strong>{{ item.product.name }}</strong>
+                <small>Quantity: {{ item.quantity }}</small>
+                </div>
+
+                <strong>
+                ₹{{ item.product.price * item.quantity | number:'1.0-0' }}
+                </strong>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PRICE SUMMARY -->
+      <div class="details-section price-summary">
+        <h4>Price Summary</h4>
+
+        <div>
+          <span>Subtotal</span>
+          <strong>₹{{ selectedOrder.subtotal | number:'1.0-0' }}</strong>
+        </div>
+
+        <div>
+          <span>Shipping Charge</span>
+          <strong>₹{{ selectedOrder.shippingCharge | number:'1.0-0' }}</strong>
+        </div>
+
+        <div>
+          <span>Discount</span>
+          <strong>- ₹{{ selectedOrder.discount | number:'1.0-0' }}</strong>
+        </div>
+
+        <div *ngIf="selectedOrder.couponCode">
+          <span>Coupon</span>
+          <strong>{{ selectedOrder.couponCode }}</strong>
+        </div>
+
+        <div class="grand-total">
+          <span>Total Amount</span>
+          <strong>₹{{ selectedOrder.totalAmount | number:'1.0-0' }}</strong>
+        </div>
+      </div>
+
+      <!-- CANCELLATION DETAILS -->
+      <div
+        class="details-section cancellation-details"
+        *ngIf="selectedOrder.status.toLowerCase() === 'cancelled'">
+
+        <h4>Cancellation Information</h4>
+
+        <div>
+          <span>Reason</span>
+          <strong>{{ selectedOrder.cancellationReason || 'Not provided' }}</strong>
+        </div>
+
+        <div>
+          <span>Comments</span>
+          <strong>{{ selectedOrder.cancellationComments || 'No additional comments' }}</strong>
+        </div>
+
+        <div>
+          <span>Cancelled At</span>
+          <strong>
+            {{ selectedOrder.cancelledAt ? (selectedOrder.cancelledAt | date:'dd MMM yyyy, hh:mm a') : 'Not available' }}
+          </strong>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="close-button"
+          (click)="closeOrderDetails()">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+}
+
+<!-- UPDATE STATUS MODAL -->
+@if (showStatusModal && orderToUpdate) {
+
+  <div class="modal-overlay" (click)="closeStatusModal()">
+
+    <div
+      class="status-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="status-title"
+      (click)="$event.stopPropagation()">
+
+      <div class="status-modal-icon">
+        <i class="bi bi-arrow-repeat"></i>
+      </div>
+
+      <h3 id="status-title">Update Order Status</h3>
+
+      <p>
+        Update the status for
+        <strong>{{ getOrderDisplayNumber(orderToUpdate) }}</strong>.
+      </p>
+
+        <div class="form-group">
+            <label>New Status</label>
+
+            <div class="custom-filter update-status-dropdown">
+
+                <!-- DROPDOWN TRIGGER -->
+                <button
+                type="button"
+                class="filter-trigger"
+                [attr.aria-expanded]="isUpdateStatusDropdownOpen"
+                (click)="toggleUpdateStatusDropdown()">
+
+                <span>{{ newStatus || 'Select Status' }}</span>
+
+                <i
+                    class="bi bi-chevron-down filter-chevron"
+                    [class.rotate-chevron]="isUpdateStatusDropdownOpen">
+                </i>
+
+                </button>
+
+                <!-- DROPDOWN OPTIONS -->
+                @if (isUpdateStatusDropdownOpen) {
+
+                <div
+                    class="filter-dismiss"
+                    (click)="closeUpdateStatusDropdown()">
+                </div>
+
+                <div class="filter-options status-update-options">
+
+                    <button
+                    type="button"
+                    class="filter-option"
+                    *ngFor="let status of orderStatuses"
+                    [class.selected-option]="newStatus === status"
+                    (click)="selectNewStatus(status)">
+
+                    <span>{{ status }}</span>
+
+                    <i
+                        *ngIf="newStatus === status"
+                        class="bi bi-check2">
+                    </i>
+
+                    </button>
+
+                </div>
+                }
+
+            </div>
+            </div>
+
+      <div class="modal-error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <div class="modal-actions">
+        <button
+          type="button"
+          class="cancel-button"
+          [disabled]="updating"
+          (click)="closeStatusModal()">
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="confirm-button"
+          [disabled]="updating"
+          (click)="confirmStatusUpdate()">
+          {{ updating ? 'Updating...' : 'Update Status' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+}

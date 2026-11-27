@@ -1,0 +1,129 @@
+
+<section class="confirmation-page container">
+
+  @if (loading) {
+
+    <div class="loading">
+      Loading order details...
+    </div>
+
+  } @else if (error) {
+
+    <div class="error-message">
+      {{ error }}
+
+      <a routerLink="/">Return Home</a>
+    </div>
+
+  } @else if (order) {
+
+    <div class="confirmation-card">
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h1>Order Placed Successfully!</h1>
+
+      <p class="success-text">
+        Thank you for shopping with SUNSTYLE.
+        Your order has been received.
+      </p>
+
+      <div class="order-number">
+        <span>Order Number</span>
+        <strong>#{{ order.orderNumber }}</strong>
+      </div>
+
+      <div class="order-status">
+        <span>Order Status</span>
+        <strong>{{ order.status }}</strong>
+      </div>
+
+      <hr>
+
+      <h2>Delivery Information</h2>
+
+      <div class="address-details">
+
+        <strong>{{ order.shippingAddress.fullName }}</strong>
+
+        <p>{{ order.shippingAddress.phone }}</p>
+
+        <p>{{ order.shippingAddress.addressLine }}</p>
+
+        <p>
+          {{ order.shippingAddress.city }},
+          {{ order.shippingAddress.state }} -
+          {{ order.shippingAddress.postalCode }}
+        </p>
+
+        
+
+      </div>
+
+      <hr>
+
+      <h2>Ordered Products</h2>
+
+      @for (item of order.items; track item.product.id) {
+
+        <div class="ordered-item">
+
+          <img
+            [src]="item.product.image"
+            [alt]="item.product.name">
+
+          <div class="item-info">
+
+            <strong>{{ item.product.name }}</strong>
+
+            <span>
+              Quantity: {{ item.quantity }}
+            </span>
+
+          </div>
+
+          <strong>
+            ₹{{ item.product.price * item.quantity }}
+          </strong>
+
+        </div>
+
+      }
+
+      <hr>
+
+      <div class="amount-row">
+        <span>Subtotal</span>
+        <strong>₹{{ order.subtotal }}</strong>
+      </div>
+
+      <div class="amount-row">
+        <span>Shipping</span>
+        <strong>₹{{ order.shippingCharge }}</strong>
+      </div>
+
+      <div class="amount-row">
+        <span>Discount</span>
+        <strong>-₹{{ order.discount }}</strong>
+      </div>
+
+      <div class="amount-row final-total">
+        <span>Total Amount</span>
+        <strong>₹{{ order.totalAmount }}</strong>
+      </div>
+
+      <div class="payment-info">
+        Payment Method: {{ order.paymentMethod }}
+      </div>
+
+      <a routerLink="/" class="home-btn">
+        Continue Shopping
+      </a>
+
+    </div>
+
+  }
+
+</section>

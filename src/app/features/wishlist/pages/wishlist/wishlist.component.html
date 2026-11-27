@@ -1,0 +1,418 @@
+<section class="wishlist-page container">
+
+  <!-- ============================================ -->
+  <!-- HEADER -->
+  <!-- ============================================ -->
+
+  <div class="wishlist-header">
+
+    <div>
+
+      <h1>
+        My Wishlist 
+      </h1>
+
+      <p>
+        Your favourite sunglasses, all in one place.
+      </p>
+
+    </div>
+
+    @if (wishlist.length > 0 && !loading) {
+
+      <button
+        class="clear-btn"
+        type="button"
+        (click)="confirmClearWishlist()">
+
+        <i class="bi bi-trash"></i>
+
+        Clear Wishlist
+
+      </button>
+
+    }
+
+  </div>
+
+
+  <!-- ============================================ -->
+  <!-- LOADING -->
+  <!-- ============================================ -->
+
+  @if (loading) {
+
+    <div class="loading">
+
+      <div class="spinner"></div>
+
+      <p>
+        Loading wishlist...
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- ============================================ -->
+  <!-- EMPTY WISHLIST -->
+  <!-- ============================================ -->
+
+  @else if (wishlist.length === 0) {
+
+    <div class="empty-wishlist">
+
+      
+
+      <h2>
+        Your wishlist is empty!
+      </h2>
+
+      <p>
+        Save your favourite sunglasses here and shop later.
+      </p>
+
+      <a
+        routerLink="/"
+        class="shop-btn">
+
+        Explore Products
+
+      </a>
+
+    </div>
+
+  }
+
+
+  <!-- ============================================ -->
+  <!-- WISHLIST PRODUCTS -->
+  <!-- ============================================ -->
+
+  @else {
+
+    <div class="wishlist-count">
+
+      {{ wishlist.length }} saved products
+
+    </div>
+
+
+    <div class="wishlist-grid">
+
+      @for (product of wishlist; track product.id) {
+
+        <div class="wishlist-card">
+
+
+          <!-- ====================================== -->
+          <!-- PRODUCT IMAGE -->
+          <!-- ====================================== -->
+
+          <div class="product-image">
+
+            <!-- PRODUCT DETAILS LINK -->
+            <a
+              [routerLink]="['/product', product.id]"
+              class="product-image-link">
+
+              <img
+                [src]="product.image"
+                [alt]="product.name">
+
+            </a>
+
+
+            <!-- REMOVE FROM WISHLIST -->
+            <button
+              type="button"
+              class="remove-heart"
+              aria-label="Remove from wishlist"
+              (click)="confirmRemoveProduct(product)">
+
+              <i class="bi bi-heart-fill"></i>
+
+            </button>
+
+
+            <!-- DISCOUNT -->
+            @if (product.discount > 0) {
+
+              <span class="discount">
+
+                {{ product.discount }}% OFF
+
+              </span>
+
+            }
+
+          </div>
+
+
+          <!-- ====================================== -->
+          <!-- PRODUCT INFORMATION -->
+          <!-- ====================================== -->
+
+          <div class="product-info">
+
+
+            <!-- BRAND -->
+            <span class="brand">
+
+              {{ product.brand }}
+
+            </span>
+
+
+            <!-- PRODUCT NAME -->
+            <h3>
+
+              {{ product.name }}
+
+            </h3>
+
+
+            <!-- CATEGORY -->
+            <p class="category">
+
+              {{ product.category }}
+
+            </p>
+
+
+            <!-- RATING -->
+            <div class="rating">
+
+              <span class="rating-star">
+                ⭐
+              </span>
+
+              {{ product.rating }}
+
+              <small>
+                ({{ product.reviewCount }} reviews)
+              </small>
+
+            </div>
+
+
+            <!-- PRICE -->
+            <div class="price">
+
+              <strong>
+                ₹{{ product.price }}
+              </strong>
+
+              @if (product.originalPrice > product.price) {
+
+                <del>
+                  ₹{{ product.originalPrice }}
+                </del>
+
+              }
+
+            </div>
+
+
+            <!-- ====================================== -->
+            <!-- STOCK STATUS -->
+            <!-- ====================================== -->
+
+            @if (product.stock > 0) {
+
+              <span class="stock-status">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                In Stock
+
+              </span>
+
+            }
+
+            @else {
+
+              <span class="out-of-stock">
+
+                <i class="bi bi-x-circle-fill"></i>
+
+                Out of Stock
+
+              </span>
+
+            }
+
+
+            <!-- ====================================== -->
+            <!-- PRODUCT ACTIONS -->
+            <!-- ====================================== -->
+
+            <div class="card-actions">
+
+
+              <!-- MOVE TO CART -->
+              <button
+                type="button"
+                class="cart-btn"
+                [disabled]="product.stock < 1"
+                (click)="moveToCart(product)">
+
+                @if (product.stock > 0) {
+
+                  <i class="bi bi-cart-plus"></i>
+
+                  Move to Cart
+
+                }
+
+                @else {
+
+                  Out of Stock
+
+                }
+
+              </button>
+
+
+              <!-- BUY NOW -->
+              <button
+                type="button"
+                class="buy-now-btn"
+                [disabled]="product.stock < 1"
+                (click)="buyNow(product)">
+
+                @if (product.stock > 0) {
+
+                  <i class="bi bi-lightning-fill"></i>
+
+                  Buy Now
+
+                }
+
+                @else {
+
+                  Out of Stock
+
+                }
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</section>
+
+
+<!-- ============================================ -->
+<!-- CONFIRMATION MODAL -->
+<!-- ============================================ -->
+
+@if (showConfirmationModal) {
+
+  <div
+    class="confirmation-overlay"
+    (click)="cancelConfirmation()">
+
+    <div
+      class="confirmation-modal"
+      (click)="$event.stopPropagation()">
+
+
+      <!-- MODAL ICON -->
+      <div class="confirmation-icon">
+
+        <i
+          class="bi"
+          [class.bi-heart-fill]="confirmationType === 'remove'"
+          [class.bi-trash]="confirmationType === 'clear'">
+
+        </i>
+
+      </div>
+
+
+      <!-- MODAL TITLE -->
+      <h3>
+
+        @if (confirmationType === 'remove') {
+
+          Remove from Wishlist?
+
+        }
+
+        @if (confirmationType === 'clear') {
+
+          Clear Wishlist?
+
+        }
+
+      </h3>
+
+
+      <!-- MODAL MESSAGE -->
+      <p>
+
+        @if (confirmationType === 'remove') {
+
+          Are you sure you want to remove
+
+          <strong>
+            {{ productToRemove?.name }}
+          </strong>
+
+          from your wishlist?
+
+        }
+
+        @if (confirmationType === 'clear') {
+
+          Are you sure you want to remove all products
+          from your wishlist?
+
+        }
+
+      </p>
+
+
+      <!-- MODAL ACTIONS -->
+      <div class="confirmation-actions">
+
+
+        <!-- CANCEL -->
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancelConfirmation()">
+
+          Cancel
+
+        </button>
+
+
+        <!-- CONFIRM -->
+        <button
+          type="button"
+          class="confirm-btn"
+          (click)="confirmAction()">
+
+          Remove
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

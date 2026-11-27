@@ -1,0 +1,42 @@
+
+.benefit-card {
+  text-align: center;
+  padding: 25px 15px;
+  height: 100%;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.benefit-icon {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f7f3ed;
+  border-radius: 50%;
+
+  i {
+    font-size: 30px;
+    color: #a17b4c;
+  }
+}
+
+.benefit-card h5 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #171717;
+}
+
+.benefit-card p {
+  font-size: 13px;
+  color: #777;
+  line-height: 1.6;
+}

@@ -1,0 +1,702 @@
+
+<div class="users-page">
+
+  <!-- PAGE HEADING -->
+  <div class="page-heading">
+    <div>
+      <h1>Users Management</h1>
+      <p>View and manage your SUNSTYLE customers.</p>
+    </div>
+
+    <button
+      type="button"
+      class="refresh-button"
+      (click)="loadUsers()"
+      [disabled]="loading">
+      <i class="bi bi-arrow-clockwise"></i>
+      Refresh
+    </button>
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <div class="user-summary-grid">
+
+    <div class="user-summary-card">
+      <div class="summary-icon total-icon">
+        <i class="bi bi-people"></i>
+      </div>
+      <div>
+        <span>Total Customers</span>
+        <h2>{{ totalUsers }}</h2>
+      </div>
+    </div>
+
+    <div class="user-summary-card">
+      <div class="summary-icon active-icon">
+        <i class="bi bi-person-check"></i>
+      </div>
+      <div>
+        <span>Active Customers</span>
+        <h2>{{ activeUsers }}</h2>
+      </div>
+    </div>
+
+    <div class="user-summary-card">
+      <div class="summary-icon blocked-icon">
+        <i class="bi bi-person-x"></i>
+      </div>
+      <div>
+        <span>Blocked Customers</span>
+        <h2>{{ blockedUsers }}</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ERROR MESSAGE -->
+  <div class="error-message" *ngIf="errorMessage">
+    <i class="bi bi-exclamation-circle"></i>
+    {{ errorMessage }}
+  </div>
+
+  <!-- USERS TABLE CARD -->
+  <section class="users-table-card">
+
+    <!-- TABLE HEADING -->
+    <div class="table-card-heading">
+      <div>
+        <h3>All Customers</h3>
+        <p>Manage customer accounts and access.</p>
+      </div>
+
+      <span class="customer-count">
+        {{ filteredUsers.length }} Customers
+      </span>
+    </div>
+
+    <!-- SEARCH AND FILTER -->
+<div class="table-toolbar">
+
+  <div class="search-box">
+    <i class="bi bi-search"></i>
+
+    <input
+      type="text"
+      placeholder="Search by name or email..."
+      [(ngModel)]="searchTerm">
+
+    <button
+      *ngIf="searchTerm"
+      type="button"
+      class="clear-search"
+      (click)="searchTerm = ''"
+      aria-label="Clear search">
+      <i class="bi bi-x-circle"></i>
+    </button>
+  </div>
+
+  <!-- CUSTOM FILTER DROPDOWN -->
+  <div class="filter-box">
+
+    <i class="bi bi-funnel"></i>
+
+    <button
+      type="button"
+      class="filter-trigger"
+      [attr.aria-expanded]="isFilterDropdownOpen"
+      aria-label="Filter customers by status"
+      (click)="toggleFilterDropdown()">
+
+      <span>
+        {{ selectedFilter === 'all' ? 'All Customers' :
+           selectedFilter === 'active' ? 'Active' : 'Blocked' }}
+      </span>
+
+      <i
+        class="bi bi-chevron-down filter-chevron"
+        [class.rotate-chevron]="isFilterDropdownOpen">
+      </i>
+
+    </button>
+
+    @if (isFilterDropdownOpen) {
+
+      <div
+        class="filter-dismiss"
+        (click)="closeFilterDropdown()">
+      </div>
+
+      <div class="filter-options">
+
+        <button
+          type="button"
+          class="filter-option"
+          [class.selected-option]="selectedFilter === 'all'"
+          (click)="selectFilter('all')">
+
+          <span>All Customers</span>
+
+          <i
+            *ngIf="selectedFilter === 'all'"
+            class="bi bi-check2">
+          </i>
+
+        </button>
+
+        <button
+          type="button"
+          class="filter-option"
+          [class.selected-option]="selectedFilter === 'active'"
+          (click)="selectFilter('active')">
+
+          <span>Active</span>
+
+          <i
+            *ngIf="selectedFilter === 'active'"
+            class="bi bi-check2">
+          </i>
+
+        </button>
+
+        <button
+          type="button"
+          class="filter-option"
+          [class.selected-option]="selectedFilter === 'blocked'"
+          (click)="selectFilter('blocked')">
+
+          <span>Blocked</span>
+
+          <i
+            *ngIf="selectedFilter === 'blocked'"
+            class="bi bi-check2">
+          </i>
+
+        </button>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>
+
+    <!-- LOADING -->
+    <div class="table-loading" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Loading customers...</p>
+    </div>
+
+    <!-- TABLE AND PAGINATION -->
+    <ng-container *ngIf="!loading">
+
+      <div class="table-responsive">
+
+        <table class="users-table">
+
+          <thead>
+            <tr>
+              <th>CUSTOMER</th>
+              <th>EMAIL ADDRESS</th>
+              <th>USER ID</th>
+              <th>STATUS</th>
+              <th>VIEW DETAILS</th>
+              <th>ACTION</th>
+
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let user of paginatedUsers">
+
+              <!-- CUSTOMER -->
+              <td>
+                <div class="customer-info">
+
+                  <div class="customer-avatar">
+
+                    <img
+                      *ngIf="user.profileImage; else defaultAvatar"
+                      [src]="user.profileImage"
+                      [alt]="user.fullName">
+
+                    <ng-template #defaultAvatar>
+                      <span>
+                        {{ user.fullName.charAt(0).toUpperCase() }}
+                      </span>
+                    </ng-template>
+
+                  </div>
+
+                  <div>
+                    <strong>{{ user.fullName }}</strong>
+                    <small>Customer</small>
+                  </div>
+
+                </div>
+              </td>
+
+              <!-- EMAIL -->
+              <td class="email-cell">
+                {{ user.email }}
+              </td>
+
+              <!-- USER ID -->
+              <td class="id-cell">
+                #{{ user.id }}
+              </td>
+
+              <!-- STATUS -->
+              <td>
+                <span
+                  class="status-badge"
+                  [class.status-active]="user.isBlocked !== true"
+                  [class.status-blocked]="user.isBlocked === true">
+
+                  <span class="status-dot"></span>
+
+                  {{ user.isBlocked === true ? 'Blocked' : 'Active' }}
+
+                </span>
+              </td>
+
+              <!-- ACTIONS -->
+              <!-- VIEW DETAILS -->
+              <td>
+                <button
+                  type="button"
+                  class="view-details-button"
+                  (click)="openUserDetails(user)">
+
+                  <i class="bi bi-eye"></i>
+                  View Details
+
+                </button>
+              </td>
+
+              <!-- BLOCK / UNBLOCK -->
+              <td>
+                <button
+                  type="button"
+                  class="action-button"
+                  [class.block-button]="user.isBlocked !== true"
+                  [class.unblock-button]="user.isBlocked === true"
+                  [disabled]="user.id === currentAdminId"
+                  (click)="openBlockConfirmation(user)">
+
+                  <i
+                    class="bi"
+                    [class.bi-slash-circle]="user.isBlocked !== true"
+                    [class.bi-unlock]="user.isBlocked === true">
+                  </i>
+
+                  {{ user.isBlocked === true ? 'Unblock' : 'Block' }}
+
+                </button>
+              </td>
+
+            </tr>
+
+            <!-- EMPTY STATE -->
+            <tr *ngIf="filteredUsers.length === 0">
+              <td colspan="5">
+                <div class="empty-users">
+                  <i class="bi bi-people"></i>
+                  <h4>No customers found</h4>
+                  <p>Try changing your search or filter.</p>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+      <!-- PAGINATION -->
+      <div
+        class="pagination-container"
+        *ngIf="filteredUsers.length > 0">
+
+        <div class="pagination-info">
+          Showing
+          <strong>{{ startItem }}</strong>
+          to
+          <strong>{{ endItem }}</strong>
+          of
+          <strong>{{ filteredUsers.length }}</strong>
+          customers
+        </div>
+
+        <div class="pagination-controls">
+
+          <button
+            type="button"
+            class="pagination-button"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()"
+            aria-label="Previous page">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+
+          <button
+            type="button"
+            class="pagination-button"
+            *ngFor="let page of pageNumbers"
+            [class.current-page]="currentPage === page"
+            [attr.aria-current]="currentPage === page ? 'page' : null"
+            (click)="changePage(page)">
+            {{ page }}
+          </button>
+
+          <button
+            type="button"
+            class="pagination-button"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()"
+            aria-label="Next page">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+
+        </div>
+
+      </div>
+
+    </ng-container>
+
+  </section>
+
+</div>
+
+
+<!-- BLOCK / UNBLOCK CONFIRMATION MODAL -->
+@if (showConfirmModal && selectedUser) {
+
+  <div
+    class="confirmation-modal-overlay"
+    (click)="cancelConfirmation()">
+
+    <div
+      class="confirmation-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="confirm-title"
+      (click)="$event.stopPropagation()">
+
+      <div
+        class="confirmation-modal-icon"
+        [class.block-modal-icon]="pendingBlockedState"
+        [class.unblock-modal-icon]="pendingBlockedState === false">
+
+        <i
+          class="bi"
+          [class.bi-person-x]="pendingBlockedState"
+          [class.bi-person-check]="pendingBlockedState === false">
+        </i>
+
+      </div>
+
+      <h4 id="confirm-title">
+        {{ pendingBlockedState ? 'Block Customer?' : 'Unblock Customer?' }}
+      </h4>
+
+      <p>
+        Are you sure you want to
+        <strong>
+          {{ pendingBlockedState ? 'block' : 'unblock' }}
+        </strong>
+        <strong>{{ selectedUser.fullName }}</strong>?
+
+        <ng-container *ngIf="pendingBlockedState">
+          This customer will no longer be allowed to access their account.
+        </ng-container>
+
+        <ng-container *ngIf="pendingBlockedState === false">
+          This customer will be allowed to access their account again.
+        </ng-container>
+      </p>
+
+      <div class="confirmation-modal-actions">
+
+        <button
+          type="button"
+          class="cancel-button"
+          [disabled]="isUpdating"
+          (click)="cancelConfirmation()">
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="confirm-button"
+          [class.block-confirm-button]="pendingBlockedState"
+          [class.unblock-confirm-button]="pendingBlockedState === false"
+          [disabled]="isUpdating"
+          (click)="confirmBlockAction()">
+
+          <ng-container *ngIf="!isUpdating">
+            {{ pendingBlockedState ? 'Block Customer' : 'Unblock Customer' }}
+          </ng-container>
+
+          <ng-container *ngIf="isUpdating">
+            Updating...
+          </ng-container>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
+
+
+<!-- ======================================== -->
+<!-- CUSTOMER DETAILS AND ORDER HISTORY MODAL -->
+<!-- ======================================== -->
+
+@if (showUserDetailsModal && selectedDetailsUser) {
+
+  <div
+    class="user-details-overlay"
+    (click)="closeUserDetails()">
+
+    <div
+      class="user-details-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="user-details-title"
+      (click)="$event.stopPropagation()">
+
+      <!-- HEADER -->
+      <div class="user-details-header">
+
+        <div>
+          <h2 id="user-details-title">Customer Details</h2>
+          <p>Customer information and order history</p>
+        </div>
+
+        <button
+          type="button"
+          class="details-close-button"
+          (click)="closeUserDetails()"
+          aria-label="Close modal">
+
+          <i class="bi bi-x-lg"></i>
+
+        </button>
+
+      </div>
+
+      <!-- CUSTOMER INFORMATION -->
+      <div class="details-customer-card">
+
+        <div class="details-customer-avatar">
+
+          <img
+            *ngIf="selectedDetailsUser.profileImage; else detailsDefaultAvatar"
+            [src]="selectedDetailsUser.profileImage"
+            [alt]="selectedDetailsUser.fullName">
+
+          <ng-template #detailsDefaultAvatar>
+            <span>
+              {{ selectedDetailsUser.fullName.charAt(0).toUpperCase() }}
+            </span>
+          </ng-template>
+
+        </div>
+
+        <div class="details-customer-info">
+
+          <h3>{{ selectedDetailsUser.fullName }}</h3>
+
+          <p>{{ selectedDetailsUser.email }}</p>
+
+          <span>
+            Customer ID: #{{ selectedDetailsUser.id }}
+          </span>
+
+        </div>
+
+        <span
+          class="status-badge"
+          [class.status-active]="selectedDetailsUser.isBlocked !== true"
+          [class.status-blocked]="selectedDetailsUser.isBlocked === true">
+
+          <span class="status-dot"></span>
+
+          {{ selectedDetailsUser.isBlocked === true ? 'Blocked' : 'Active' }}
+
+        </span>
+
+      </div>
+
+      <!-- ORDER HISTORY HEADING -->
+      <div class="order-history-heading">
+
+        <div>
+          <h3>Order History</h3>
+          <p>All orders placed by this customer</p>
+        </div>
+
+        <span class="order-count">
+          {{ userOrders.length }} Orders
+        </span>
+
+      </div>
+
+      <!-- LOADING -->
+      <div
+        class="orders-loading"
+        *ngIf="loadingUserOrders">
+
+        <div class="spinner"></div>
+        <p>Loading customer orders...</p>
+
+      </div>
+
+      <!-- ERROR -->
+      <div
+        class="orders-error"
+        *ngIf="ordersError">
+
+        <i class="bi bi-exclamation-circle"></i>
+        {{ ordersError }}
+
+      </div>
+
+      <!-- ORDER LIST -->
+      <div
+        class="customer-orders-list"
+        *ngIf="!loadingUserOrders && !ordersError && userOrders.length > 0">
+
+        <div
+          class="customer-order-card"
+          *ngFor="let order of userOrders">
+
+          <!-- ORDER HEADER -->
+          <div class="customer-order-header">
+
+            <div>
+              <strong>
+                Order {{ getOrderDisplayNumber(order) }}
+              </strong>
+
+              <span>
+                {{ order.createdAt | date:'dd MMM yyyy, hh:mm a' }}
+              </span>
+            </div>
+
+            <span
+              class="order-status"
+              [ngClass]="order.status.toLowerCase()">
+
+              {{ order.status }}
+
+            </span>
+
+          </div>
+
+          <!-- ORDER PRODUCTS -->
+          <div class="customer-order-products">
+
+            <div
+              class="customer-order-product"
+              *ngFor="let item of order.items">
+
+              <div class="order-product-image">
+
+                <img
+                  [src]="item.product.image"
+                  [alt]="item.product.name">
+
+              </div>
+
+              <div class="order-product-info">
+
+                <strong>{{ item.product.name }}</strong>
+
+                <span>
+                  {{ item.product.brand }} ·
+                  Qty: {{ item.quantity }}
+                </span>
+
+              </div>
+
+              <strong class="order-product-price">
+                ₹{{ item.product.price * item.quantity | number:'1.0-0' }}
+              </strong>
+
+            </div>
+
+          </div>
+
+          <!-- ORDER FOOTER -->
+          <div class="customer-order-footer">
+
+            <div>
+              <span>Payment Method</span>
+              <strong>{{ order.paymentMethod }}</strong>
+            </div>
+
+            <div>
+              <span>Items</span>
+              <strong>{{ order.items.length }}</strong>
+            </div>
+
+            <div class="order-total">
+              <span>Total Amount</span>
+              <strong>
+                ₹{{ order.totalAmount | number:'1.0-0' }}
+              </strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- NO ORDERS -->
+      <div
+        class="no-customer-orders"
+        *ngIf="
+          !loadingUserOrders &&
+          !ordersError &&
+          userOrders.length === 0
+        ">
+
+        <i class="bi bi-bag-x"></i>
+
+        <h3>No Orders Yet</h3>
+
+        <p>
+          This customer hasn't placed any orders yet.
+        </p>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div class="user-details-footer">
+
+        <button
+          type="button"
+          class="details-done-button"
+          (click)="closeUserDetails()">
+
+          Close
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
+

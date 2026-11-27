@@ -1,0 +1,612 @@
+<div class="coupons-page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div>
+      <h1>Coupon Management</h1>
+      <p>Manage discount coupons and promotional offers</p>
+    </div>
+
+    <button class="add-coupon-btn" (click)="openAddCoupon()">
+      <i class="bi bi-plus-lg"></i>
+      Add Coupon
+    </button>
+  </div>
+
+  <!-- MESSAGES -->
+  @if (successMessage) {
+    <div class="alert-message success-message">
+      <i class="bi bi-check-circle"></i>
+      {{ successMessage }}
+      <button (click)="clearMessages()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  }
+
+  @if (errorMessage && !showCouponModal && !showDeleteModal) {
+    <div class="alert-message error-message">
+      <i class="bi bi-exclamation-circle"></i>
+      {{ errorMessage }}
+      <button (click)="clearMessages()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  }
+
+  <!-- SUMMARY CARDS -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-icon total-icon">
+        <i class="bi bi-ticket-perforated"></i>
+      </div>
+      <div>
+        <span>Total Coupons</span>
+        <h2>{{ coupons.length }}</h2>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon active-icon">
+        <i class="bi bi-check-circle"></i>
+      </div>
+      <div>
+        <span>Active Coupons</span>
+        <h2>{{ activeCoupons }}</h2>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon inactive-icon">
+        <i class="bi bi-pause-circle"></i>
+      </div>
+      <div>
+        <span>Inactive Coupons</span>
+        <h2>{{ inactiveCoupons }}</h2>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon expired-icon">
+        <i class="bi bi-calendar-x"></i>
+      </div>
+      <div>
+        <span>Expired Coupons</span>
+        <h2>{{ expiredCoupons }}</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COUPON TABLE CARD -->
+  <div class="table-card">
+
+    <div class="table-heading">
+      <div>
+        <h2>All Coupons</h2>
+        <p>View and manage your promotional coupons</p>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filter-section">
+
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+
+        <input
+          type="text"
+          placeholder="Search coupon code or description..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onFilterChange()"
+        />
+      </div>
+
+      <!-- STATUS FILTER -->
+      <div class="custom-filter">
+
+        <button
+          type="button"
+          class="filter-trigger"
+          [class.open]="isStatusDropdownOpen"
+          (click)="toggleStatusDropdown()"
+        >
+          <span>{{ selectedStatusLabel }}</span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
+
+        @if (isStatusDropdownOpen) {
+          <div class="filter-dismiss" (click)="closeAllDropdowns()"></div>
+
+          <div class="filter-options">
+            @for (option of statusOptions; track option.value) {
+              <button
+                type="button"
+                class="filter-option"
+                [class.selected]="selectedStatus === option.value"
+                (click)="selectStatus(option.value)"
+              >
+                {{ option.label }}
+
+                @if (selectedStatus === option.value) {
+                  <i class="bi bi-check2"></i>
+                }
+              </button>
+            }
+          </div>
+        }
+
+      </div>
+
+      <!-- DISCOUNT TYPE FILTER -->
+      <div class="custom-filter">
+
+        <button
+          type="button"
+          class="filter-trigger"
+          [class.open]="isTypeDropdownOpen"
+          (click)="toggleTypeDropdown()"
+        >
+          <span>{{ selectedTypeLabel }}</span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
+
+        @if (isTypeDropdownOpen) {
+          <div class="filter-dismiss" (click)="closeAllDropdowns()"></div>
+
+          <div class="filter-options">
+            @for (option of typeOptions; track option.value) {
+              <button
+                type="button"
+                class="filter-option"
+                [class.selected]="selectedDiscountType === option.value"
+                (click)="selectDiscountType(option.value)"
+              >
+                {{ option.label }}
+
+                @if (selectedDiscountType === option.value) {
+                  <i class="bi bi-check2"></i>
+                }
+              </button>
+            }
+          </div>
+        }
+
+      </div>
+
+    </div>
+
+    <!-- LOADING -->
+    @if (loading) {
+      <div class="loading-state">
+        <span class="spinner"></span>
+        <p>Loading coupons...</p>
+      </div>
+    }
+
+    <!-- TABLE -->
+    @if (!loading) {
+
+      <div class="table-responsive">
+        <table class="coupons-table">
+
+          <thead>
+            <tr>
+              <th>Coupon</th>
+              <th>Discount</th>
+              <th>Minimum Order</th>
+              <th>Expiry Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            @for (coupon of paginatedCoupons; track coupon.id) {
+              <tr>
+
+                <td>
+                  <div class="coupon-info">
+                    <div class="coupon-icon">
+                      <i class="bi bi-ticket-perforated"></i>
+                    </div>
+
+                    <div>
+                      <strong>{{ coupon.code }}</strong>
+                      <small>{{ coupon.description }}</small>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <span class="discount-value">
+                    {{ getDiscountLabel(coupon) }}
+                  </span>
+                </td>
+
+                <td>
+                  ₹{{ coupon.minOrderAmount | number:'1.0-0' }}
+                </td>
+
+                <td>
+                  {{ coupon.expiryDate | date:'dd MMM yyyy' }}
+                </td>
+
+                <td>
+                  <span
+                    class="status-badge"
+                    [ngClass]="getCouponStatus(coupon).toLowerCase()"
+                  >
+                    {{ getCouponStatus(coupon) }}
+                  </span>
+                </td>
+
+                <td>
+                  <div class="action-buttons">
+
+                    <button
+                      type="button"
+                      class="action-btn edit-btn"
+                      title="Edit coupon"
+                      (click)="openEditCoupon(coupon)"
+                    >
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="action-btn toggle-btn"
+                      [title]="coupon.isActive ? 'Deactivate coupon' : 'Activate coupon'"
+                      [disabled]="getCouponStatus(coupon) === 'Expired'"
+                      (click)="toggleCouponStatus(coupon)"
+                    >
+                      <i
+                        class="bi"
+                        [ngClass]="coupon.isActive ? 'bi-pause-circle' : 'bi-play-circle'"
+                      ></i>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="action-btn delete-btn"
+                      title="Delete coupon"
+                      (click)="openDeleteConfirmation(coupon)"
+                    >
+                      <i class="bi bi-trash3"></i>
+                    </button>
+
+                  </div>
+                </td>
+
+              </tr>
+            }
+
+            @if (filteredCoupons.length === 0) {
+              <tr>
+                <td colspan="6">
+                  <div class="empty-state">
+                    <i class="bi bi-ticket-perforated"></i>
+                    <h3>No coupons found</h3>
+                    <p>Try changing your search or filters.</p>
+                  </div>
+                </td>
+              </tr>
+            }
+
+          </tbody>
+
+        </table>
+      </div>
+
+      <!-- PAGINATION -->
+      @if (filteredCoupons.length > 0) {
+        <div class="pagination-section">
+
+          <p>
+            Showing {{ startIndex }}–{{ endIndex }}
+            of {{ filteredCoupons.length }} coupons
+          </p>
+
+          <div class="pagination-buttons">
+
+            <button
+              type="button"
+              [disabled]="currentPage === 1"
+              (click)="goToPage(currentPage - 1)"
+            >
+              <i class="bi bi-chevron-left"></i>
+            </button>
+
+            @for (page of pages; track page) {
+              <button
+                type="button"
+                [class.active]="currentPage === page"
+                (click)="goToPage(page)"
+              >
+                {{ page }}
+              </button>
+            }
+
+            <button
+              type="button"
+              [disabled]="currentPage === totalPages"
+              (click)="goToPage(currentPage + 1)"
+            >
+              <i class="bi bi-chevron-right"></i>
+            </button>
+
+          </div>
+
+        </div>
+      }
+
+    }
+
+  </div>
+
+</div>
+
+
+<!-- ADD / EDIT COUPON MODAL -->
+@if (showCouponModal) {
+
+  <div class="modal-backdrop" (click)="closeCouponModal()">
+
+    <div class="coupon-modal" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <div>
+          <h2>{{ isEditMode ? 'Edit Coupon' : 'Add New Coupon' }}</h2>
+          <p>
+            {{ isEditMode
+              ? 'Update your coupon details'
+              : 'Create a promotional discount coupon'
+            }}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="modal-close"
+          [disabled]="saving"
+          (click)="closeCouponModal()"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <form (ngSubmit)="saveCoupon()" #couponForm="ngForm">
+
+        @if (errorMessage) {
+          <div class="form-error-message">
+            <i class="bi bi-exclamation-circle"></i>
+            {{ errorMessage }}
+          </div>
+        }
+
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="couponCode">Coupon Code *</label>
+
+            <input
+              type="text"
+              id="couponCode"
+              name="code"
+              [(ngModel)]="form.code"
+              placeholder="Example: SUN20"
+              required
+              maxlength="20"
+              autocomplete="off"
+            />
+
+            <small>Use uppercase letters, numbers, hyphens or underscores.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description *</label>
+
+            <input
+              type="text"
+              id="description"
+              name="description"
+              [(ngModel)]="form.description"
+              placeholder="Example: Get 20% off on your order"
+              required
+            />
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+              <label for="discountType">Discount Type *</label>
+
+              <div class="select-wrapper">
+                <select
+                  id="discountType"
+                  name="discountType"
+                  [ngModel]="form.discountType"
+                  (ngModelChange)="onDiscountTypeChange($event)"
+                >
+                  <option value="percentage">Percentage (%)</option>
+                  <option value="fixed">Fixed Amount (₹)</option>
+                </select>
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="discountValue">
+                Discount Value *
+              </label>
+
+              <input
+                type="number"
+                id="discountValue"
+                name="discountValue"
+                [(ngModel)]="form.discountValue"
+                min="1"
+                [max]="form.discountType === 'percentage' ? 100 : 100000"
+                required
+              />
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+              <label for="minOrderAmount">Minimum Order Amount (₹)</label>
+
+              <input
+                type="number"
+                id="minOrderAmount"
+                name="minOrderAmount"
+                [(ngModel)]="form.minOrderAmount"
+                min="0"
+                required
+              />
+            </div>
+
+            @if (form.discountType === 'percentage') {
+              <div class="form-group">
+                <label for="maxDiscount">Maximum Discount (₹)</label>
+
+                <input
+                  type="number"
+                  id="maxDiscount"
+                  name="maxDiscount"
+                  [(ngModel)]="form.maxDiscount"
+                  min="1"
+                  placeholder="Example: 200"
+                />
+              </div>
+            }
+
+          </div>
+
+          <div class="form-group">
+            <label for="expiryDate">Expiry Date *</label>
+
+            <input
+              type="date"
+              id="expiryDate"
+              name="expiryDate"
+              [(ngModel)]="form.expiryDate"
+              [min]="today"
+              required
+            />
+          </div>
+
+          <div class="active-toggle">
+            <div>
+              <strong>Coupon Status</strong>
+              <small>Allow customers to use this coupon</small>
+            </div>
+
+            <label class="switch">
+              <input
+                type="checkbox"
+                name="isActive"
+                [(ngModel)]="form.isActive"
+              />
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="cancel-btn"
+            [disabled]="saving"
+            (click)="closeCouponModal()"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="save-btn"
+            [disabled]="saving || couponForm.invalid"
+          >
+            @if (saving) {
+              <span class="button-spinner"></span>
+              Saving...
+            } @else {
+              <i class="bi bi-check-lg"></i>
+              {{ isEditMode ? 'Update Coupon' : 'Create Coupon' }}
+            }
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+}
+
+
+<!-- DELETE CONFIRMATION MODAL -->
+@if (showDeleteModal && selectedCoupon) {
+
+  <div class="modal-backdrop" (click)="cancelDelete()">
+
+    <div class="confirmation-modal" (click)="$event.stopPropagation()">
+
+      <div class="confirmation-icon">
+        <i class="bi bi-trash3"></i>
+      </div>
+
+      <h2>Delete Coupon?</h2>
+
+      <p>
+        Are you sure you want to delete
+        <strong>{{ selectedCoupon.code }}</strong>?
+        This action cannot be undone.
+      </p>
+
+      @if (errorMessage) {
+        <div class="form-error-message">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <div class="confirmation-actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          [disabled]="deleting"
+          (click)="cancelDelete()"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="confirm-delete-btn"
+          [disabled]="deleting"
+          (click)="confirmDelete()"
+        >
+          @if (deleting) {
+            Deleting...
+          } @else {
+            Delete Coupon
+          }
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

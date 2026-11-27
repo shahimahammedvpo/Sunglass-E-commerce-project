@@ -1,0 +1,372 @@
+<!-- TOP OFFER BAR -->
+<div class="top-bar">
+  Free Delivery on Orders Above ₹999
+  <span> | </span>
+  Premium Eyewear Collection
+</div>
+
+
+<!-- MAIN HEADER -->
+<header class="main-header" (click)="closeSearchSuggestions()">
+
+  <div class="container-fluid px-lg-5">
+
+    <div class="header-content">
+
+      <!-- LOGO -->
+      <a routerLink="/" class="brand-logo">
+        <span class="brand-icon">◉</span>
+
+        <span>
+          SUN<span class="brand-highlight">STYLE</span>
+          <small>EYEWEAR COLLECTION</small>
+        </span>
+      </a>
+
+
+      <!-- SEARCH BAR -->
+      <div class="header-search" (click)="$event.stopPropagation()">
+
+        <div class="search-input-wrapper">
+
+          <input
+            type="text"
+            placeholder="Search sunglasses, brands..."
+            [formControl]="searchControl"
+            (focus)="onSearchFocus()"
+            (keyup.enter)="onSearch()"
+          />
+
+          <button type="button" (click)="onSearch()">
+            <i class="bi bi-search"></i>
+          </button>
+
+        </div>
+
+
+        <!-- SEARCH SUGGESTIONS -->
+        @if (showSearchSuggestions) {
+
+          @if (searchResults$ | async; as suggestions) {
+
+            @if (searchControl.value.trim().length >= 2) {
+
+              <div class="search-suggestions">
+
+                @for (product of suggestions; track product.id) {
+
+                  <button
+                    type="button"
+                    class="suggestion-item"
+                    (click)="selectProduct(product)"
+                  >
+
+                    <img
+                      [src]="product.image"
+                      [alt]="product.name"
+                    />
+
+                    <span class="suggestion-details">
+                      <strong>{{ product.name }}</strong>
+                      <small>{{ product.brand }}</small>
+                    </span>
+
+                    <strong class="suggestion-price">
+                      {{ product.price | currency:'INR':'symbol':'1.0-0' }}
+                    </strong>
+
+                  </button>
+
+                }
+
+
+                <!-- NO RESULTS -->
+                @if (suggestions.length === 0) {
+
+                  <p class="no-suggestions">
+                    No matching products found.
+                  </p>
+
+                }
+
+
+                <!-- VIEW ALL RESULTS -->
+                <button
+                  type="button"
+                  class="view-all-results"
+                  (click)="onSearch()"
+                >
+                  View all results
+                  <i class="bi bi-arrow-right"></i>
+                </button>
+
+              </div>
+
+            }
+
+          }
+
+        }
+
+      </div>
+
+
+      <!-- HEADER ACTIONS -->
+      
+      <div class="header-actions">
+
+        <!-- WISHLIST -->
+        <a
+          class="header-wishlist"
+          title="Wishlist"
+          (click)="navigateToWishlist()"
+        >
+
+          <i class="bi bi-heart"></i>
+
+          @if (isLoggedIn && (wishlistCount$ | async)! > 0) {
+            <span class="wishlist-count">
+              {{ wishlistCount$ | async }}
+            </span>
+          }
+
+        </a>
+
+
+        <!-- CART -->
+        <a
+          class="header-cart"
+          title="Cart"
+          (click)="navigateToCart()"
+        >
+
+          <i class="bi bi-cart3"></i>
+
+          @if (isLoggedIn && (cartCount$ | async)! > 0) {
+            <span class="cart-count">
+              {{ cartCount$ | async }}
+            </span>
+          }
+
+        </a>
+
+
+        <!-- MY ORDERS -->
+        <a
+          routerLink="/orders"
+          class="header-link"
+          title="My Orders"
+        >
+
+          <i class="bi bi-bag"></i>
+
+        </a>
+
+
+        <!-- PROFILE -->
+        @if (isLoggedIn) {
+
+          <div class="user-menu">
+
+            <a
+              routerLink="/profile"
+              class="account-btn"
+              title="My Profile"
+            >
+
+              <i class="bi bi-person-circle"></i>
+
+            </a>
+
+          </div>
+
+        }
+
+
+        <!-- LOGIN -->
+        @else {
+
+          <a
+            routerLink="/login"
+            class="login-btn"
+          >
+
+            <i class="bi bi-box-arrow-in-right"></i>
+            Login / Register
+
+          </a>
+
+        }
+
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- CATEGORY NAVIGATION -->
+<nav class="category-nav">
+
+  <div class="container-fluid px-lg-5">
+
+    <div class="category-links">
+
+
+      <!-- HOME -->
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Home
+      </a>
+
+
+      <!-- ALL PRODUCTS -->
+      <a
+        routerLink="/products"
+        routerLinkActive="active"
+        [queryParams]="{ category: 'All', view: 'all' }"
+      >
+        All Products
+      </a>
+
+
+      <!-- CATEGORIES DROPDOWN -->
+      <div class="category-dropdown">
+
+        <button
+          type="button"
+          class="category-dropdown-btn"
+        >
+
+          Categories
+
+          <i class="bi bi-chevron-down"></i>
+
+        </button>
+
+
+        <!-- DROPDOWN MENU -->
+        <div class="category-dropdown-menu">
+
+
+          <!-- MEN -->
+          <a
+            routerLink="/products"
+            [queryParams]="{ category: 'Men', view: 'all' }"
+          >
+            <i class="bi bi-person"></i>
+            Men
+          </a>
+
+
+          <!-- WOMEN -->
+          <a
+            routerLink="/products"
+            [queryParams]="{ category: 'Women', view: 'all' }"
+          >
+            <i class="bi bi-person"></i>
+            Women
+          </a>
+
+
+          <!-- UNISEX -->
+          <a
+            routerLink="/products"
+            [queryParams]="{ category: 'Unisex', view: 'all' }"
+          >
+            <i class="bi bi-people"></i>
+            Unisex
+          </a>
+
+
+          <!-- TRENDING -->
+          <a
+            routerLink="/products"
+            [queryParams]="{ category: 'All', view: 'trending' }"
+          >
+            <i class="bi bi-fire"></i>
+            Trending
+          </a>
+
+
+          <!-- BEST SELLERS -->
+          <a
+            routerLink="/products"
+            [queryParams]="{ category: 'All', view: 'bestsellers' }"
+          >
+            <i class="bi bi-star"></i>
+            Best Sellers
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</nav>
+
+
+<!-- LOGOUT CONFIRMATION MODAL -->
+@if (showLogoutModal) {
+
+  <div
+    class="logout-modal-overlay"
+    (click)="cancelLogout()"
+  >
+
+    <div
+      class="logout-modal"
+      (click)="$event.stopPropagation()"
+    >
+
+      <!-- ICON -->
+      <div class="logout-icon">
+        <span>↪</span>
+      </div>
+
+
+      <!-- TITLE -->
+      <h2>Logout?</h2>
+
+
+      <!-- MESSAGE -->
+      <p>
+        Are you sure you want to logout from your account?
+      </p>
+
+
+      <!-- BUTTONS -->
+      <div class="logout-actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancelLogout()"
+        >
+          Cancel
+        </button>
+
+
+        <button
+          type="button"
+          class="confirm-logout-btn"
+          (click)="confirmLogout()"
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

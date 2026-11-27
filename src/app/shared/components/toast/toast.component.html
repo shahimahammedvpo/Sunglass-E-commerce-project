@@ -1,0 +1,47 @@
+<div class="toast-container">
+
+  @for (toast of toastService.toast$ | async; track toast.id) {
+
+    <div
+      class="toast-message"
+      [class.success]="toast.type === 'success'"
+      [class.error]="toast.type === 'error'"
+      [class.warning]="toast.type === 'warning'"
+      [class.info]="toast.type === 'info'">
+
+      <div class="toast-icon">
+
+        @if (toast.type === 'success') {
+          ✓
+        }
+
+        @if (toast.type === 'error') {
+          ✕
+        }
+
+        @if (toast.type === 'warning') {
+          ⚠
+        }
+
+        @if (toast.type === 'info') {
+          ℹ
+        }
+
+      </div>
+
+      <span class="toast-text">
+        {{ toast.message }}
+      </span>
+
+      <button
+        class="toast-close"
+        type="button"
+        (click)="toastService.remove(toast.id)">
+        ×
+      </button>
+
+    </div>
+
+  }
+
+</div>

@@ -1,0 +1,81 @@
+<section class="category-section container py-5" id="categories">
+
+  <!-- SECTION HEADING -->
+
+  <div class="section-heading">
+
+    <div>
+      <span class="section-label">
+        EXPLORE OUR COLLECTION
+      </span>
+
+      <h2>Shop By Category</h2>
+    </div>
+
+    <p>Find the perfect sunglasses for your style.</p>
+
+  </div>
+
+  <!-- CATEGORY CARDS -->
+
+  <div class="row g-4">
+
+    @for (category of categories; track category.id) {
+
+      <div class="col-md-4">
+
+        <a
+          routerLink="/products"
+          [queryParams]="{ category: category.name }"
+          class="category-card"
+        >
+
+          <img
+            [src]="category.image"
+            [alt]="category.name"
+            [style.object-position]="category.imagePosition || 'center center'"
+          >
+
+          <div class="category-overlay">
+
+            <h3>{{ category.name }}</h3>
+
+            <p>{{ category.description }}</p>
+
+            <span>Explore Collection →</span>
+
+          </div>
+
+        </a>
+
+      </div>
+
+    }
+
+  </div>
+
+  <!-- LOADING -->
+
+  @if (loading) {
+    <div class="text-center py-4">
+      <p>Loading categories...</p>
+    </div>
+  }
+
+  <!-- ERROR -->
+
+  @if (errorMessage) {
+    <div class="text-center py-4">
+      <p>{{ errorMessage }}</p>
+    </div>
+  }
+
+  <!-- EMPTY STATE -->
+
+  @if (!loading && !errorMessage && categories.length === 0) {
+    <div class="text-center py-4">
+      <p>No categories available.</p>
+    </div>
+  }
+
+</section>

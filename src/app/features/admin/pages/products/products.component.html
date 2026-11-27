@@ -1,0 +1,757 @@
+
+<div class="products-page">
+
+  <div class="page-heading">
+    <div>
+      <h1>Products Management</h1>
+      <p>Manage your SUNSTYLE sunglasses collection.</p>
+    </div>
+
+    <button
+      type="button"
+      class="add-product-button"
+      (click)="openAddProduct()">
+      <i class="bi bi-plus-lg"></i>
+      Add Product
+    </button>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="product-summary">
+    <div class="summary-card">
+      <div class="summary-icon">
+        <i class="bi bi-eyeglasses"></i>
+      </div>
+      <div>
+        <span>Total Products</span>
+        <h2>{{ totalProducts }}</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="message success-message" *ngIf="successMessage">
+    <i class="bi bi-check-circle"></i>
+    {{ successMessage }}
+    <button type="button" (click)="clearMessages()">
+      <i class="bi bi-x"></i>
+    </button>
+  </div>
+
+  <div class="message error-message" *ngIf="errorMessage && !showProductModal && !showDeleteModal">
+    <i class="bi bi-exclamation-circle"></i>
+    {{ errorMessage }}
+  </div>
+
+  <section class="products-table-card">
+
+    <div class="table-card-heading">
+      <div>
+        <h3>All Products</h3>
+        <p>View, edit and manage your products.</p>
+      </div>
+
+      <span class="product-count">
+        {{ filteredProducts.length }} Products
+      </span>
+    </div>
+
+    <!-- SEARCH AND FILTERS -->
+    
+    <div class="table-toolbar">
+
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+
+            <input
+            type="text"
+            placeholder="Search by product name or brand..."
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onFilterChange()">
+        </div>
+
+        <!-- CATEGORY FILTER -->
+        <div class="product-filter custom-filter">
+
+            <button
+            type="button"
+            class="filter-trigger"
+            [attr.aria-expanded]="isCategoryDropdownOpen"
+            (click)="toggleCategoryDropdown()">
+
+            <span>
+                {{ selectedCategory === 'all' ? 'All Categories' : selectedCategory }}
+            </span>
+
+            <i
+                class="bi bi-chevron-down filter-chevron"
+                [class.rotate-chevron]="isCategoryDropdownOpen">
+            </i>
+            </button>
+
+            @if (isCategoryDropdownOpen) {
+
+            <div
+                class="filter-dismiss"
+                (click)="closeAllDropdowns()">
+            </div>
+
+            <div class="filter-options">
+
+                <button
+                type="button"
+                class="filter-option"
+                [class.selected-option]="selectedCategory === 'all'"
+                (click)="selectCategory('all')">
+                <span>All Categories</span>
+                <i *ngIf="selectedCategory === 'all'" class="bi bi-check2"></i>
+                </button>
+
+                <button
+                type="button"
+                class="filter-option"
+                [class.selected-option]="selectedCategory === 'Men'"
+                (click)="selectCategory('Men')">
+                <span>Men</span>
+                <i *ngIf="selectedCategory === 'Men'" class="bi bi-check2"></i>
+                </button>
+
+                <button
+                type="button"
+                class="filter-option"
+                [class.selected-option]="selectedCategory === 'Women'"
+                (click)="selectCategory('Women')">
+                <span>Women</span>
+                <i *ngIf="selectedCategory === 'Women'" class="bi bi-check2"></i>
+                </button>
+
+                <button
+                type="button"
+                class="filter-option"
+                [class.selected-option]="selectedCategory === 'Unisex'"
+                (click)="selectCategory('Unisex')">
+                <span>Unisex</span>
+                <i *ngIf="selectedCategory === 'Unisex'" class="bi bi-check2"></i>
+                </button>
+
+            </div>
+            }
+
+        </div>
+
+        <!-- BRAND FILTER -->
+        <div class="product-filter custom-filter">
+
+            <button
+            type="button"
+            class="filter-trigger"
+            [attr.aria-expanded]="isBrandDropdownOpen"
+            (click)="toggleBrandDropdown()">
+
+            <span>
+                {{ selectedBrand === 'all' ? 'All Brands' : selectedBrand }}
+            </span>
+
+            <i
+                class="bi bi-chevron-down filter-chevron"
+                [class.rotate-chevron]="isBrandDropdownOpen">
+            </i>
+            </button>
+
+            @if (isBrandDropdownOpen) {
+
+            <div
+                class="filter-dismiss"
+                (click)="closeAllDropdowns()">
+            </div>
+
+            <div class="filter-options brand-options">
+
+                <button
+                type="button"
+                class="filter-option"
+                [class.selected-option]="selectedBrand === 'all'"
+                (click)="selectBrand('all')">
+                <span>All Brands</span>
+                <i *ngIf="selectedBrand === 'all'" class="bi bi-check2"></i>
+                </button>
+
+                <button
+                type="button"
+                class="filter-option"
+                *ngFor="let brand of brands"
+                [class.selected-option]="selectedBrand === brand"
+                (click)="selectBrand(brand)">
+                <span>{{ brand }}</span>
+                <i *ngIf="selectedBrand === brand" class="bi bi-check2"></i>
+                </button>
+
+            </div>
+            }
+
+        </div>
+
+    </div>
+
+    <!-- LOADING -->
+    <div class="table-loading" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Loading products...</p>
+    </div>
+
+    <ng-container *ngIf="!loading">
+
+      <div class="table-responsive">
+        <table class="products-table">
+
+          <thead>
+            <tr>
+              <th>PRODUCT</th>
+              <th>BRAND</th>
+              <th>CATEGORY</th>
+              <th>PRICE</th>
+              <th>STOCK</th>
+              <th>STATUS</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let product of paginatedProducts">
+
+              <td>
+                <div class="product-info">
+                  <img
+                    [src]="product.image"
+                    [alt]="product.name">
+
+                  <div>
+                    <strong>{{ product.name }}</strong>
+                    <small>#{{ product.id }}</small>
+                  </div>
+                </div>
+              </td>
+
+              <td>{{ product.brand }}</td>
+
+              <td>
+                <span class="category-badge">
+                  {{ product.category }}
+                </span>
+              </td>
+
+              <td>
+                <div class="price-info">
+                  <strong>₹{{ product.price | number:'1.0-0' }}</strong>
+                  <del>₹{{ product.originalPrice | number:'1.0-0' }}</del>
+                </div>
+              </td>
+
+              <td>
+                <span
+                  class="stock-badge"
+                  [class.low-stock]="product.stock > 0 && product.stock <= 5"
+                  [class.out-stock]="product.stock === 0">
+                  {{ product.stock }}
+                </span>
+              </td>
+
+              <td>
+                <span
+                  class="featured-badge"
+                  [class.not-featured]="!product.isFeatured">
+                  {{ product.isFeatured ? 'Featured' : 'Regular' }}
+                </span>
+              </td>
+
+              <td>
+                <div class="action-buttons">
+                  <button
+                    type="button"
+                    class="edit-button"
+                    title="Edit product"
+                    (click)="openEditProduct(product)">
+                    <i class="bi bi-pencil-square"></i>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="delete-button"
+                    title="Delete product"
+                    (click)="openDeleteConfirmation(product)">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                </div>
+              </td>
+
+            </tr>
+
+            <tr *ngIf="filteredProducts.length === 0">
+              <td colspan="7">
+                <div class="empty-products">
+                  <i class="bi bi-eyeglasses"></i>
+                  <h4>No products found</h4>
+                  <p>Try changing your search or filters.</p>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PAGINATION -->
+      <div
+        class="pagination-container"
+        *ngIf="filteredProducts.length > 0">
+
+        <div class="pagination-info">
+          Showing <strong>{{ startItem }}</strong> to
+          <strong>{{ endItem }}</strong> of
+          <strong>{{ filteredProducts.length }}</strong> products
+        </div>
+
+        <div class="pagination-controls">
+
+          <button
+            type="button"
+            class="pagination-button"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+
+          <button
+            type="button"
+            class="pagination-button"
+            *ngFor="let page of pageNumbers"
+            [class.current-page]="currentPage === page"
+            (click)="changePage(page)">
+            {{ page }}
+          </button>
+
+          <button
+            type="button"
+            class="pagination-button"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+
+        </div>
+      </div>
+
+    </ng-container>
+  </section>
+</div>
+
+
+
+<!-- ADD / EDIT PRODUCT MODAL -->
+@if (showProductModal) {
+  <div class="modal-overlay" (click)="closeProductModal()">
+
+    <div
+      class="product-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="product-modal-title"
+      (click)="$event.stopPropagation()">
+
+      <div class="modal-heading">
+        <div>
+          <h3 id="product-modal-title">
+            {{ isEditMode ? 'Edit Product' : 'Add New Product' }}
+          </h3>
+          <p>Enter the product information below.</p>
+        </div>
+
+        <button
+          type="button"
+          class="close-modal"
+          [disabled]="saving"
+          (click)="closeProductModal()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <form (ngSubmit)="saveProduct()" novalidate>
+
+        <div class="form-grid">
+
+          <!-- PRODUCT NAME -->
+          <div class="form-group">
+            <label>Product Name *</label>
+
+            <input
+              type="text"
+              name="name"
+              [(ngModel)]="form.name"
+              (blur)="markTouched('name')"
+              (ngModelChange)="markTouched('name')"
+              [class.invalid-input]="showFieldError('name')"
+              placeholder="Enter product name">
+
+            <small class="validation-message"
+              *ngIf="showFieldError('name')">
+              <i class="bi bi-exclamation-circle"></i>
+              {{ getFieldError('name') }}
+            </small>
+          </div>
+
+          <!-- BRAND -->
+          <div class="form-group">
+            <label>Brand *</label>
+
+            <input
+              type="text"
+              name="brand"
+              [(ngModel)]="form.brand"
+              (blur)="markTouched('brand')"
+              (ngModelChange)="markTouched('brand')"
+              [class.invalid-input]="showFieldError('brand')"
+              placeholder="Enter brand name">
+
+            <small class="validation-message"
+              *ngIf="showFieldError('brand')">
+              <i class="bi bi-exclamation-circle"></i>
+              {{ getFieldError('brand') }}
+            </small>
+          </div>
+
+          <!-- CATEGORY -->
+          <div class="form-group">
+            <label>Category *</label>
+
+            <select
+              name="category"
+              [(ngModel)]="form.category">
+              <option value="Men">Men</option>
+              <option value="Women">Women</option>
+              <option value="Unisex">Unisex</option>
+            </select>
+          </div>
+
+          <!-- IMAGE UPLOAD -->
+          <div class="form-group full-width">
+            <label>Product Image *</label>
+
+            <div class="image-upload-box">
+
+              <div
+                class="image-preview"
+                *ngIf="imagePreview">
+
+                <img
+                  [src]="imagePreview"
+                  [alt]="form.name || 'Product preview'">
+
+                <button
+                  type="button"
+                  class="remove-image-button"
+                  (click)="removeImage()">
+                  <i class="bi bi-trash3"></i>
+                  Remove image
+                </button>
+              </div>
+
+              <label
+                class="image-upload-label"
+                *ngIf="!imagePreview">
+
+                <i class="bi bi-cloud-arrow-up"></i>
+
+                <strong>Click to upload product image</strong>
+
+                <span>PNG, JPG, JPEG or WEBP (Maximum 5 MB)</span>
+
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/jpg,image/webp,image/gif"
+                  (change)="onImageSelected($event)"
+                  hidden>
+              </label>
+
+              <label
+                class="image-change-label"
+                *ngIf="imagePreview">
+
+                <i class="bi bi-arrow-repeat"></i>
+                Change image
+
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/jpg,image/webp,image/gif"
+                  (change)="onImageSelected($event)"
+                  hidden>
+              </label>
+
+            </div>
+
+            <small
+              class="validation-message"
+              *ngIf="imageError">
+              <i class="bi bi-exclamation-circle"></i>
+              {{ imageError }}
+            </small>
+
+            <small
+              class="validation-message"
+              *ngIf="showFieldError('image') && !imageError">
+              <i class="bi bi-exclamation-circle"></i>
+              {{ getFieldError('image') }}
+            </small>
+          </div>
+
+          <!-- SELLING PRICE -->
+          <div class="form-group">
+            <label>Selling Price (₹) *</label>
+
+            <input
+              type="number"
+              name="price"
+              min="1"
+              [(ngModel)]="form.price"
+              (blur)="markTouched('price')"
+              (ngModelChange)="markTouched('price')"
+              [class.invalid-input]="showFieldError('price')"
+              placeholder="Enter selling price">
+
+            <small class="validation-message"
+              *ngIf="showFieldError('price')">
+              <i class="bi bi-exclamation-circle"></i>
+              {{ getFieldError('price') }}
+            </small>
+          </div>
+
+          <!-- ORIGINAL PRICE -->
+          <div class="form-group">
+            <label>Original Price (₹) *</label>
+
+            <input
+              type="number"
+              name="originalPrice"
+              min="1"
+              [(ngModel)]="form.originalPrice"
+              (blur)="markTouched('originalPrice')"
+              (ngModelChange)="markTouched('originalPrice')"
+              [class.invalid-input]="showFieldError('originalPrice')"
+              placeholder="Enter original price">
+
+            <small class="validation-message"
+              *ngIf="showFieldError('originalPrice')">
+              <i class="bi bi-exclamation-circle"></i>
+              {{ getFieldError('originalPrice') }}
+            </small>
+          </div>
+
+          <!-- STOCK -->
+          <div class="form-group">
+            <label>Stock *</label>
+
+            <input
+              type="number"
+              name="stock"
+              min="0"
+              [(ngModel)]="form.stock"
+              (blur)="markTouched('stock')"
+              (ngModelChange)="markTouched('stock')"
+              [class.invalid-input]="showFieldError('stock')"
+              placeholder="Enter stock quantity">
+
+            <small class="validation-message"
+              *ngIf="showFieldError('stock')">
+              <i class="bi bi-exclamation-circle"></i>
+              {{ getFieldError('stock') }}
+            </small>
+          </div>
+
+          <!-- RATING -->
+          <div class="form-group">
+            <label>Rating</label>
+
+            <input
+              type="number"
+              name="rating"
+              min="0"
+              max="5"
+              step="0.1"
+              [(ngModel)]="form.rating"
+              (blur)="markTouched('rating')"
+              (ngModelChange)="markTouched('rating')"
+              [class.invalid-input]="showFieldError('rating')"
+              placeholder="0 - 5">
+
+            <small class="validation-message"
+              *ngIf="showFieldError('rating')">
+              <i class="bi bi-exclamation-circle"></i>
+              {{ getFieldError('rating') }}
+            </small>
+          </div>
+
+          <!-- REVIEW COUNT -->
+          <div class="form-group">
+            <label>Review Count</label>
+
+            <input
+              type="number"
+              name="reviewCount"
+              min="0"
+              [(ngModel)]="form.reviewCount"
+              (blur)="markTouched('reviewCount')"
+              (ngModelChange)="markTouched('reviewCount')"
+              [class.invalid-input]="showFieldError('reviewCount')"
+              placeholder="Enter review count">
+
+            <small class="validation-message"
+              *ngIf="showFieldError('reviewCount')">
+              <i class="bi bi-exclamation-circle"></i>
+              {{ getFieldError('reviewCount') }}
+            </small>
+          </div>
+
+          <!-- DISCOUNT -->
+          <div class="form-group">
+            <label>Discount (%)</label>
+
+            <input
+              type="number"
+              name="discount"
+              [ngModel]="form.discount"
+              disabled>
+          </div>
+
+          <!-- DESCRIPTION -->
+          <div class="form-group full-width">
+            <label>Description *</label>
+
+            <textarea
+              name="description"
+              rows="3"
+              [(ngModel)]="form.description"
+              (blur)="markTouched('description')"
+              (ngModelChange)="markTouched('description')"
+              [class.invalid-input]="showFieldError('description')"
+              placeholder="Enter product description">
+            </textarea>
+
+            <small class="validation-message"
+              *ngIf="showFieldError('description')">
+              <i class="bi bi-exclamation-circle"></i>
+              {{ getFieldError('description') }}
+            </small>
+          </div>
+
+          <!-- FEATURES -->
+          <div class="form-group full-width">
+            <label>Features (comma separated)</label>
+
+            <textarea
+              name="features"
+              rows="2"
+              [(ngModel)]="featuresText"
+              placeholder="Polarized lenses, UV protection, Lightweight frame">
+            </textarea>
+          </div>
+
+          <!-- TAGS -->
+          <div class="form-group full-width">
+            <label>Tags (comma separated)</label>
+
+            <input
+              type="text"
+              name="tags"
+              [(ngModel)]="tagsText"
+              placeholder="sunglasses, fashion, premium">
+          </div>
+
+          <!-- FEATURED -->
+          <div class="form-group checkbox-group full-width">
+            <label>
+              <input
+                type="checkbox"
+                name="isFeatured"
+                [(ngModel)]="form.isFeatured">
+              Mark as featured product
+            </label>
+          </div>
+
+        </div>
+
+        <div class="modal-error" *ngIf="errorMessage">
+          <i class="bi bi-exclamation-circle"></i>
+          {{ errorMessage }}
+        </div>
+
+        <div class="modal-actions">
+          <button
+            type="button"
+            class="cancel-button"
+            [disabled]="saving"
+            (click)="closeProductModal()">
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="save-button"
+            [disabled]="saving">
+            {{ saving ? 'Saving...' : (isEditMode ? 'Update Product' : 'Add Product') }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+}
+
+
+<!-- DELETE CONFIRMATION MODAL -->
+@if (showDeleteModal && selectedProduct) {
+
+  <div class="modal-overlay" (click)="cancelDelete()">
+
+    <div
+      class="delete-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-title"
+      (click)="$event.stopPropagation()">
+
+      <div class="delete-modal-icon">
+        <i class="bi bi-trash3"></i>
+      </div>
+
+      <h3 id="delete-title">Delete Product?</h3>
+
+      <p>
+        Are you sure you want to delete
+        <strong>{{ selectedProduct.name }}</strong>?
+        This action cannot be undone.
+      </p>
+
+      <div class="modal-error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <div class="modal-actions">
+        <button
+          type="button"
+          class="cancel-button"
+          [disabled]="deleting"
+          (click)="cancelDelete()">
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="delete-confirm-button"
+          [disabled]="deleting"
+          (click)="confirmDelete()">
+          {{ deleting ? 'Deleting...' : 'Delete Product' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+}

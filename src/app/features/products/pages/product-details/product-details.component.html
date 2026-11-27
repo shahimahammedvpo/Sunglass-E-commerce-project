@@ -1,0 +1,731 @@
+<!-- ==================== LOADING ==================== -->
+
+@if (loading) {
+
+  <div class="loading-container">
+
+    <div class="spinner-border text-dark"></div>
+
+    <h3>
+      Loading product details...
+    </h3>
+
+  </div>
+
+}
+
+
+<!-- ==================== ERROR ==================== -->
+
+@else if (error) {
+
+  <div class="error-container">
+
+    <div class="error-icon">
+      <i class="bi bi-exclamation-circle"></i>
+    </div>
+
+    <h3>
+      {{ error }}
+    </h3>
+
+    <a routerLink="/" class="back-shopping-btn">
+      <i class="bi bi-arrow-left"></i>
+      Back to Shopping
+    </a>
+
+  </div>
+
+}
+
+
+<!-- ==================== PRODUCT DETAILS ==================== -->
+
+@else if (product) {
+
+  <section class="product-details container">
+
+
+    <!-- ==================== BACK LINK ==================== -->
+
+    <a routerLink="/" class="back-link">
+
+      <i class="bi bi-arrow-left"></i>
+
+      Back to Shopping
+
+    </a>
+
+
+    <!-- ==================== PRODUCT LAYOUT ==================== -->
+
+    <div class="details-layout">
+
+
+      <!-- ==================== PRODUCT IMAGE ==================== -->
+
+      <div class="product-image-container">
+
+        <div class="product-image">
+
+          <img
+            [src]="product.image"
+            [alt]="product.name"
+          />
+
+            <!-- WISHLIST BUTTON -->
+            <button
+              type="button"
+              class="product-wishlist-btn"
+              [class.active]="(isInWishlist(product.id) | async) ?? false"
+              (click)="toggleWishlist(product)"
+              [attr.aria-label]="
+                (isInWishlist(product.id) | async)
+                  ? 'Remove from wishlist'
+                  : 'Add to wishlist'
+              "
+            >
+
+              <i
+                class="bi"
+                [class.bi-heart]="!(isInWishlist(product.id) | async)"
+                [class.bi-heart-fill]="(isInWishlist(product.id) | async)"
+              ></i>
+
+            </button>
+
+
+          <!-- DISCOUNT BADGE -->
+
+          @if (product.discount > 0) {
+
+            <span class="discount-badge">
+
+              {{ product.discount }}% OFF
+
+            </span>
+
+          }
+
+
+          <!-- STOCK BADGE -->
+
+          @if (product.stock < 1) {
+
+            <span class="out-of-stock-badge">
+
+              Out of Stock
+
+            </span>
+
+          }
+
+        </div>
+
+
+        <!-- IMAGE CAPTION -->
+
+        <div class="image-caption">
+
+          <i class="bi bi-shield-check"></i>
+
+          Authentic SUNSTYLE Product
+
+        </div>
+
+      </div>
+
+
+      <!-- ==================== PRODUCT INFORMATION ==================== -->
+
+      <div class="product-info">
+
+
+        <!-- BRAND -->
+
+        <span class="brand">
+          {{ product.brand }}
+        </span>
+
+
+        <!-- PRODUCT NAME -->
+
+        <h1>
+          {{ product.name }}
+        </h1>
+
+
+        <!-- CATEGORY -->
+
+        <p class="category">
+
+          <i class="bi bi-tag"></i>
+
+          {{ product.category }} Sunglasses
+
+        </p>
+
+
+        <!-- ==================== RATING ==================== -->
+
+        <div class="rating">
+
+          <span class="rating-stars">
+            ⭐
+          </span>
+
+          <strong>
+            {{ product.rating }}
+          </strong>
+
+          <span class="rating-total">
+            / 5
+          </span>
+
+          <span class="review-count">
+
+            ({{ product.reviewCount }} reviews)
+
+          </span>
+
+        </div>
+
+
+        <!-- ==================== PRICE ==================== -->
+
+        <div class="price-section">
+
+
+          <!-- CURRENT PRICE -->
+
+          <span class="current-price">
+
+            ₹{{ product.price }}
+
+          </span>
+
+
+          <!-- ORIGINAL PRICE -->
+
+          @if (product.originalPrice > product.price) {
+
+            <del class="original-price">
+
+              ₹{{ product.originalPrice }}
+
+            </del>
+
+          }
+
+
+          <!-- DISCOUNT -->
+
+          @if (product.discount > 0) {
+
+            <span class="discount-text">
+
+              Save {{ product.discount }}%
+
+            </span>
+
+          }
+
+        </div>
+
+
+        <!-- PRICE MESSAGE -->
+
+        @if (product.discount > 0) {
+
+          <p class="price-message">
+
+            <i class="bi bi-tag-fill"></i>
+
+            You save ₹{{ product.originalPrice - product.price }}
+
+          </p>
+
+        }
+
+
+        <!-- ==================== DESCRIPTION ==================== -->
+
+        <div class="description-section">
+
+          <h3>
+            Product Description
+          </h3>
+
+          <p class="description">
+
+            {{ product.description }}
+
+          </p>
+
+        </div>
+
+
+        <!-- ==================== FEATURES ==================== -->
+
+        @if (product.features && product.features.length > 0) {
+
+          <div class="features">
+
+            <h3>
+              Product Features
+            </h3>
+
+            <ul>
+
+              @for (feature of product.features; track feature) {
+
+                <li>
+
+                  <i class="bi bi-check-circle-fill"></i>
+
+                  {{ feature }}
+
+                </li>
+
+              }
+
+            </ul>
+
+          </div>
+
+        }
+
+
+        <!-- ==================== STOCK ==================== -->
+
+        <div class="stock">
+
+          @if (product.stock > 0) {
+
+            <span class="available">
+
+              <i class="bi bi-check-circle-fill"></i>
+
+              In Stock
+
+              <span class="stock-count">
+                ({{ product.stock }} available)
+              </span>
+
+            </span>
+
+          } @else {
+
+            <span class="unavailable">
+
+              <i class="bi bi-x-circle-fill"></i>
+
+              Currently Out of Stock
+
+            </span>
+
+          }
+
+        </div>
+
+
+        <!-- ==================== QUANTITY ==================== -->
+
+        @if (product.stock > 0) {
+
+          <div class="quantity-section">
+
+            <label>
+              Quantity
+            </label>
+
+            <div class="quantity-control">
+
+
+              <!-- DECREASE -->
+
+              <button
+                type="button"
+                class="quantity-btn"
+                (click)="decreaseQuantity()"
+                [disabled]="quantity <= 1"
+                aria-label="Decrease quantity"
+              >
+
+                −
+
+              </button>
+
+
+              <!-- QUANTITY -->
+
+              <span class="quantity-value">
+
+                {{ quantity }}
+
+              </span>
+
+
+              <!-- INCREASE -->
+
+              <button
+                type="button"
+                class="quantity-btn"
+                (click)="increaseQuantity()"
+                [disabled]="quantity >= product.stock"
+                aria-label="Increase quantity"
+              >
+
+                +
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- ==================== TOTAL ==================== -->
+
+          <div class="total-price">
+
+            <span>
+              Total Price
+            </span>
+
+            <strong>
+
+              ₹{{ product.price * quantity }}
+
+            </strong>
+
+          </div>
+
+
+          <!-- ==================== ACTION BUTTONS ==================== -->
+
+          <div class="product-actions">
+
+
+            <!-- ADD TO CART -->
+
+            <button
+              type="button"
+              (click)="addToCart()"
+              [disabled]="!product || product.stock < 1">
+
+              @if (product && isInCart(product.id)) {
+                <i class="bi bi-cart-check"></i>
+                Go to Cart
+              } @else {
+                <i class="bi bi-cart-plus"></i>
+                Add to Cart
+              }
+
+            </button>
+
+
+            <!-- BUY NOW -->
+
+            <button
+              type="button"
+              class="buy-now-btn"
+              (click)="buyNow()"
+            >
+
+              <i class="bi bi-lightning-fill"></i>
+
+              Buy Now
+
+            </button>
+
+          </div>
+
+
+          <!-- ==================== MESSAGE ==================== -->
+
+          <div class="product-message">
+
+            <!-- Your existing success/error message can be placed here -->
+
+          </div>
+
+        }
+
+
+        <!-- ==================== BENEFITS ==================== -->
+
+        <div class="product-benefits">
+
+
+          <div class="benefit-item">
+
+            <i class="bi bi-truck"></i>
+
+            <div>
+
+              <strong>
+                Free Delivery
+              </strong>
+
+              <span>
+                On eligible orders
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="benefit-item">
+
+            <i class="bi bi-shield-check"></i>
+
+            <div>
+
+              <strong>
+                Quality Guaranteed
+              </strong>
+
+              <span>
+                Premium eyewear
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="benefit-item">
+
+            <i class="bi bi-arrow-repeat"></i>
+
+            <div>
+
+              <strong>
+                Easy Returns
+              </strong>
+
+              <span>
+                Hassle-free shopping
+              </span>
+
+
+              
+
+            </div>
+
+          </div>
+
+        </div>
+        
+
+
+      </div>
+      
+
+    </div>
+    
+<!-- ==================== SIMILAR PRODUCTS ==================== -->
+
+<section class="similar-products-section container">
+
+  <!-- SECTION HEADER -->
+
+  <div class="similar-products-header">
+
+    <div>
+      <span class="section-label">
+        YOU MAY ALSO LIKE
+      </span>
+
+      <h2>Similar Products</h2>
+
+      <p>
+        Explore more sunglasses similar to this style.
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- SIMILAR PRODUCTS GRID -->
+
+  @if (similarProducts.length > 0) {
+
+    <div class="similar-products-grid">
+
+      @for (similarProduct of similarProducts; track similarProduct.id) {
+
+        <div class="similar-product-card">
+
+          <!-- PRODUCT IMAGE -->
+
+          <div class="similar-product-image">
+
+            <a
+              [routerLink]="['/product', similarProduct.id]"
+              class="similar-product-image-link"
+            >
+
+              <img
+                [src]="similarProduct.image"
+                [alt]="similarProduct.name"
+                loading="lazy"
+              />
+
+            </a>
+
+
+            <!-- WISHLIST -->
+
+            <button
+              type="button"
+              class="similar-wishlist-btn"
+              [class.active]="(isInWishlist(similarProduct.id) | async) ?? false"
+              (click)="toggleWishlist(similarProduct)"
+              [attr.aria-label]="
+                (isInWishlist(similarProduct.id) | async)
+                  ? 'Remove from wishlist'
+                  : 'Add to wishlist'
+              "
+            >
+
+              {{
+                (isInWishlist(similarProduct.id) | async)
+                  ? '♥'
+                  : '♡'
+              }}
+
+            </button>
+
+          </div>
+
+
+          <!-- PRODUCT INFORMATION -->
+
+          <div class="similar-product-info">
+
+            <span class="similar-brand">
+              {{ similarProduct.brand }}
+            </span>
+
+
+            <!-- CLICKABLE PRODUCT NAME -->
+
+            <h3>
+
+              <a
+                [routerLink]="['/product-details', similarProduct.id]"
+                class="similar-product-name-link"
+              >
+                {{ similarProduct.name }}
+              </a>
+
+            </h3>
+
+
+            <p class="similar-category">
+              {{ similarProduct.category }}
+            </p>
+
+
+            <!-- RATING -->
+
+            <div class="similar-rating">
+
+              <span>★</span>
+
+              {{ similarProduct.rating }}
+
+              @if (similarProduct.reviewCount) {
+
+                <small>
+                  ({{ similarProduct.reviewCount }})
+                </small>
+
+              }
+
+            </div>
+
+
+            <!-- PRICE -->
+
+            <div class="similar-price">
+
+              <strong>
+                {{ similarProduct.price | currency:'INR':'symbol':'1.0-0' }}
+              </strong>
+
+              @if (
+                similarProduct.originalPrice &&
+                similarProduct.originalPrice > similarProduct.price
+              ) {
+
+                <del>
+                  {{ similarProduct.originalPrice | currency:'INR':'symbol':'1.0-0' }}
+                </del>
+
+              }
+
+            </div>
+
+
+            <!-- ADD TO CART -->
+
+            <button
+              type="button"
+              class="similar-add-cart-btn"
+              (click)="addSimilarProductToCart(similarProduct)"
+              [disabled]="similarProduct.stock < 1">
+
+              @if (isInCart(similarProduct.id)) {
+                <i class="bi bi-cart-check"></i>
+                Go to Cart
+              } @else {
+                <i class="bi bi-cart-plus"></i>
+                Add to Cart
+              }
+
+            </button>
+
+
+            <!-- BUY NOW -->
+
+            <button
+              type="button"
+              class="similar-buy-now-btn"
+              (click)="buySimilarProductNow(similarProduct)"
+              [disabled]="similarProduct.stock < 1"
+            >
+
+              <i class="bi bi-lightning-fill"></i>
+
+              Buy Now
+
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  } @else {
+
+    <div class="similar-products-empty">
+
+      <p>
+        No similar products available right now.
+      </p>
+
+    </div>
+
+  }
+
+</section>
+</section>
+
+}

@@ -1,0 +1,29 @@
+.form-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  margin-top: 6px;
+
+  color: #dc3545;
+  font-size: 12px;
+  font-weight: 500;
+
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.form-error i {
+  font-size: 13px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

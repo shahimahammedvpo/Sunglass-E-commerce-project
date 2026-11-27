@@ -1,0 +1,669 @@
+<section class="account-page container py-5">
+
+  <!-- PAGE HEADING -->
+  <div class="account-heading mb-4">
+
+    <h1 class="fw-bold">My Account</h1>
+
+    <p class="text-muted">
+      Manage your SUNSTYLE account information.
+    </p>
+
+  </div>
+
+  <div class="row g-4">
+
+    <!-- ==================== SIDEBAR ==================== -->
+
+    <div class="col-lg-3">
+
+      <aside class="account-sidebar card border-0 shadow-sm">
+
+        <!-- USER INFORMATION -->
+        <div class="account-user text-center p-4">
+
+          <!-- PROFILE IMAGE -->
+          <div class="profile-avatar mx-auto mb-3">
+
+            @if (profileImage) {
+
+              <img
+                [src]="profileImage"
+                alt="Profile Image"
+                class="profile-avatar-image">
+
+            } @else {
+
+              <span>
+                {{ fullName.charAt(0).toUpperCase() || 'U' }}
+              </span>
+
+            }
+
+          </div>
+
+          <h5 class="fw-bold mb-1">
+            {{ fullName }}
+          </h5>
+
+          <p class="text-muted small mb-0">
+            {{ email }}
+          </p>
+
+        </div>
+
+        <hr class="m-0">
+
+        <!-- SIDEBAR NAVIGATION -->
+        <nav class="account-nav">
+
+          <!-- PROFILE -->
+          <a
+            routerLink="/profile"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="account-nav-link">
+
+            <i class="bi bi-person"></i>
+
+            <span>Profile Information</span>
+
+          </a>
+
+        
+
+          <!-- SAVED ADDRESSES -->
+          <a
+            routerLink="/profile/saved-addresses"
+            routerLinkActive="active"
+            class="account-nav-link">
+
+            <i class="bi bi-bookmark"></i>
+
+            <span>Saved Addresses</span>
+
+          </a>
+
+          <!-- ORDERS -->
+          <a
+            routerLink="/orders"
+            routerLinkActive="active"
+            class="account-nav-link">
+
+            <i class="bi bi-box-seam"></i>
+
+            <span>My Orders</span>
+
+          </a>
+
+          <!-- WISHLIST -->
+          <a
+            routerLink="/wishlist"
+            routerLinkActive="active"
+            class="account-nav-link">
+
+            <i class="bi bi-heart"></i>
+
+            <span>My Wishlist</span>
+
+          </a>
+
+          <!-- CART -->
+          <a
+            routerLink="/cart"
+            routerLinkActive="active"
+            class="account-nav-link">
+
+            <i class="bi bi-cart3"></i>
+
+            <span>My Cart</span>
+
+          </a>
+
+          <!-- LOGOUT -->
+          <button
+            type="button"
+            class="account-nav-link logout-link"
+            (click)="logout()">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+            <span>Logout</span>
+
+          </button>
+
+        </nav>
+
+      </aside>
+
+    </div>
+
+    <!-- ==================== PROFILE CONTENT ==================== -->
+
+    <div class="col-lg-9">
+
+      <div class="profile-content">
+
+        <!-- ==================== PROFILE IMAGE ==================== -->
+
+        <section
+          class="profile-card card border-0 shadow-sm mb-4">
+
+          <div class="card-body p-4 p-md-5">
+
+            <!-- CARD HEADER -->
+            <div class="card-heading mb-4">
+
+              <h4 class="fw-bold mb-1">
+                Profile Image
+              </h4>
+
+              <p class="text-muted mb-0">
+                Update your account profile picture.
+              </p>
+
+            </div>
+
+            <!-- SUCCESS MESSAGE -->
+            @if (imageMessage) {
+
+              <div class="alert alert-success">
+
+                <i class="bi bi-check-circle me-2"></i>
+
+                {{ imageMessage }}
+
+              </div>
+
+            }
+
+            <!-- ERROR MESSAGE -->
+            @if (imageError) {
+
+              <div class="alert alert-danger">
+
+                <i class="bi bi-exclamation-circle me-2"></i>
+
+                {{ imageError }}
+
+              </div>
+
+            }
+
+            <div class="profile-image-section">
+
+              <!-- IMAGE PREVIEW -->
+              <div class="profile-image-preview">
+
+                @if (imagePreview || profileImage) {
+
+                  <img
+                    [src]="imagePreview || profileImage"
+                    alt="Profile Preview"
+                    class="profile-image">
+
+                } @else {
+
+                  <div class="profile-image-placeholder">
+
+                    <i class="bi bi-person"></i>
+
+                  </div>
+
+                }
+
+              </div>
+
+              <!-- IMAGE DETAILS -->
+              <div class="profile-image-details">
+
+                <h6 class="fw-bold mb-2">
+                  Your Profile Picture
+                </h6>
+
+                <p class="text-muted small mb-3">
+                  Upload a JPG, PNG, or WebP image.
+                  Maximum file size is 2 MB.
+                </p>
+
+                <!-- BUTTONS -->
+                <div class="d-flex flex-wrap gap-2">
+
+                  <!-- SELECT IMAGE -->
+                  <label
+                    for="profileImageInput"
+                    class="btn btn-outline-dark">
+
+                    <i class="bi bi-camera me-2"></i>
+
+                    Choose Image
+
+                  </label>
+
+                  <input
+                    id="profileImageInput"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    class="d-none"
+                    (change)="onImageSelected($event)">
+
+                  <!-- SAVE IMAGE -->
+                  @if (selectedImage) {
+
+                    <button
+                      type="button"
+                      class="btn btn-dark"
+                      [disabled]="isImageUploading"
+                      (click)="updateProfileImage()">
+
+                      @if (isImageUploading) {
+
+                        <span
+                          class="spinner-border spinner-border-sm me-2">
+                        </span>
+
+                        Saving...
+
+                      } @else {
+
+                        <i class="bi bi-check-lg me-2"></i>
+
+                        Save Image
+
+                      }
+
+                    </button>
+
+                    <!-- CANCEL -->
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      [disabled]="isImageUploading"
+                      (click)="cancelImageUpdate()">
+
+                      Cancel
+
+                    </button>
+
+                  }
+
+                  <!-- REMOVE IMAGE -->
+                  @if (profileImage && !selectedImage) {
+
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      [disabled]="isImageUploading"
+                      (click)="removeProfileImage()">
+
+                      <i class="bi bi-trash me-2"></i>
+
+                      Remove Image
+
+                    </button>
+
+                  }
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ==================== PERSONAL INFORMATION ==================== -->
+
+        <section class="profile-card card border-0 shadow-sm">
+
+          <div class="card-body p-4 p-md-5">
+
+            <!-- CARD HEADER -->
+            <div
+              class="card-heading d-flex justify-content-between align-items-center mb-4">
+
+              <div>
+
+                <h4 class="fw-bold mb-1">
+                  Personal Information
+                </h4>
+
+                <p class="text-muted mb-0">
+                  Manage your personal account details.
+                </p>
+
+              </div>
+
+              @if (!editMode) {
+
+                <button
+                  type="button"
+                  class="btn btn-outline-dark"
+                  (click)="enableEdit()">
+
+                  <i class="bi bi-pencil me-2"></i>
+
+                  Edit Profile
+
+                </button>
+
+              }
+
+            </div>
+
+            <!-- SUCCESS MESSAGE -->
+            @if (profileMessage) {
+
+              <div
+                class="alert alert-success alert-dismissible fade show">
+
+                <i class="bi bi-check-circle me-2"></i>
+
+                {{ profileMessage }}
+
+                <button
+                  type="button"
+                  class="btn-close"
+                  (click)="profileMessage = ''">
+                </button>
+
+              </div>
+
+            }
+
+            <!-- ERROR MESSAGE -->
+            @if (profileError) {
+
+              <div
+                class="alert alert-danger alert-dismissible fade show">
+
+                <i class="bi bi-exclamation-circle me-2"></i>
+
+                {{ profileError }}
+
+                <button
+                  type="button"
+                  class="btn-close"
+                  (click)="profileError = ''">
+                </button>
+
+              </div>
+
+            }
+
+            <!-- EDIT PROFILE -->
+            @if (editMode) {
+
+              <form
+                #profileForm="ngForm"
+                (ngSubmit)="updateProfile()">
+
+                <!-- FULL NAME -->
+                <div class="mb-4">
+
+                  <label
+                    for="fullName"
+                    class="form-label fw-semibold">
+
+                    Full Name
+
+                  </label>
+
+                  <input
+                    id="fullName"
+                    type="text"
+                    name="fullName"
+                    class="form-control form-control-lg"
+                    [(ngModel)]="fullName"
+                    required
+                    minlength="3"
+                    placeholder="Enter your full name">
+
+                </div>
+
+                <!-- EMAIL -->
+                <div class="mb-4">
+
+                  <label
+                    for="email"
+                    class="form-label fw-semibold">
+
+                    Email Address
+
+                  </label>
+
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    class="form-control form-control-lg"
+                    [(ngModel)]="email"
+                    required
+                    email
+                    placeholder="Enter your email">
+
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex gap-3 flex-wrap">
+
+                  <button
+                    type="submit"
+                    class="btn btn-dark"
+                    [disabled]="profileForm.invalid">
+
+                    <i class="bi bi-check-lg me-2"></i>
+
+                    Save Changes
+
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="cancelEdit()">
+
+                    Cancel
+
+                  </button>
+
+                </div>
+
+              </form>
+
+            } @else {
+
+              <!-- VIEW PROFILE -->
+              <div class="profile-information">
+
+                <!-- FULL NAME -->
+                <div class="profile-info-row">
+
+                  <div class="info-icon">
+
+                    <i class="bi bi-person"></i>
+
+                  </div>
+
+                  <div class="info-details">
+
+                    <span class="info-label">
+                      Full Name
+                    </span>
+
+                    <strong>
+                      {{ fullName }}
+                    </strong>
+
+                  </div>
+
+                </div>
+
+                <!-- EMAIL -->
+                <div class="profile-info-row">
+
+                  <div class="info-icon">
+
+                    <i class="bi bi-envelope"></i>
+
+                  </div>
+
+                  <div class="info-details">
+
+                    <span class="info-label">
+                      Email Address
+                    </span>
+
+                    <strong>
+                      {{ email }}
+                    </strong>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            }
+
+          </div>
+
+        </section>
+
+        <!-- ==================== ACCOUNT QUICK LINKS ==================== -->
+
+        <section class="quick-links mt-4">
+
+          <div class="row g-3">
+
+            <!-- ADDRESS -->
+            
+
+            <!-- SAVED ADDRESSES -->
+            <div class="col-md-6">
+
+              <a
+                routerLink="/profile/saved-addresses"
+                class="quick-link-card card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                  <div class="quick-link-icon">
+
+                    <i class="bi bi-bookmark"></i>
+
+                  </div>
+
+                  <h5 class="fw-bold mt-3">
+                    Saved Addresses
+                  </h5>
+
+                  <p class="text-muted mb-0">
+                    View and manage saved addresses.
+                  </p>
+
+                </div>
+
+              </a>
+
+            </div>
+
+            <!-- MY ORDERS -->
+            <div class="col-md-6">
+
+              <a
+                routerLink="/orders"
+                class="quick-link-card card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                  <div class="quick-link-icon">
+
+                    <i class="bi bi-box-seam"></i>
+
+                  </div>
+
+                  <h5 class="fw-bold mt-3">
+                    My Orders
+                  </h5>
+
+                  <p class="text-muted mb-0">
+                    Track your orders and purchases.
+                  </p>
+
+                </div>
+
+              </a>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ==================== LOGOUT CONFIRMATION MODAL ==================== -->
+
+@if (showLogoutModal) {
+
+  <div class="logout-modal-overlay">
+
+    <div class="logout-modal">
+
+      <!-- ICON -->
+      <div class="logout-modal-icon">
+
+        <i class="bi bi-box-arrow-right"></i>
+
+      </div>
+
+      <!-- TITLE -->
+      <h4 class="fw-bold mb-2">
+        Confirm Logout
+      </h4>
+
+      <!-- MESSAGE -->
+      <p class="text-muted mb-4">
+        Are you sure you want to logout from your SUNSTYLE account?
+      </p>
+
+      <!-- BUTTONS -->
+      <div class="logout-modal-actions">
+
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="cancelLogout()">
+
+          Cancel
+
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="confirmLogout()">
+
+          <i class="bi bi-box-arrow-right me-2"></i>
+
+          Logout
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

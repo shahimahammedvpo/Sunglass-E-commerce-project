@@ -1,0 +1,228 @@
+<section class="trending-section container py-5" id="trending">
+
+  <!-- ==================== SECTION HEADER ==================== -->
+
+  <div class="section-heading">
+
+    <div>
+
+      <span class="section-label">
+        POPULAR CHOICES
+      </span>
+
+      <h2>Trending Now</h2>
+
+      <p>
+        Our highest-rated sunglasses.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==================== PRODUCT GRID ==================== -->
+
+  <div class="row g-4">
+
+    @for (product of products; track product.id) {
+
+      <div class="col-6 col-md-4 col-lg-3">
+
+        <div class="trending-card">
+
+
+          <!-- ==================== PRODUCT IMAGE ==================== -->
+
+          <div class="trending-image">
+
+            <a
+              [routerLink]="['/product', product.id]"
+              class="product-image-link"
+            >
+
+              <img
+                [src]="product.image"
+                [alt]="product.name"
+                class="product-image"
+                loading="lazy"
+              />
+
+            </a>
+
+
+            <!-- WISHLIST BUTTON -->
+
+            <button
+              type="button"
+              class="wishlist-btn"
+              [class.active]="isInWishlist(product.id)"
+              (click)="toggleWishlist(product)"
+              [attr.aria-label]="
+                isInWishlist(product.id)
+                  ? 'Remove from wishlist'
+                  : 'Add to wishlist'
+              "
+            >
+
+              {{ isInWishlist(product.id) ? '♥' : '♡' }}
+
+            </button>
+
+
+            <!-- TRENDING BADGE -->
+
+            <span class="trending-badge">
+
+              <i class="bi bi-fire"></i>
+
+              Trending
+
+            </span>
+
+          </div>
+
+
+          <!-- ==================== PRODUCT INFORMATION ==================== -->
+
+          <div class="trending-info">
+
+
+            <!-- BRAND -->
+
+            <span class="brand-name">
+              {{ product.brand }}
+            </span>
+
+
+            <!-- PRODUCT NAME -->
+
+            <h6>
+              {{ product.name }}
+            </h6>
+
+
+            <!-- CATEGORY -->
+
+            <p class="product-category">
+              {{ product.category }}
+            </p>
+
+
+            <!-- RATING -->
+
+            <div class="rating">
+
+              <span class="rating-star">
+                ★
+              </span>
+
+              <span class="rating-value">
+                {{ product.rating }}
+              </span>
+
+              @if (product.reviewCount) {
+
+                <span class="review-count">
+                  ({{ product.reviewCount }} reviews)
+                </span>
+
+              }
+
+            </div>
+
+
+            <!-- PRICE -->
+
+            <div class="price-section">
+
+              <strong class="product-price">
+
+                {{ product.price | currency:'INR':'symbol':'1.0-0' }}
+
+              </strong>
+
+              @if (product.originalPrice && product.originalPrice > product.price) {
+
+                <del class="original-price">
+
+                  {{ product.originalPrice | currency:'INR':'symbol':'1.0-0' }}
+
+                </del>
+
+              }
+
+            </div>
+
+
+            <!-- STOCK -->
+
+            <p
+              class="stock-status"
+              [class.out-of-stock]="product.stock < 1"
+            >
+
+              <i
+                class="bi"
+                [class.bi-check-circle-fill]="product.stock > 0"
+                [class.bi-x-circle-fill]="product.stock < 1"
+              ></i>
+
+              {{
+                product.stock > 0
+                  ? 'In Stock'
+                  : 'Out of Stock'
+              }}
+
+            </p>
+
+
+            <!-- ==================== ACTION BUTTONS ==================== -->
+
+
+            <!-- ADD TO CART -->
+
+            <button
+              type="button"
+              class="add-to-cart-btn"
+              (click)="addToCart(product)"
+              [disabled]="product.stock < 1">
+
+              @if (isInCart(product.id)) {
+                <i class="bi bi-cart-check"></i>
+                Go to Cart
+              } @else {
+                <i class="bi bi-cart-plus"></i>
+                Add to Cart
+              }
+
+            </button>
+
+
+            <!-- BUY NOW -->
+
+            <button
+              type="button"
+              class="buy-now-btn"
+              (click)="buyNow(product)"
+              [disabled]="product.stock < 1"
+            >
+
+              <i class="bi bi-lightning-fill"></i>
+
+              Buy Now
+
+            </button>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+</section>

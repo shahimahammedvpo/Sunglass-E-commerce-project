@@ -1,0 +1,212 @@
+
+<div class="admin-layout">
+
+  <!-- Mobile overlay -->
+  <div
+    class="sidebar-overlay"
+    [class.show]="isSidebarOpen"
+    (click)="closeSidebar()">
+  </div>
+
+  <!-- Sidebar -->
+  <aside
+    class="admin-sidebar"
+    [class.sidebar-open]="isSidebarOpen">
+
+    <!-- Brand -->
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <i class="bi bi-sunglasses"></i>
+      </div>
+
+      <div class="brand-details">
+        <h2>SUNSTYLE</h2>
+        <span>ADMIN PANEL</span>
+      </div>
+
+      <button
+        class="close-sidebar"
+        type="button"
+        (click)="closeSidebar()"
+        aria-label="Close sidebar">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-navigation">
+
+      <span class="nav-heading">MAIN MENU</span>
+
+      <a
+        routerLink="/admin/dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
+        (click)="closeSidebar()">
+
+        <i class="bi bi-grid-1x2"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a
+        routerLink="/admin/users"
+        routerLinkActive="active"
+        class="nav-link"
+        (click)="closeSidebar()">
+
+        <i class="bi bi-people"></i>
+        <span>Users</span>
+      </a>
+
+      <a
+        routerLink="/admin/products"
+        routerLinkActive="active"
+        class="nav-link"
+        (click)="closeSidebar()">
+
+        <i class="bi bi-box-seam"></i>
+        <span>Products</span>
+      </a>
+
+      <a
+        routerLink="/admin/orders"
+        routerLinkActive="active"
+        class="nav-link"
+        (click)="closeSidebar()">
+
+        <i class="bi bi-cart3"></i>
+        <span>Orders</span>
+      </a>
+
+      <a routerLink="/admin/coupons"
+         routerLinkActive="active"
+         class="nav-link"
+        (click)="closeSidebar()">
+
+        <i class="bi bi-ticket-perforated"></i>
+        <span>Coupons</span>
+      </a>
+
+      
+
+    </nav>
+
+    <!-- Sidebar Bottom -->
+    <div class="sidebar-bottom">
+
+      
+
+     <button
+        type="button"
+        class="logout-button"
+        (click)="logout()">
+
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Logout</span>
+      </button>
+
+    </div>
+
+  </aside>
+
+  <!-- Main Area -->
+  <main class="admin-main">
+
+    <!-- Header -->
+    <header class="admin-header">
+
+      <div class="header-left">
+
+        <button
+          type="button"
+          class="menu-toggle"
+          (click)="toggleSidebar()"
+          aria-label="Open sidebar">
+
+          <i class="bi bi-list"></i>
+        </button>
+
+        <div class="header-title">
+          <h2>Admin Panel</h2>
+          <p>Manage your SUNSTYLE store</p>
+        </div>
+
+      </div>
+
+      <div class="header-right">
+
+        <div class="admin-profile" *ngIf="currentUser$ | async as user">
+
+          <div class="profile-avatar">
+            <img
+              *ngIf="user.profileImage; else defaultAvatar"
+              [src]="user.profileImage"
+              alt="Admin profile">
+
+            <ng-template #defaultAvatar>
+              <i class="bi bi-person-fill"></i>
+            </ng-template>
+          </div>
+
+          <div class="profile-info">
+            <strong>{{ user.fullName }}</strong>
+            <span>Administrator</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- Page Content -->
+    <section class="admin-content">
+      <router-outlet></router-outlet>
+    </section>
+
+  </main>
+
+  <!-- Logout Confirmation Modal -->
+  <div
+    class="confirmation-overlay"
+    *ngIf="showLogoutModal"
+    (click)="cancelLogout()">
+
+    <div
+      class="confirmation-modal"
+      (click)="$event.stopPropagation()">
+
+      <div class="confirmation-icon">
+        <i class="bi bi-box-arrow-right"></i>
+      </div>
+
+      <h3>Confirm Logout</h3>
+
+      <p>
+        Are you sure you want to logout from the SUNSTYLE Admin Panel?
+      </p>
+
+      <div class="confirmation-actions">
+
+        <button
+          type="button"
+          class="cancel-button"
+          (click)="cancelLogout()">
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="confirm-button"
+          (click)="confirmLogout()">
+          <i class="bi bi-box-arrow-right"></i>
+          Yes, Logout
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

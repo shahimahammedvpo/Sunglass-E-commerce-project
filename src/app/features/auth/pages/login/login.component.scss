@@ -1,0 +1,111 @@
+.auth-page {
+  min-height: 100vh;
+  padding: 30px 15px;
+  background: #f8f9fa;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.auth-heading h1 {
+  font-size: 32px;
+  color: #111;
+}
+
+.auth-heading p {
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+.form-label {
+  color: #222;
+}
+
+.form-control {
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 15px;
+}
+
+.form-control:focus {
+  border-color: #111;
+  box-shadow: 0 0 0 0.2rem rgba(17, 17, 17, 0.1);
+}
+
+/* Password Input Group */
+
+.input-group .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.password-toggle {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  min-width: 55px;
+  font-size: 18px;
+}
+
+.password-toggle:hover {
+  background-color: #f1f1f1;
+}
+
+/* Login Button */
+
+.login-btn {
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover:not(:disabled) {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Footer */
+
+.auth-footer {
+  color: #666;
+  font-size: 14px;
+}
+
+.auth-footer a {
+  color: #111;
+}
+
+.auth-footer a:hover {
+  color: #555;
+  text-decoration: underline !important;
+}
+
+/* Alerts */
+
+.alert {
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* Responsive */
+
+@media (max-width: 576px) {
+
+  .auth-card {
+    max-width: 100%;
+  }
+
+  .auth-heading h1 {
+    font-size: 28px;
+  }
+
+}

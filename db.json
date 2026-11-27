@@ -1,0 +1,2882 @@
+{
+  "heroBanner": {
+    "id": 1,
+    "label": "PREMIUM EYEWEAR COLLECTION",
+    "title": "See the World Differently",
+    "subtitle": "Discover sunglasses that define your personality.",
+    "image": "hero-image/hero.jpeg",
+    "imageAlt": "Premium sunglasses collection",
+    "shopButtonText": "Shop Collection",
+    "shopButtonLink": "/products",
+    "exploreButtonText": "Explore Styles",
+    "exploreButtonLink": "/",
+    "exploreFragment": "categories",
+    "stats": [
+      {
+        "value": "30+",
+        "label": "Unique Styles"
+      },
+      {
+        "value": "UV400",
+        "label": "Protection Range"
+      },
+      {
+        "value": "4.5+",
+        "label": "Product Ratings"
+      }
+    ],
+    "floatingCard": {
+      "label": "NEW ARRIVALS",
+      "title": "Find Your Style"
+    }
+  },
+  "categories": [
+    {
+      "id": 1,
+      "name": "Men",
+      "description": "Bold styles for modern men",
+      "image": "category-image/men.jpeg",
+      "imagePosition": "center 35%"
+    },
+    {
+      "id": 2,
+      "name": "Women",
+      "description": "Elegant eyewear collection",
+      "image": "category-image/women.jpeg",
+      "imagePosition": "center 35%"
+    },
+    {
+      "id": 3,
+      "name": "Unisex",
+      "description": "Fashion without boundaries",
+      "image": "category-image/unisex.jpeg",
+      "imagePosition": "center 35%"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Classic Gold Aviator",
+      "category": "Men",
+      "description": "Premium gold-frame aviator sunglasses with a timeless and stylish appearance.",
+      "price": 1299,
+      "originalPrice": 1999,
+      "rating": 4.5,
+      "reviewCount": 128,
+      "discount": 35,
+      "stock": 25,
+      "image": "products/ray-ban/Classic-Gold-Aviator.jpg",
+      "features": [
+        "UV400",
+        "Polarized",
+        "Metal Frame"
+      ],
+      "tags": [
+        "aviator",
+        "trending",
+        "premium"
+      ],
+      "isFeatured": true,
+      "brand": "Ray-Ban"
+    },
+    {
+      "id": 2,
+      "name": "Urban Black Wayfarer",
+      "category": "Men",
+      "description": "Classic black wayfarer sunglasses designed for everyday casual fashion.",
+      "price": 999,
+      "originalPrice": 1499,
+      "rating": 4.3,
+      "reviewCount": 86,
+      "discount": 33,
+      "stock": 30,
+      "image": "products/fastrack/Urban-Black-Wayfarer.jpg",
+      "features": [
+        "UV400",
+        "Lightweight",
+        "Durable Frame"
+      ],
+      "tags": [
+        "wayfarer",
+        "casual",
+        "black"
+      ],
+      "isFeatured": true,
+      "brand": "Fastrack"
+    },
+    {
+      "id": 3,
+      "name": "Retro Rectangle",
+      "category": "Men",
+      "description": "Modern rectangular sunglasses with a minimal retro-inspired design.",
+      "price": 899,
+      "originalPrice": 1299,
+      "rating": 4.2,
+      "reviewCount": 64,
+      "discount": 31,
+      "stock": 18,
+      "image": "products/vincent-chase/Retro-Rectangle.jpg",
+      "features": [
+        "UV400",
+        "Retro Design"
+      ],
+      "tags": [
+        "rectangle",
+        "retro",
+        "minimal"
+      ],
+      "isFeatured": false,
+      "brand": "Vincent Chase"
+    },
+    {
+      "id": 4,
+      "name": "Hexa Edge",
+      "category": "Men",
+      "description": "Unique hexagonal sunglasses for people who love bold fashion.",
+      "price": 1499,
+      "originalPrice": 1999,
+      "rating": 4.6,
+      "reviewCount": 92,
+      "discount": 25,
+      "stock": 15,
+      "image": "products/idee/Hexa-Edge.jpg",
+      "features": [
+        "UV400",
+        "Geometric Frame",
+        "Premium Finish"
+      ],
+      "tags": [
+        "geometric",
+        "fashion",
+        "trendy"
+      ],
+      "isFeatured": true,
+      "brand": "IDEE"
+    },
+    {
+      "id": 5,
+      "name": "Sport X Pro",
+      "category": "Men",
+      "description": "Sporty wraparound sunglasses suitable for outdoor activities and cycling.",
+      "price": 1799,
+      "originalPrice": 2499,
+      "rating": 4.7,
+      "reviewCount": 156,
+      "discount": 28,
+      "stock": 20,
+      "image": "products/oakley/Sport-X-Pro.jpg",
+      "features": [
+        "Polarized",
+        "UV400",
+        "Sports Design"
+      ],
+      "tags": [
+        "sports",
+        "outdoor",
+        "polarized"
+      ],
+      "isFeatured": true,
+      "brand": "Oakley"
+    },
+    {
+      "id": 6,
+      "name": "Matte Black Aviator",
+      "category": "Men",
+      "description": "Stylish matte black aviators with a sophisticated modern finish.",
+      "price": 1399,
+      "originalPrice": 1999,
+      "rating": 4.4,
+      "reviewCount": 73,
+      "discount": 30,
+      "stock": 22,
+      "image": "products/titan/Matte-Black-Aviator.jpg",
+      "features": [
+        "UV400",
+        "Matte Finish",
+        "Metal Frame"
+      ],
+      "tags": [
+        "aviator",
+        "black",
+        "premium"
+      ],
+      "isFeatured": false,
+      "brand": "Titan"
+    },
+    {
+      "id": 7,
+      "name": "Blue Mirror Sport",
+      "category": "Men",
+      "description": "Sport sunglasses featuring blue mirror lenses and a bold athletic look.",
+      "price": 1599,
+      "originalPrice": 2199,
+      "rating": 4.6,
+      "reviewCount": 110,
+      "discount": 27,
+      "stock": 17,
+      "image": "products/polaroid/Blue-Mirror-Sport.jpg",
+      "features": [
+        "UV400",
+        "Mirror Lens",
+        "Lightweight"
+      ],
+      "tags": [
+        "sports",
+        "blue",
+        "mirror"
+      ],
+      "isFeatured": true,
+      "brand": "Polaroid"
+    },
+    {
+      "id": 8,
+      "name": "Vintage Brown Frame",
+      "category": "Men",
+      "description": "Classic brown sunglasses with a vintage-inspired frame.",
+      "price": 1099,
+      "originalPrice": 1599,
+      "rating": 4.1,
+      "reviewCount": 58,
+      "discount": 31,
+      "stock": 28,
+      "image": "products/carrera/Vintage-Brown-Frame.jpg",
+      "features": [
+        "UV400",
+        "Brown Lens",
+        "Classic Design"
+      ],
+      "tags": [
+        "vintage",
+        "brown",
+        "classic"
+      ],
+      "isFeatured": false,
+      "brand": "Carrera"
+    },
+    {
+      "id": 9,
+      "name": "Carbon Edge",
+      "category": "Men",
+      "description": "Bold rectangular sunglasses with a sleek carbon-inspired finish.",
+      "price": 1899,
+      "originalPrice": 2599,
+      "rating": 4.8,
+      "reviewCount": 143,
+      "discount": 27,
+      "stock": 12,
+      "image": "products/oakley/Carbon-Edge.jpg",
+      "features": [
+        "UV400",
+        "Premium Frame",
+        "Scratch Resistant"
+      ],
+      "tags": [
+        "premium",
+        "rectangle",
+        "luxury"
+      ],
+      "isFeatured": true,
+      "brand": "Oakley"
+    },
+    {
+      "id": 10,
+      "name": "Executive Square",
+      "category": "Men",
+      "description": "Elegant square sunglasses designed for a professional and fashionable look.",
+      "price": 1299,
+      "originalPrice": 1799,
+      "rating": 4.3,
+      "reviewCount": 81,
+      "discount": 28,
+      "stock": 19,
+      "image": "products/john-jacobs/Executive-Square.jpg",
+      "features": [
+        "UV400",
+        "Square Frame",
+        "Lightweight"
+      ],
+      "tags": [
+        "square",
+        "office",
+        "formal"
+      ],
+      "isFeatured": false,
+      "brand": "John Jacobs"
+    },
+    {
+      "id": 11,
+      "name": "Glam Cat-Eye",
+      "category": "Women",
+      "description": "Elegant black cat-eye sunglasses that add a glamorous touch to any outfit.",
+      "price": 1199,
+      "originalPrice": 1799,
+      "rating": 4.7,
+      "reviewCount": 165,
+      "discount": 33,
+      "stock": 24,
+      "image": "products/vogue-eyewear/Glam-Cat-Eye.jpg",
+      "features": [
+        "UV400",
+        "Cat-Eye Frame",
+        "Fashion Design"
+      ],
+      "tags": [
+        "cat-eye",
+        "glamour",
+        "women"
+      ],
+      "isFeatured": true,
+      "brand": "Vogue Eyewear"
+    },
+    {
+      "id": 12,
+      "name": "Luxury Oversized",
+      "category": "Women",
+      "description": "Oversized luxury sunglasses offering a bold and elegant fashion statement.",
+      "price": 1599,
+      "originalPrice": 2299,
+      "rating": 4.8,
+      "reviewCount": 142,
+      "discount": 30,
+      "stock": 16,
+      "image": "products/prada/Luxury-Oversized.jpg",
+      "features": [
+        "UV400",
+        "Oversized Frame",
+        "Premium Finish"
+      ],
+      "tags": [
+        "oversized",
+        "luxury",
+        "trending"
+      ],
+      "isFeatured": true,
+      "brand": "Prada"
+    },
+    {
+      "id": 13,
+      "name": "Pink Aesthetic",
+      "category": "Women",
+      "description": "Beautiful pink-tinted sunglasses with a trendy transparent frame.",
+      "price": 899,
+      "originalPrice": 1299,
+      "rating": 4.2,
+      "reviewCount": 67,
+      "discount": 31,
+      "stock": 32,
+      "image": "products/fastrack/Pink-Aesthetic.jpg",
+      "features": [
+        "UV400",
+        "Pink Tint",
+        "Transparent Frame"
+      ],
+      "tags": [
+        "pink",
+        "aesthetic",
+        "fashion"
+      ],
+      "isFeatured": false,
+      "brand": "Fastrack"
+    },
+    {
+      "id": 14,
+      "name": "Vintage Gold Round",
+      "category": "Women",
+      "description": "Retro-inspired round sunglasses with an elegant gold metal frame.",
+      "price": 1299,
+      "originalPrice": 1899,
+      "rating": 4.5,
+      "reviewCount": 95,
+      "discount": 32,
+      "stock": 20,
+      "image": "products/ray-ban/Vintage-Gold-Round.jpg",
+      "features": [
+        "UV400",
+        "Gold Frame",
+        "Round Design"
+      ],
+      "tags": [
+        "round",
+        "vintage",
+        "gold"
+      ],
+      "isFeatured": true,
+      "brand": "Ray-Ban"
+    },
+    {
+      "id": 15,
+      "name": "Butterfly Glam",
+      "category": "Women",
+      "description": "Stylish butterfly-shaped sunglasses for a fashionable and elegant look.",
+      "price": 1499,
+      "originalPrice": 1999,
+      "rating": 4.6,
+      "reviewCount": 118,
+      "discount": 25,
+      "stock": 14,
+      "image": "products/gucci/Butterfly-Glam.jpg",
+      "features": [
+        "UV400",
+        "Butterfly Frame",
+        "Premium Design"
+      ],
+      "tags": [
+        "butterfly",
+        "glamour",
+        "trendy"
+      ],
+      "isFeatured": true,
+      "brand": "Gucci"
+    },
+    {
+      "id": 16,
+      "name": "Rose Gold Oval",
+      "category": "Women",
+      "description": "Delicate oval sunglasses with a fashionable rose gold frame.",
+      "price": 1099,
+      "originalPrice": 1599,
+      "rating": 4.3,
+      "reviewCount": 76,
+      "discount": 31,
+      "stock": 21,
+      "image": "products/idee/Rose-Gold-Oval.jpg",
+      "features": [
+        "UV400",
+        "Rose Gold Frame",
+        "Oval Design"
+      ],
+      "tags": [
+        "oval",
+        "rose-gold",
+        "minimal"
+      ],
+      "isFeatured": false,
+      "brand": "IDEE"
+    },
+    {
+      "id": 17,
+      "name": "Crystal Frame",
+      "category": "Women",
+      "description": "Transparent crystal-frame sunglasses with a fresh contemporary appearance.",
+      "price": 1399,
+      "originalPrice": 1999,
+      "rating": 4.4,
+      "reviewCount": 89,
+      "discount": 30,
+      "stock": 18,
+      "image": "products/vincent-chase/Crystal-Frame.jpg",
+      "features": [
+        "UV400",
+        "Crystal Frame",
+        "Modern Style"
+      ],
+      "tags": [
+        "transparent",
+        "crystal",
+        "modern"
+      ],
+      "isFeatured": false,
+      "brand": "Vincent Chase"
+    },
+    {
+      "id": 18,
+      "name": "Retro Diva",
+      "category": "Women",
+      "description": "Bold retro sunglasses with a fashionable vintage-inspired design.",
+      "price": 1699,
+      "originalPrice": 2399,
+      "rating": 4.7,
+      "reviewCount": 132,
+      "discount": 29,
+      "stock": 13,
+      "image": "products/michael-kors/Retro-Diva.jpg",
+      "features": [
+        "UV400",
+        "Retro Frame",
+        "Premium Finish"
+      ],
+      "tags": [
+        "retro",
+        "vintage",
+        "fashion"
+      ],
+      "isFeatured": true,
+      "brand": "Michael Kors"
+    },
+    {
+      "id": 19,
+      "name": "Sunset Gradient",
+      "category": "Women",
+      "description": "Beautiful gradient-lens sunglasses inspired by warm sunset colours.",
+      "price": 1299,
+      "originalPrice": 1799,
+      "rating": 4.5,
+      "reviewCount": 104,
+      "discount": 28,
+      "stock": 26,
+      "image": "products/vogue-eyewear/Sunset-Gradient.jpg",
+      "features": [
+        "UV400",
+        "Gradient Lens",
+        "Stylish Frame"
+      ],
+      "tags": [
+        "gradient",
+        "sunset",
+        "summer"
+      ],
+      "isFeatured": false,
+      "brand": "Vogue Eyewear"
+    },
+    {
+      "id": 20,
+      "name": "Elegant Square",
+      "category": "Women",
+      "description": "Minimal square-frame sunglasses suitable for everyday fashion.",
+      "price": 1199,
+      "originalPrice": 1699,
+      "rating": 4.2,
+      "reviewCount": 71,
+      "discount": 29,
+      "stock": 23,
+      "image": "products/titan/Elegant-Square.jpg",
+      "features": [
+        "UV400",
+        "Square Frame",
+        "Lightweight"
+      ],
+      "tags": [
+        "square",
+        "elegant",
+        "casual"
+      ],
+      "isFeatured": false,
+      "brand": "Titan"
+    },
+    {
+      "id": 21,
+      "name": "Blackout Square",
+      "category": "Unisex",
+      "description": "Bold black square sunglasses with a clean and modern unisex design.",
+      "price": 1499,
+      "originalPrice": 2099,
+      "rating": 4.6,
+      "reviewCount": 121,
+      "discount": 29,
+      "stock": 20,
+      "image": "products/ray-ban/Blackout-Square.jpg",
+      "features": [
+        "UV400",
+        "Square Frame",
+        "Premium Design"
+      ],
+      "tags": [
+        "black",
+        "square",
+        "unisex"
+      ],
+      "isFeatured": true,
+      "brand": "Ray-Ban"
+    },
+    {
+      "id": 22,
+      "name": "Crystal Blue",
+      "category": "Unisex",
+      "description": "Transparent frame sunglasses with attractive blue-tinted lenses.",
+      "price": 1099,
+      "originalPrice": 1599,
+      "rating": 4.3,
+      "reviewCount": 78,
+      "discount": 31,
+      "stock": 29,
+      "image": "products/fastrack/Crystal-Blue.jpg",
+      "features": [
+        "UV400",
+        "Blue Tint",
+        "Transparent Frame"
+      ],
+      "tags": [
+        "blue",
+        "transparent",
+        "unisex"
+      ],
+      "isFeatured": false,
+      "brand": "Fastrack"
+    },
+    {
+      "id": 23,
+      "name": "Amber Gradient",
+      "category": "Unisex",
+      "description": "Stylish amber gradient sunglasses with a timeless everyday design.",
+      "price": 1299,
+      "originalPrice": 1899,
+      "rating": 4.5,
+      "reviewCount": 93,
+      "discount": 32,
+      "stock": 22,
+      "image": "products/polaroid/Amber-Gradient.jpg",
+      "features": [
+        "UV400",
+        "Gradient Lens",
+        "Comfort Fit"
+      ],
+      "tags": [
+        "amber",
+        "gradient",
+        "classic"
+      ],
+      "isFeatured": true,
+      "brand": "Polaroid"
+    },
+    {
+      "id": 24,
+      "name": "Urban Classic",
+      "category": "Unisex",
+      "description": "Versatile everyday sunglasses with a classic frame and modern styling.",
+      "price": 999,
+      "originalPrice": 1499,
+      "rating": 4.1,
+      "reviewCount": 61,
+      "discount": 33,
+      "stock": 35,
+      "image": "products/vincent-chase/Urban-Classic.jpg",
+      "features": [
+        "UV400",
+        "Classic Frame",
+        "Lightweight"
+      ],
+      "tags": [
+        "classic",
+        "casual",
+        "everyday"
+      ],
+      "isFeatured": false,
+      "brand": "Vincent Chase"
+    },
+    {
+      "id": 25,
+      "name": "Aero Sport",
+      "category": "Unisex",
+      "description": "Lightweight sports sunglasses designed for active outdoor lifestyles.",
+      "price": 1799,
+      "originalPrice": 2499,
+      "rating": 4.7,
+      "reviewCount": 147,
+      "discount": 28,
+      "stock": 16,
+      "image": "products/oakley/Aero-Sport.jpg",
+      "features": [
+        "UV400",
+        "Polarized",
+        "Sports Frame"
+      ],
+      "tags": [
+        "sports",
+        "outdoor",
+        "active"
+      ],
+      "isFeatured": true,
+      "brand": "Oakley"
+    },
+    {
+      "id": 26,
+      "name": "Neon Edge",
+      "category": "Unisex",
+      "description": "Futuristic sunglasses with bold styling for a standout appearance.",
+      "price": 1499,
+      "originalPrice": 2199,
+      "rating": 4.4,
+      "reviewCount": 84,
+      "discount": 32,
+      "stock": 14,
+      "image": "products/carrera/Neon-Edge.jpg",
+      "features": [
+        "UV400",
+        "Futuristic Design",
+        "Lightweight"
+      ],
+      "tags": [
+        "neon",
+        "futuristic",
+        "trendy"
+      ],
+      "isFeatured": false,
+      "brand": "Carrera"
+    },
+    {
+      "id": 27,
+      "name": "Titanium Pro",
+      "category": "Unisex",
+      "description": "Premium titanium-style frame sunglasses with a sleek minimalist look.",
+      "price": 2199,
+      "originalPrice": 2999,
+      "rating": 4.9,
+      "reviewCount": 189,
+      "discount": 27,
+      "stock": 10,
+      "image": "products/john-jacobs/Titanium-Pro.jpg",
+      "features": [
+        "UV400",
+        "Titanium-Style Frame",
+        "Premium Finish"
+      ],
+      "tags": [
+        "titanium",
+        "premium",
+        "luxury"
+      ],
+      "isFeatured": true,
+      "brand": "John Jacobs"
+    },
+    {
+      "id": 28,
+      "name": "Shadow X",
+      "category": "Unisex",
+      "description": "Contemporary dark sunglasses with a bold and sporty appearance.",
+      "price": 1899,
+      "originalPrice": 2599,
+      "rating": 4.6,
+      "reviewCount": 116,
+      "discount": 27,
+      "stock": 17,
+      "image": "products/police/Shadow-X.jpg",
+      "features": [
+        "UV400",
+        "Polarized",
+        "Modern Frame"
+      ],
+      "tags": [
+        "dark",
+        "sports",
+        "polarized"
+      ],
+      "isFeatured": true,
+      "brand": "Police"
+    },
+    {
+      "id": 29,
+      "name": "Transparent Vision",
+      "category": "Unisex",
+      "description": "Minimal transparent-frame sunglasses with a contemporary aesthetic.",
+      "price": 1199,
+      "originalPrice": 1699,
+      "rating": 4.2,
+      "reviewCount": 68,
+      "discount": 29,
+      "stock": 27,
+      "image": "products/idee/Transparent-Vision.jpg",
+      "features": [
+        "UV400",
+        "Transparent Frame",
+        "Minimal Design"
+      ],
+      "tags": [
+        "transparent",
+        "minimal",
+        "modern"
+      ],
+      "isFeatured": false,
+      "brand": "IDEE"
+    },
+    {
+      "id": 30,
+      "name": "Elite Polarized",
+      "category": "Unisex",
+      "description": "Premium polarized sunglasses with a refined design for everyday outdoor use.",
+      "price": 2499,
+      "originalPrice": 3499,
+      "rating": 4.9,
+      "reviewCount": 215,
+      "discount": 29,
+      "stock": 5,
+      "image": "products/ray-ban/Elite-Polarized.jpg",
+      "features": [
+        "Polarized",
+        "UV400",
+        "Premium Frame"
+      ],
+      "tags": [
+        "polarized",
+        "elite",
+        "premium"
+      ],
+      "isFeatured": true,
+      "brand": "Ray-Ban"
+    }
+  ],
+  "users": [
+    {
+      "fullName": "shaheem vpo",
+      "email": "shaheem@gmail.com",
+      "password": "123456",
+      "id": 1,
+      "profileImage": "",
+      "role": "customer",
+      "isBlocked": false
+    },
+    {
+      "fullName": "ahammed",
+      "email": "ahammed@gmail.com",
+      "password": "123456",
+      "id": 2,
+      "role": "customer",
+      "isBlocked": false
+    },
+    {
+      "fullName": "ahsana",
+      "email": "rerty676@gmail.com",
+      "password": "123456",
+      "id": 3,
+      "role": "customer",
+      "isBlocked": false
+    },
+    {
+      "fullName": "shahim",
+      "email": "ahammedshahim1@gmail.com",
+      "password": "Shahim@2",
+      "id": 4,
+      "role": "customer",
+      "isBlocked": false
+    },
+    {
+      "fullName": "ahsana",
+      "email": "ahsana@gmail.com",
+      "password": "Ahsana@1234",
+      "profileImage": "",
+      "id": 5,
+      "role": "customer",
+      "isBlocked": false
+    },
+    {
+      "fullName": "sana",
+      "email": "sana@gmail.com",
+      "password": "Sana@123",
+      "profileImage": "",
+      "id": 6,
+      "role": "customer",
+      "isBlocked": false
+    },
+    {
+      "fullName": "SUNSTYLE Admin",
+      "email": "admin@sunstyle.com",
+      "password": "Admin@123",
+      "id": 7,
+      "profileImage": "",
+      "role": "admin",
+      "isBlocked": false
+    }
+  ],
+  "carts": [
+    {
+      "userId": 1,
+      "items": [
+        {
+          "product": {
+            "id": 2,
+            "name": "Urban Black Wayfarer",
+            "category": "Men",
+            "description": "Classic black wayfarer sunglasses designed for everyday casual fashion.",
+            "price": 999,
+            "originalPrice": 1499,
+            "rating": 4.3,
+            "reviewCount": 86,
+            "discount": 33,
+            "stock": 30,
+            "image": "products/fastrack/Urban-Black-Wayfarer.jpg",
+            "features": [
+              "UV400",
+              "Lightweight",
+              "Durable Frame"
+            ],
+            "tags": [
+              "wayfarer",
+              "casual",
+              "black"
+            ],
+            "isFeatured": true,
+            "brand": "Fastrack"
+          },
+          "quantity": 1
+        }
+      ],
+      "id": 1
+    },
+    {
+      "userId": 4,
+      "items": [],
+      "id": 2
+    },
+    {
+      "userId": 5,
+      "items": [],
+      "id": 3
+    },
+    {
+      "userId": 6,
+      "items": [],
+      "id": 4
+    }
+  ],
+  "wishlists": [
+    {
+      "userId": 1,
+      "products": [
+        {
+          "id": 30,
+          "name": "Elite Polarized",
+          "category": "Unisex",
+          "description": "Premium polarized sunglasses with a refined design for everyday outdoor use.",
+          "price": 2499,
+          "originalPrice": 3499,
+          "rating": 4.9,
+          "reviewCount": 215,
+          "discount": 29,
+          "stock": 8,
+          "image": "products/ray-ban/Elite-Polarized.jpg",
+          "features": [
+            "Polarized",
+            "UV400",
+            "Premium Frame"
+          ],
+          "tags": [
+            "polarized",
+            "elite",
+            "premium"
+          ],
+          "isFeatured": true,
+          "brand": "Ray-Ban"
+        }
+      ],
+      "id": 1
+    },
+    {
+      "userId": 4,
+      "products": [],
+      "id": 2
+    },
+    {
+      "userId": 5,
+      "products": [],
+      "id": 3
+    },
+    {
+      "userId": 6,
+      "products": [],
+      "id": 4
+    }
+  ],
+  "addresses": [
+    {
+      "userId": 1,
+      "fullName": "shaheem vp",
+      "phone": "9037056909",
+      "addressLine1": "Valiyakath puthiya ottayil,tanur (PO),Malappuram",
+      "addressLine2": "Valiyakath puthiya ottayil,tanur (PO),Malappuram ,676302",
+      "city": "Malappuram",
+      "state": "Kerala",
+      "postalCode": "676302",
+      "addressType": "Home",
+      "isDefault": true,
+      "id": 1
+    },
+    {
+      "userId": 5,
+      "fullName": "ahsana",
+      "phone": "9875658589",
+      "addressLine1": "home pattambi",
+      "addressLine2": "uytuerhfj",
+      "city": "tirur",
+      "state": "fjkhgkj",
+      "postalCode": "769745",
+      "addressType": "Home",
+      "isDefault": false,
+      "id": 2
+    },
+    {
+      "userId": 6,
+      "fullName": "ahammed shahim",
+      "phone": "9037056909",
+      "addressLine1": "Valiyakath puthiya ottayil(H), Tanur (PO),near Police Station, Tanur,Malappuram, Kerala,676302",
+      "addressLine2": "",
+      "city": "Tirur",
+      "state": "Kerala",
+      "postalCode": "676302",
+      "addressType": "Home",
+      "isDefault": true,
+      "id": 3
+    },
+    {
+      "userId": 5,
+      "fullName": "ahsana",
+      "phone": "8758346857",
+      "addressLine1": "cihyugg",
+      "addressLine2": "jhfuyhlkjj",
+      "city": "uuythgyuuyh",
+      "state": "bvjhn bhf",
+      "postalCode": "998766",
+      "addressType": "Home",
+      "isDefault": true,
+      "id": 4
+    }
+  ],
+  "orders": [
+    {
+      "customerId": 1794890376469,
+      "customerName": "shahim",
+      "email": "shahim@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 1,
+            "name": "Classic Gold Aviator",
+            "category": "Men",
+            "description": "Premium gold-frame aviator sunglasses with a timeless and stylish appearance.",
+            "price": 1299,
+            "originalPrice": 1999,
+            "rating": 4.5,
+            "reviewCount": 128,
+            "discount": 35,
+            "stock": 25,
+            "image": "https://placehold.co/600x600?text=Gold+Aviator",
+            "features": [
+              "UV400",
+              "Polarized",
+              "Metal Frame"
+            ],
+            "tags": [
+              "aviator",
+              "trending",
+              "premium"
+            ],
+            "isFeatured": true,
+            "brand": "Ray-Ban"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shahim",
+        "phone": "7845962512",
+        "addressLine": "rtrsegehgvbgfbffb",
+        "city": "Tiru",
+        "state": "Kerala",
+        "postalCode": "112224",
+        "country": "India"
+      },
+      "subtotal": 1299,
+      "shippingCharge": 99,
+      "discount": 130,
+      "totalAmount": 1268,
+      "couponCode": "SUN10",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-17T04:50:27.159Z",
+      "id": 1,
+      "cancellationReason": "",
+      "cancellationComments": "",
+      "cancelledAt": "2026-11-23T06:33:20.074Z"
+    },
+    {
+      "customerId": 1794890376469,
+      "customerName": "shahim",
+      "email": "shahim@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 1,
+            "name": "Classic Gold Aviator",
+            "category": "Men",
+            "description": "Premium gold-frame aviator sunglasses with a timeless and stylish appearance.",
+            "price": 1299,
+            "originalPrice": 1999,
+            "rating": 4.5,
+            "reviewCount": 128,
+            "discount": 35,
+            "stock": 25,
+            "image": "https://placehold.co/600x600?text=Gold+Aviator",
+            "features": [
+              "UV400",
+              "Polarized",
+              "Metal Frame"
+            ],
+            "tags": [
+              "aviator",
+              "trending",
+              "premium"
+            ],
+            "isFeatured": true,
+            "brand": "Ray-Ban"
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "id": 2,
+            "name": "Urban Black Wayfarer",
+            "category": "Men",
+            "description": "Classic black wayfarer sunglasses designed for everyday casual fashion.",
+            "price": 999,
+            "originalPrice": 1499,
+            "rating": 4.3,
+            "reviewCount": 86,
+            "discount": 33,
+            "stock": 30,
+            "image": "https://placehold.co/600x600?text=Black+Wayfarer",
+            "features": [
+              "UV400",
+              "Lightweight",
+              "Durable Frame"
+            ],
+            "tags": [
+              "wayfarer",
+              "casual",
+              "black"
+            ],
+            "isFeatured": true,
+            "brand": "Fastrack"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shahim",
+        "phone": "9037122546",
+        "addressLine": "dfwerghrgvdrhrr",
+        "city": "Tir",
+        "state": "Kerala",
+        "postalCode": "676314",
+        "country": "India"
+      },
+      "subtotal": 2298,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 2298,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-17T05:09:24.781Z",
+      "id": 2
+    },
+    {
+      "customerId": 1794890376469,
+      "customerName": "shahim",
+      "email": "shahim@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 9,
+            "name": "Carbon Edge",
+            "category": "Men",
+            "description": "Bold rectangular sunglasses with a sleek carbon-inspired finish.",
+            "price": 1899,
+            "originalPrice": 2599,
+            "rating": 4.8,
+            "reviewCount": 143,
+            "discount": 27,
+            "stock": 12,
+            "image": "https://placehold.co/600x600?text=Carbon+Edge",
+            "features": [
+              "UV400",
+              "Premium Frame",
+              "Scratch Resistant"
+            ],
+            "tags": [
+              "premium",
+              "rectangle",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "Oakley"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shahim",
+        "phone": "9037068353",
+        "addressLine": "ygrthrth5jyj",
+        "city": "Malapp",
+        "state": "Kerala",
+        "postalCode": "676377",
+        "country": "India"
+      },
+      "subtotal": 1899,
+      "shippingCharge": 99,
+      "discount": 0,
+      "totalAmount": 1998,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-17T05:10:07.254Z",
+      "id": 3
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vpo",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 1,
+            "name": "Classic Gold Aviator",
+            "category": "Men",
+            "description": "Premium gold-frame aviator sunglasses with a timeless and stylish appearance.",
+            "price": 1299,
+            "originalPrice": 1999,
+            "rating": 4.5,
+            "reviewCount": 128,
+            "discount": 35,
+            "stock": 25,
+            "image": "https://placehold.co/600x600?text=Gold+Aviator",
+            "features": [
+              "UV400",
+              "Polarized",
+              "Metal Frame"
+            ],
+            "tags": [
+              "aviator",
+              "trending",
+              "premium"
+            ],
+            "isFeatured": true,
+            "brand": "Ray-Ban"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vpo",
+        "phone": "9037056953",
+        "addressLine": "serrgyjbyjbrthrtb",
+        "city": "Tirhsrbh",
+        "state": "Kerala",
+        "postalCode": "675683",
+        "country": "India"
+      },
+      "subtotal": 1299,
+      "shippingCharge": 99,
+      "discount": 0,
+      "totalAmount": 1398,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-18T06:20:00.485Z",
+      "id": 4
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vpo",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 1,
+            "name": "Classic Gold Aviator",
+            "category": "Men",
+            "description": "Premium gold-frame aviator sunglasses with a timeless and stylish appearance.",
+            "price": 1299,
+            "originalPrice": 1999,
+            "rating": 4.5,
+            "reviewCount": 128,
+            "discount": 35,
+            "stock": 25,
+            "image": "https://placehold.co/600x600?text=Gold+Aviator",
+            "features": [
+              "UV400",
+              "Polarized",
+              "Metal Frame"
+            ],
+            "tags": [
+              "aviator",
+              "trending",
+              "premium"
+            ],
+            "isFeatured": true,
+            "brand": "Ray-Ban"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vpo",
+        "phone": "9032453435",
+        "addressLine": "ewdwdwd",
+        "city": "Tirur",
+        "state": "Kerala",
+        "postalCode": "676585",
+        "country": "India"
+      },
+      "subtotal": 1299,
+      "shippingCharge": 99,
+      "discount": 0,
+      "totalAmount": 1398,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-18T07:07:16.315Z",
+      "id": 5
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vpo",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 1,
+            "name": "Classic Gold Aviator",
+            "category": "Men",
+            "description": "Premium gold-frame aviator sunglasses with a timeless and stylish appearance.",
+            "price": 1299,
+            "originalPrice": 1999,
+            "rating": 4.5,
+            "reviewCount": 128,
+            "discount": 35,
+            "stock": 25,
+            "image": "https://placehold.co/600x600?text=Gold+Aviator",
+            "features": [
+              "UV400",
+              "Polarized",
+              "Metal Frame"
+            ],
+            "tags": [
+              "aviator",
+              "trending",
+              "premium"
+            ],
+            "isFeatured": true,
+            "brand": "Ray-Ban"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vpo",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil(H), Tanur (PO),near Police Station, Tanur,Malappuram, Kerala,676302",
+        "city": "Tirur",
+        "state": "Kerala",
+        "postalCode": "676302",
+        "country": "India"
+      },
+      "subtotal": 1299,
+      "shippingCharge": 99,
+      "discount": 0,
+      "totalAmount": 1398,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-18T09:59:54.723Z",
+      "id": 6
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vpo",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 5,
+            "name": "Sport X Pro",
+            "category": "Men",
+            "description": "Sporty wraparound sunglasses suitable for outdoor activities and cycling.",
+            "price": 1799,
+            "originalPrice": 2499,
+            "rating": 4.7,
+            "reviewCount": 156,
+            "discount": 28,
+            "stock": 20,
+            "image": "https://placehold.co/600x600?text=Sport+X+Pro",
+            "features": [
+              "Polarized",
+              "UV400",
+              "Sports Design"
+            ],
+            "tags": [
+              "sports",
+              "outdoor",
+              "polarized"
+            ],
+            "isFeatured": true,
+            "brand": "Oakley"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vpo",
+        "phone": "9037098968",
+        "addressLine": "xdxftbh76302",
+        "city": "Tirur",
+        "state": "Kerala",
+        "postalCode": "676302",
+        "country": "India"
+      },
+      "subtotal": 1799,
+      "shippingCharge": 99,
+      "discount": 0,
+      "totalAmount": 1898,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-18T11:06:37.466Z",
+      "id": 7,
+      "cancellationReason": "Delivery is taking too long",
+      "cancellationComments": "",
+      "cancelledAt": "2026-11-23T06:18:38.817Z"
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vpo",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 2,
+            "name": "Urban Black Wayfarer",
+            "category": "Men",
+            "description": "Classic black wayfarer sunglasses designed for everyday casual fashion.",
+            "price": 999,
+            "originalPrice": 1499,
+            "rating": 4.3,
+            "reviewCount": 86,
+            "discount": 33,
+            "stock": 30,
+            "image": "https://placehold.co/600x600?text=Black+Wayfarer",
+            "features": [
+              "UV400",
+              "Lightweight",
+              "Durable Frame"
+            ],
+            "tags": [
+              "wayfarer",
+              "casual",
+              "black"
+            ],
+            "isFeatured": true,
+            "brand": "Fastrack"
+          },
+          "quantity": 2
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vpo",
+        "phone": "7868757667",
+        "addressLine": "gduygjh",
+        "city": "ygghjif",
+        "state": "gruygb",
+        "postalCode": "867868",
+        "country": "India"
+      },
+      "subtotal": 1998,
+      "shippingCharge": 99,
+      "discount": 0,
+      "totalAmount": 2097,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-19T06:18:18.718Z",
+      "id": 8
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vpo",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 2,
+            "name": "Urban Black Wayfarer",
+            "category": "Men",
+            "description": "Classic black wayfarer sunglasses designed for everyday casual fashion.",
+            "price": 999,
+            "originalPrice": 1499,
+            "rating": 4.3,
+            "reviewCount": 86,
+            "discount": 33,
+            "stock": 30,
+            "image": "https://placehold.co/600x600?text=Black+Wayfarer",
+            "features": [
+              "UV400",
+              "Lightweight",
+              "Durable Frame"
+            ],
+            "tags": [
+              "wayfarer",
+              "casual",
+              "black"
+            ],
+            "isFeatured": true,
+            "brand": "Fastrack"
+          },
+          "quantity": 6
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vpo",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram\nValiyakath puthiya ottayil,tanur (PO),Malappuram ,676302",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302",
+        "country": "India"
+      },
+      "subtotal": 5994,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 5994,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-19T06:21:47.686Z",
+      "id": 9
+    },
+    {
+      "customerId": 4,
+      "customerName": "Shahim Ahammed Vpo",
+      "email": "ahammedshahim1@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 2,
+            "name": "Urban Black Wayfarer",
+            "category": "Men",
+            "description": "Classic black wayfarer sunglasses designed for everyday casual fashion.",
+            "price": 999,
+            "originalPrice": 1499,
+            "rating": 4.3,
+            "reviewCount": 86,
+            "discount": 33,
+            "stock": 30,
+            "image": "https://placehold.co/600x600?text=Black+Wayfarer",
+            "features": [
+              "UV400",
+              "Lightweight",
+              "Durable Frame"
+            ],
+            "tags": [
+              "wayfarer",
+              "casual",
+              "black"
+            ],
+            "isFeatured": true,
+            "brand": "Fastrack"
+          },
+          "quantity": 2
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "Shahim Ahammed Vpo",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": null,
+      "shippingCharge": 50,
+      "discount": 0,
+      "totalAmount": null,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-19T09:22:52.601Z",
+      "id": 10
+    },
+    {
+      "customerId": 5,
+      "customerName": "ahsana naseefa",
+      "email": "ahsana@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 30,
+            "name": "Elite Polarized",
+            "category": "Unisex",
+            "description": "Premium polarized sunglasses with a refined design for everyday outdoor use.",
+            "price": 2499,
+            "originalPrice": 3499,
+            "rating": 4.9,
+            "reviewCount": 215,
+            "discount": 29,
+            "stock": 8,
+            "image": "products/ray-ban/Elite-Polarized.png",
+            "features": [
+              "Polarized",
+              "UV400",
+              "Premium Frame"
+            ],
+            "tags": [
+              "polarized",
+              "elite",
+              "premium"
+            ],
+            "isFeatured": true,
+            "brand": "Ray-Ban"
+          },
+          "quantity": 2
+        },
+        {
+          "product": {
+            "id": 1,
+            "name": "Classic Gold Aviator",
+            "category": "Men",
+            "description": "Premium gold-frame aviator sunglasses with a timeless and stylish appearance.",
+            "price": 1299,
+            "originalPrice": 1999,
+            "rating": 4.5,
+            "reviewCount": 128,
+            "discount": 35,
+            "stock": 25,
+            "image": "products/ray-ban/Classic-Gold-Aviator.png",
+            "features": [
+              "UV400",
+              "Polarized",
+              "Metal Frame"
+            ],
+            "tags": [
+              "aviator",
+              "trending",
+              "premium"
+            ],
+            "isFeatured": true,
+            "brand": "Ray-Ban"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "ahsana naseefa",
+        "phone": "8465849346",
+        "addressLine": "home pattambi",
+        "city": "Tirur",
+        "state": "Kerala",
+        "postalCode": "679465"
+      },
+      "subtotal": 6297,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 6297,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-21T06:36:09.247Z",
+      "id": 11
+    },
+    {
+      "customerId": 1,
+      "customerName": "tyrdsy",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 12,
+            "name": "Luxury Oversized",
+            "category": "Women",
+            "description": "Oversized luxury sunglasses offering a bold and elegant fashion statement.",
+            "price": 1599,
+            "originalPrice": 2299,
+            "rating": 4.8,
+            "reviewCount": 142,
+            "discount": 30,
+            "stock": 16,
+            "image": "products/prada/Luxury-Oversized.jpg",
+            "features": [
+              "UV400",
+              "Oversized Frame",
+              "Premium Finish"
+            ],
+            "tags": [
+              "oversized",
+              "luxury",
+              "trending"
+            ],
+            "isFeatured": true,
+            "brand": "Prada"
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "id": 13,
+            "name": "Pink Aesthetic",
+            "category": "Women",
+            "description": "Beautiful pink-tinted sunglasses with a trendy transparent frame.",
+            "price": 899,
+            "originalPrice": 1299,
+            "rating": 4.2,
+            "reviewCount": 67,
+            "discount": 31,
+            "stock": 32,
+            "image": "products/fastrack/Pink-Aesthetic.png",
+            "features": [
+              "UV400",
+              "Pink Tint",
+              "Transparent Frame"
+            ],
+            "tags": [
+              "pink",
+              "aesthetic",
+              "fashion"
+            ],
+            "isFeatured": false,
+            "brand": "Fastrack"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "tyrdsy",
+        "phone": "9895600347",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram",
+        "city": "Malappuram",
+        "state": "sdf",
+        "postalCode": "676302"
+      },
+      "subtotal": 2498,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 2498,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-21T14:44:03.570Z",
+      "id": 12,
+      "cancellationReason": "Changed my mind",
+      "cancellationComments": "wwefweff",
+      "cancelledAt": "2026-11-23T06:10:32.309Z"
+    },
+    {
+      "customerId": 1,
+      "customerName": "Shahim Ahammed Vpo",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 13,
+            "name": "Pink Aesthetic",
+            "category": "Women",
+            "description": "Beautiful pink-tinted sunglasses with a trendy transparent frame.",
+            "price": 899,
+            "originalPrice": 1299,
+            "rating": 4.2,
+            "reviewCount": 67,
+            "discount": 31,
+            "stock": 32,
+            "image": "products/fastrack/Pink-Aesthetic.png",
+            "features": [
+              "UV400",
+              "Pink Tint",
+              "Transparent Frame"
+            ],
+            "tags": [
+              "pink",
+              "aesthetic",
+              "fashion"
+            ],
+            "isFeatured": false,
+            "brand": "Fastrack"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "Shahim Ahammed Vpo",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 899,
+      "shippingCharge": 50,
+      "discount": 0,
+      "totalAmount": 949,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-21T14:45:49.706Z",
+      "id": 13
+    },
+    {
+      "customerId": 6,
+      "customerName": "sdg",
+      "email": "sana@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 2,
+            "name": "Urban Black Wayfarer",
+            "category": "Men",
+            "description": "Classic black wayfarer sunglasses designed for everyday casual fashion.",
+            "price": 999,
+            "originalPrice": 1499,
+            "rating": 4.3,
+            "reviewCount": 86,
+            "discount": 33,
+            "stock": 30,
+            "image": "products/fastrack/Urban-Black-Wayfarer.png",
+            "features": [
+              "UV400",
+              "Lightweight",
+              "Durable Frame"
+            ],
+            "tags": [
+              "wayfarer",
+              "casual",
+              "black"
+            ],
+            "isFeatured": true,
+            "brand": "Fastrack"
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "id": 3,
+            "name": "Retro Rectangle",
+            "category": "Men",
+            "description": "Modern rectangular sunglasses with a minimal retro-inspired design.",
+            "price": 899,
+            "originalPrice": 1299,
+            "rating": 4.2,
+            "reviewCount": 64,
+            "discount": 31,
+            "stock": 18,
+            "image": "products/vincent-chase/Retro-Rectangle.png",
+            "features": [
+              "UV400",
+              "Retro Design"
+            ],
+            "tags": [
+              "rectangle",
+              "retro",
+              "minimal"
+            ],
+            "isFeatured": false,
+            "brand": "Vincent Chase"
+          },
+          "quantity": 5
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "sdg",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil(H), Tanur (PO),near Police Station, Tanur,Malappuram, Kerala,676302",
+        "city": "Tirur",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 5494,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 5494,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-21T14:50:19.890Z",
+      "id": 14
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vp",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 3,
+            "name": "Retro Rectangle",
+            "category": "Men",
+            "description": "Modern rectangular sunglasses with a minimal retro-inspired design.",
+            "price": 899,
+            "originalPrice": 1299,
+            "rating": 4.2,
+            "reviewCount": 64,
+            "discount": 31,
+            "stock": 18,
+            "image": "products/vincent-chase/Retro-Rectangle.png",
+            "features": [
+              "UV400",
+              "Retro Design"
+            ],
+            "tags": [
+              "rectangle",
+              "retro",
+              "minimal"
+            ],
+            "isFeatured": false,
+            "brand": "Vincent Chase"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vp",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram, Valiyakath puthiya ottayil,tanur (PO),Malappuram ,676302",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 899,
+      "shippingCharge": 50,
+      "discount": 0,
+      "totalAmount": 949,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-23T05:06:23.174Z",
+      "id": 15
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vp",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 9,
+            "name": "Carbon Edge",
+            "category": "Men",
+            "description": "Bold rectangular sunglasses with a sleek carbon-inspired finish.",
+            "price": 1899,
+            "originalPrice": 2599,
+            "rating": 4.8,
+            "reviewCount": 143,
+            "discount": 27,
+            "stock": 12,
+            "image": "products/oakley/Carbon-Edge.png",
+            "features": [
+              "UV400",
+              "Premium Frame",
+              "Scratch Resistant"
+            ],
+            "tags": [
+              "premium",
+              "rectangle",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "Oakley"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vp",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram, Valiyakath puthiya ottayil,tanur (PO),Malappuram ,676302",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 1899,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 1899,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-23T06:26:25.205Z",
+      "orderNumber": 1,
+      "id": 16
+    },
+    {
+      "customerId": 6,
+      "customerName": "ahammed shahim",
+      "email": "sana@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 27,
+            "name": "Titanium Pro",
+            "category": "Unisex",
+            "description": "Premium titanium-style frame sunglasses with a sleek minimalist look.",
+            "price": 2199,
+            "originalPrice": 2999,
+            "rating": 4.9,
+            "reviewCount": 189,
+            "discount": 27,
+            "stock": 10,
+            "image": "products/john-jacobs/Titanium-Pro.png",
+            "features": [
+              "UV400",
+              "Titanium-Style Frame",
+              "Premium Finish"
+            ],
+            "tags": [
+              "titanium",
+              "premium",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "John Jacobs"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "ahammed shahim",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil(H), Tanur (PO),near Police Station, Tanur,Malappuram, Kerala,676302",
+        "city": "Tirur",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 2199,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 2199,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-23T06:27:32.038Z",
+      "orderNumber": 1,
+      "id": 17,
+      "cancellationReason": "Found a better price",
+      "cancellationComments": "dscff",
+      "cancelledAt": "2026-11-23T06:47:27.062Z"
+    },
+    {
+      "customerId": 6,
+      "customerName": "ahammed shahim",
+      "email": "sana@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 27,
+            "name": "Titanium Pro",
+            "category": "Unisex",
+            "description": "Premium titanium-style frame sunglasses with a sleek minimalist look.",
+            "price": 2199,
+            "originalPrice": 2999,
+            "rating": 4.9,
+            "reviewCount": 189,
+            "discount": 27,
+            "stock": 10,
+            "image": "products/john-jacobs/Titanium-Pro.png",
+            "features": [
+              "UV400",
+              "Titanium-Style Frame",
+              "Premium Finish"
+            ],
+            "tags": [
+              "titanium",
+              "premium",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "John Jacobs"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "ahammed shahim",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil(H), Tanur (PO),near Police Station, Tanur,Malappuram, Kerala,676302",
+        "city": "Tirur",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 2199,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 2199,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-23T06:30:13.057Z",
+      "orderNumber": 2,
+      "id": 18,
+      "cancellationReason": "Found a better price",
+      "cancellationComments": "wefewf",
+      "cancelledAt": "2026-11-23T06:31:00.338Z"
+    },
+    {
+      "customerId": 6,
+      "customerName": "ahammed shahim",
+      "email": "sana@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 27,
+            "name": "Titanium Pro",
+            "category": "Unisex",
+            "description": "Premium titanium-style frame sunglasses with a sleek minimalist look.",
+            "price": 2199,
+            "originalPrice": 2999,
+            "rating": 4.9,
+            "reviewCount": 189,
+            "discount": 27,
+            "stock": 10,
+            "image": "products/john-jacobs/Titanium-Pro.png",
+            "features": [
+              "UV400",
+              "Titanium-Style Frame",
+              "Premium Finish"
+            ],
+            "tags": [
+              "titanium",
+              "premium",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "John Jacobs"
+          },
+          "quantity": 2
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "ahammed shahim",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil(H), Tanur (PO),near Police Station, Tanur,Malappuram, Kerala,676302",
+        "city": "Tirur",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 4398,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 4398,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-23T06:49:10.918Z",
+      "orderNumber": 3,
+      "id": 19,
+      "cancellationReason": "Found a better price",
+      "cancellationComments": "wedwe",
+      "cancelledAt": "2026-11-23T06:49:21.242Z"
+    },
+    {
+      "customerId": 5,
+      "customerName": "ahsana",
+      "email": "ahsana@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 2,
+            "name": "Urban Black Wayfarer",
+            "category": "Men",
+            "description": "Classic black wayfarer sunglasses designed for everyday casual fashion.",
+            "price": 999,
+            "originalPrice": 1499,
+            "rating": 4.3,
+            "reviewCount": 86,
+            "discount": 33,
+            "stock": 30,
+            "image": "products/fastrack/Urban-Black-Wayfarer.png",
+            "features": [
+              "UV400",
+              "Lightweight",
+              "Durable Frame"
+            ],
+            "tags": [
+              "wayfarer",
+              "casual",
+              "black"
+            ],
+            "isFeatured": true,
+            "brand": "Fastrack"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "ahsana",
+        "phone": "8758346857",
+        "addressLine": "cihyugg, jhfuyhlkjj",
+        "city": "uuythgyuuyh",
+        "state": "bvjhn bhf",
+        "postalCode": "998766"
+      },
+      "subtotal": 999,
+      "shippingCharge": 50,
+      "discount": 0,
+      "totalAmount": 1049,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-23T09:47:22.053Z",
+      "orderNumber": 1,
+      "id": 20,
+      "cancellationReason": "Ordered by mistake",
+      "cancellationComments": "",
+      "cancelledAt": "2026-11-23T09:48:11.683Z"
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vp",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 7,
+            "name": "Blue Mirror Sport",
+            "category": "Men",
+            "description": "Sport sunglasses featuring blue mirror lenses and a bold athletic look.",
+            "price": 1599,
+            "originalPrice": 2199,
+            "rating": 4.6,
+            "reviewCount": 110,
+            "discount": 27,
+            "stock": 17,
+            "image": "products/polaroid/Blue-Mirror-Sport.jpg",
+            "features": [
+              "UV400",
+              "Mirror Lens",
+              "Lightweight"
+            ],
+            "tags": [
+              "sports",
+              "blue",
+              "mirror"
+            ],
+            "isFeatured": true,
+            "brand": "Polaroid"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vp",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram, Valiyakath puthiya ottayil,tanur (PO),Malappuram ,676302",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 1599,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 1599,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-23T10:58:26.070Z",
+      "orderNumber": 2,
+      "id": 21,
+      "cancellationReason": "Delivery is taking too long",
+      "cancellationComments": "wedwd",
+      "cancelledAt": "2026-11-23T10:58:50.935Z"
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vp",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 27,
+            "name": "Titanium Pro",
+            "category": "Unisex",
+            "description": "Premium titanium-style frame sunglasses with a sleek minimalist look.",
+            "price": 2199,
+            "originalPrice": 2999,
+            "rating": 4.9,
+            "reviewCount": 189,
+            "discount": 27,
+            "stock": 10,
+            "image": "products/john-jacobs/Titanium-Pro.jpg",
+            "features": [
+              "UV400",
+              "Titanium-Style Frame",
+              "Premium Finish"
+            ],
+            "tags": [
+              "titanium",
+              "premium",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "John Jacobs"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vp",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram, Valiyakath puthiya ottayil,tanur (PO),Malappuram ,676302",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 2199,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 2199,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-25T13:42:50.011Z",
+      "orderNumber": 3,
+      "id": 22
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vp",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 27,
+            "name": "Titanium Pro",
+            "category": "Unisex",
+            "description": "Premium titanium-style frame sunglasses with a sleek minimalist look.",
+            "price": 2199,
+            "originalPrice": 2999,
+            "rating": 4.9,
+            "reviewCount": 189,
+            "discount": 27,
+            "stock": 10,
+            "image": "products/john-jacobs/Titanium-Pro.jpg",
+            "features": [
+              "UV400",
+              "Titanium-Style Frame",
+              "Premium Finish"
+            ],
+            "tags": [
+              "titanium",
+              "premium",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "John Jacobs"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vp",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram, Valiyakath puthiya ottayil,tanur (PO),Malappuram ,676302",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 2199,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 2199,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-25T13:43:08.635Z",
+      "orderNumber": 4,
+      "id": 23
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vp",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 27,
+            "name": "Titanium Pro",
+            "category": "Unisex",
+            "description": "Premium titanium-style frame sunglasses with a sleek minimalist look.",
+            "price": 2199,
+            "originalPrice": 2999,
+            "rating": 4.9,
+            "reviewCount": 189,
+            "discount": 27,
+            "stock": 10,
+            "image": "products/john-jacobs/Titanium-Pro.jpg",
+            "features": [
+              "UV400",
+              "Titanium-Style Frame",
+              "Premium Finish"
+            ],
+            "tags": [
+              "titanium",
+              "premium",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "John Jacobs"
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "id": 3,
+            "name": "Retro Rectangle",
+            "category": "Men",
+            "description": "Modern rectangular sunglasses with a minimal retro-inspired design.",
+            "price": 899,
+            "originalPrice": 1299,
+            "rating": 4.2,
+            "reviewCount": 64,
+            "discount": 31,
+            "stock": 18,
+            "image": "products/vincent-chase/Retro-Rectangle.jpg",
+            "features": [
+              "UV400",
+              "Retro Design"
+            ],
+            "tags": [
+              "rectangle",
+              "retro",
+              "minimal"
+            ],
+            "isFeatured": false,
+            "brand": "Vincent Chase"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vp",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram, Valiyakath puthiya ottayil,tanur (PO),Malappuram ,676302",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 3098,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 3098,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-25T13:44:01.514Z",
+      "orderNumber": 5,
+      "id": 24
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vp",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 3,
+            "name": "Retro Rectangle",
+            "category": "Men",
+            "description": "Modern rectangular sunglasses with a minimal retro-inspired design.",
+            "price": 899,
+            "originalPrice": 1299,
+            "rating": 4.2,
+            "reviewCount": 64,
+            "discount": 31,
+            "stock": 18,
+            "image": "products/vincent-chase/Retro-Rectangle.jpg",
+            "features": [
+              "UV400",
+              "Retro Design"
+            ],
+            "tags": [
+              "rectangle",
+              "retro",
+              "minimal"
+            ],
+            "isFeatured": false,
+            "brand": "Vincent Chase"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vp",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram, Valiyakath puthiya ottayil,tanur (PO),Malappuram ,676302",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 899,
+      "shippingCharge": 50,
+      "discount": 0,
+      "totalAmount": 949,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Pending",
+      "createdAt": "2026-11-25T13:45:03.761Z",
+      "orderNumber": 6,
+      "id": 25
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vp",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 27,
+            "name": "Titanium Pro",
+            "category": "Unisex",
+            "description": "Premium titanium-style frame sunglasses with a sleek minimalist look.",
+            "price": 2199,
+            "originalPrice": 2999,
+            "rating": 4.9,
+            "reviewCount": 189,
+            "discount": 27,
+            "stock": 10,
+            "image": "products/john-jacobs/Titanium-Pro.jpg",
+            "features": [
+              "UV400",
+              "Titanium-Style Frame",
+              "Premium Finish"
+            ],
+            "tags": [
+              "titanium",
+              "premium",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "John Jacobs"
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "id": 3,
+            "name": "Retro Rectangle",
+            "category": "Men",
+            "description": "Modern rectangular sunglasses with a minimal retro-inspired design.",
+            "price": 899,
+            "originalPrice": 1299,
+            "rating": 4.2,
+            "reviewCount": 64,
+            "discount": 31,
+            "stock": 18,
+            "image": "products/vincent-chase/Retro-Rectangle.jpg",
+            "features": [
+              "UV400",
+              "Retro Design"
+            ],
+            "tags": [
+              "rectangle",
+              "retro",
+              "minimal"
+            ],
+            "isFeatured": false,
+            "brand": "Vincent Chase"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vp",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram, Valiyakath puthiya ottayil,tanur (PO),Malappuram ,676302",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 3098,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 3098,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Delivered",
+      "createdAt": "2026-11-25T13:52:03.050Z",
+      "orderNumber": 7,
+      "id": 26
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vp",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 27,
+            "name": "Titanium Pro",
+            "category": "Unisex",
+            "description": "Premium titanium-style frame sunglasses with a sleek minimalist look.",
+            "price": 2199,
+            "originalPrice": 2999,
+            "rating": 4.9,
+            "reviewCount": 189,
+            "discount": 27,
+            "stock": 10,
+            "image": "products/john-jacobs/Titanium-Pro.jpg",
+            "features": [
+              "UV400",
+              "Titanium-Style Frame",
+              "Premium Finish"
+            ],
+            "tags": [
+              "titanium",
+              "premium",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "John Jacobs"
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "id": 9,
+            "name": "Carbon Edge",
+            "category": "Men",
+            "description": "Bold rectangular sunglasses with a sleek carbon-inspired finish.",
+            "price": 1899,
+            "originalPrice": 2599,
+            "rating": 4.8,
+            "reviewCount": 143,
+            "discount": 27,
+            "stock": 12,
+            "image": "products/oakley/Carbon-Edge.jpg",
+            "features": [
+              "UV400",
+              "Premium Frame",
+              "Scratch Resistant"
+            ],
+            "tags": [
+              "premium",
+              "rectangle",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "Oakley"
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "id": 12,
+            "name": "Luxury Oversized",
+            "category": "Women",
+            "description": "Oversized luxury sunglasses offering a bold and elegant fashion statement.",
+            "price": 1599,
+            "originalPrice": 2299,
+            "rating": 4.8,
+            "reviewCount": 142,
+            "discount": 30,
+            "stock": 16,
+            "image": "products/prada/Luxury-Oversized.jpg",
+            "features": [
+              "UV400",
+              "Oversized Frame",
+              "Premium Finish"
+            ],
+            "tags": [
+              "oversized",
+              "luxury",
+              "trending"
+            ],
+            "isFeatured": true,
+            "brand": "Prada"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vp",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram, Valiyakath puthiya ottayil,tanur (PO),Malappuram ,676302",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 5697,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 5697,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Shipped",
+      "createdAt": "2026-11-25T13:53:12.519Z",
+      "orderNumber": 8,
+      "id": 27
+    },
+    {
+      "customerId": 6,
+      "customerName": "ahammed shahim",
+      "email": "sana@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 30,
+            "name": "Elite Polarized",
+            "category": "Unisex",
+            "description": "Premium polarized sunglasses with a refined design for everyday outdoor use.",
+            "price": 2499,
+            "originalPrice": 3499,
+            "rating": 4.9,
+            "reviewCount": 215,
+            "discount": 29,
+            "stock": 8,
+            "image": "products/ray-ban/Elite-Polarized.jpg",
+            "features": [
+              "Polarized",
+              "UV400",
+              "Premium Frame"
+            ],
+            "tags": [
+              "polarized",
+              "elite",
+              "premium"
+            ],
+            "isFeatured": true,
+            "brand": "Ray-Ban"
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "id": 27,
+            "name": "Titanium Pro",
+            "category": "Unisex",
+            "description": "Premium titanium-style frame sunglasses with a sleek minimalist look.",
+            "price": 2199,
+            "originalPrice": 2999,
+            "rating": 4.9,
+            "reviewCount": 189,
+            "discount": 27,
+            "stock": 10,
+            "image": "products/john-jacobs/Titanium-Pro.jpg",
+            "features": [
+              "UV400",
+              "Titanium-Style Frame",
+              "Premium Finish"
+            ],
+            "tags": [
+              "titanium",
+              "premium",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "John Jacobs"
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "id": 9,
+            "name": "Carbon Edge",
+            "category": "Men",
+            "description": "Bold rectangular sunglasses with a sleek carbon-inspired finish.",
+            "price": 1899,
+            "originalPrice": 2599,
+            "rating": 4.8,
+            "reviewCount": 143,
+            "discount": 27,
+            "stock": 12,
+            "image": "products/oakley/Carbon-Edge.jpg",
+            "features": [
+              "UV400",
+              "Premium Frame",
+              "Scratch Resistant"
+            ],
+            "tags": [
+              "premium",
+              "rectangle",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "Oakley"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "ahammed shahim",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil(H), Tanur (PO),near Police Station, Tanur,Malappuram, Kerala,676302",
+        "city": "Tirur",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 6597,
+      "shippingCharge": 0,
+      "discount": 0,
+      "totalAmount": 6597,
+      "couponCode": "",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Cancelled",
+      "createdAt": "2026-11-25T16:40:43.783Z",
+      "orderNumber": 4,
+      "id": 28,
+      "cancellationReason": "Ordered by mistake",
+      "cancellationComments": "thesdhsk",
+      "cancelledAt": "2026-11-25T16:41:35.674Z"
+    },
+    {
+      "customerId": 1,
+      "customerName": "shaheem vp",
+      "email": "shaheem@gmail.com",
+      "items": [
+        {
+          "product": {
+            "id": 27,
+            "name": "Titanium Pro",
+            "category": "Unisex",
+            "description": "Premium titanium-style frame sunglasses with a sleek minimalist look.",
+            "price": 2199,
+            "originalPrice": 2999,
+            "rating": 4.9,
+            "reviewCount": 189,
+            "discount": 27,
+            "stock": 10,
+            "image": "products/john-jacobs/Titanium-Pro.jpg",
+            "features": [
+              "UV400",
+              "Titanium-Style Frame",
+              "Premium Finish"
+            ],
+            "tags": [
+              "titanium",
+              "premium",
+              "luxury"
+            ],
+            "isFeatured": true,
+            "brand": "John Jacobs"
+          },
+          "quantity": 1
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "shaheem vp",
+        "phone": "9037056909",
+        "addressLine": "Valiyakath puthiya ottayil,tanur (PO),Malappuram, Valiyakath puthiya ottayil,tanur (PO),Malappuram ,676302",
+        "city": "Malappuram",
+        "state": "Kerala",
+        "postalCode": "676302"
+      },
+      "subtotal": 2199,
+      "shippingCharge": 0,
+      "discount": 200,
+      "totalAmount": 1999,
+      "couponCode": "SUN200",
+      "paymentMethod": "Cash on Delivery",
+      "status": "Confirmed",
+      "createdAt": "2026-11-26T10:05:09.898Z",
+      "orderNumber": 9,
+      "id": 29
+    }
+  ],
+  "coupons": [
+    {
+      "id": 1,
+      "code": "SUN10",
+      "description": "Get 10% off on your order",
+      "discountType": "percentage",
+      "discountValue": 10,
+      "minOrderAmount": 500,
+      "maxDiscount": 200,
+      "isActive": true,
+      "expiryDate": "2027-12-31"
+    },
+    {
+      "id": 2,
+      "code": "SUN200",
+      "description": "Get ₹200 off on your order",
+      "discountType": "fixed",
+      "discountValue": 200,
+      "minOrderAmount": 1500,
+      "maxDiscount": null,
+      "isActive": true,
+      "expiryDate": "2027-12-31"
+    }
+  ],
+  "reviews": []
+}

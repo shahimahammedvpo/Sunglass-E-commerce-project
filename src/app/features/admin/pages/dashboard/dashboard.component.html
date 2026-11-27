@@ -1,0 +1,856 @@
+
+<div class="dashboard-page">
+
+  <!-- PAGE HEADING -->
+  <div class="page-heading">
+
+    <div>
+      <h1>Dashboard Overview</h1>
+      <p>Welcome to your SUNSTYLE store administration.</p>
+    </div>
+
+    <button
+      type="button"
+      class="refresh-button"
+      [disabled]="loading"
+      (click)="loadDashboard()">
+
+      <i class="bi bi-arrow-clockwise"></i>
+      Refresh
+
+    </button>
+
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-state" *ngIf="loading">
+
+    <div class="spinner"></div>
+    <p>Loading dashboard data...</p>
+
+  </div>
+
+  <!-- ERROR -->
+  <div class="error-state" *ngIf="!loading && errorMessage">
+
+    <i class="bi bi-exclamation-circle"></i>
+
+    <p>{{ errorMessage }}</p>
+
+    <button type="button" (click)="loadDashboard()">
+      Try Again
+    </button>
+
+  </div>
+
+  <ng-container *ngIf="!loading && !errorMessage">
+
+    <!-- SUMMARY CARDS -->
+    <div class="summary-grid">
+
+      <div class="summary-card users-card">
+
+        <div class="card-top">
+
+          <div class="card-icon">
+            <i class="bi bi-people"></i>
+          </div>
+
+          <span class="card-label">CUSTOMERS</span>
+
+        </div>
+
+        <h2>{{ totalUsers | number }}</h2>
+        <p>Total registered customers</p>
+
+      </div>
+
+      <div class="summary-card products-card">
+
+        <div class="card-top">
+
+          <div class="card-icon">
+            <i class="bi bi-box-seam"></i>
+          </div>
+
+          <span class="card-label">PRODUCTS</span>
+
+        </div>
+
+        <h2>{{ totalProducts | number }}</h2>
+        <p>Total listed products</p>
+
+      </div>
+
+      <div class="summary-card orders-card">
+
+        <div class="card-top">
+
+          <div class="card-icon">
+            <i class="bi bi-cart3"></i>
+          </div>
+
+          <span class="card-label">ORDERS</span>
+
+        </div>
+
+        <h2>{{ totalOrders | number }}</h2>
+        <p>Total placed orders</p>
+
+      </div>
+
+      <div class="summary-card revenue-card">
+
+        <div class="card-top">
+
+          <div class="card-icon">
+            <i class="bi bi-currency-rupee"></i>
+          </div>
+
+          <span class="card-label">REVENUE</span>
+
+        </div>
+
+        <h2>{{ formatCurrency(totalRevenue) }}</h2>
+        <p>Excluding cancelled orders</p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================================
+         REVENUE AND ORDER TRENDS
+    ========================================= -->
+
+    <section class="chart-card">
+
+      <div class="chart-heading trend-heading">
+
+        <div>
+          <h3>Revenue and Order Trends</h3>
+          <p>{{ trendDescription }}</p>
+        </div>
+
+        <!-- WEEK / MONTH / YEAR -->
+        <div class="trend-filters">
+
+          <button
+            type="button"
+            [class.active]="selectedTrendPeriod === 'week'"
+            [attr.aria-pressed]="selectedTrendPeriod === 'week'"
+            (click)="onTrendPeriodChange('week')">
+            Week
+          </button>
+
+          <button
+            type="button"
+            [class.active]="selectedTrendPeriod === 'month'"
+            [attr.aria-pressed]="selectedTrendPeriod === 'month'"
+            (click)="onTrendPeriodChange('month')">
+            Month
+          </button>
+
+          <button
+            type="button"
+            [class.active]="selectedTrendPeriod === 'year'"
+            [attr.aria-pressed]="selectedTrendPeriod === 'year'"
+            (click)="onTrendPeriodChange('year')">
+            Year
+          </button>
+
+        </div>
+
+      </div>
+
+      <div
+        class="line-chart-container"
+        *ngIf="trendData.length">
+
+        <!-- LEGEND -->
+        <div class="chart-legend">
+
+          <span>
+            <i class="revenue-legend"></i>
+            Revenue
+          </span>
+
+          <span>
+            <i class="orders-legend"></i>
+            Orders
+          </span>
+
+        </div>
+
+        <!-- PERIOD COMPARISON -->
+        <div class="trend-comparison">
+
+          <div class="comparison-item">
+
+            <span>Revenue vs previous period</span>
+
+            <strong
+              [class.positive-change]="revenueChangePercent !== null && revenueChangePercent > 0"
+              [class.negative-change]="revenueChangePercent !== null && revenueChangePercent < 0">
+
+              <ng-container *ngIf="revenueChangePercent !== null; else newRevenue">
+
+                <i
+                  class="bi"
+                  [ngClass]="revenueChangePercent >= 0
+                    ? 'bi-arrow-up-right'
+                    : 'bi-arrow-down-right'">
+                </i>
+
+                {{ revenueChangePercent > 0 ? '+' : '' }}
+                {{ revenueChangePercent | number:'1.1-1' }}%
+
+              </ng-container>
+
+              <ng-template #newRevenue>
+                New
+              </ng-template>
+
+            </strong>
+
+          </div>
+
+          <div class="comparison-item">
+
+            <span>Orders vs previous period</span>
+
+            <strong
+              [class.positive-change]="ordersChangePercent !== null && ordersChangePercent > 0"
+              [class.negative-change]="ordersChangePercent !== null && ordersChangePercent < 0">
+
+              <ng-container *ngIf="ordersChangePercent !== null; else newOrders">
+
+                <i
+                  class="bi"
+                  [ngClass]="ordersChangePercent >= 0
+                    ? 'bi-arrow-up-right'
+                    : 'bi-arrow-down-right'">
+                </i>
+
+                {{ ordersChangePercent > 0 ? '+' : '' }}
+                {{ ordersChangePercent | number:'1.1-1' }}%
+
+              </ng-container>
+
+              <ng-template #newOrders>
+                New
+              </ng-template>
+
+            </strong>
+
+          </div>
+
+          <small>
+            Compared with the previous equivalent period
+          </small>
+
+        </div>
+
+        <!-- SVG LINE GRAPH -->
+        <div class="trend-chart-wrapper">
+
+          <svg
+            viewBox="0 0 650 205"
+            preserveAspectRatio="none"
+            class="revenue-svg"
+            (mouseleave)="hideTrendTooltip()">
+
+            <defs>
+
+              <linearGradient
+                id="revenueGradient"
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1">
+
+                <stop
+                  offset="0%"
+                  stop-color="#c0914c"
+                  stop-opacity="0.28"/>
+
+                <stop
+                  offset="100%"
+                  stop-color="#c0914c"
+                  stop-opacity="0.01"/>
+
+              </linearGradient>
+
+            </defs>
+
+            <!-- GRID LINES -->
+            <line
+              x1="35"
+              y1="25"
+              x2="625"
+              y2="25"
+              class="chart-grid-line"/>
+
+            <line
+              x1="35"
+              y1="95"
+              x2="625"
+              y2="95"
+              class="chart-grid-line"/>
+
+            <line
+              x1="35"
+              y1="165"
+              x2="625"
+              y2="165"
+              class="chart-grid-line"/>
+
+            <!-- REVENUE GRADIENT AREA -->
+            <path
+              [attr.d]="revenueAreaPath"
+              fill="url(#revenueGradient)"/>
+
+            <!-- REVENUE LINE -->
+            <polyline
+              [attr.points]="revenueLinePoints"
+              class="revenue-line"/>
+
+            <!-- ORDERS LINE -->
+            <polyline
+              [attr.points]="orderLinePoints"
+              class="orders-line"/>
+
+            <!-- INTERACTIVE DATA POINTS -->
+            <ng-container *ngFor="let item of trendData">
+
+              <!-- REVENUE POINT -->
+              <circle
+                [attr.cx]="item.x"
+                [attr.cy]="item.revenueY"
+                r="5"
+                class="revenue-point interactive-point"
+                (mouseenter)="showTrendTooltip(item)"
+                (focus)="showTrendTooltip(item)"
+                tabindex="0"
+                [attr.aria-label]="item.label + ': Revenue ' + formatCurrency(item.revenue) + ', ' + item.orders + ' orders'">
+
+                <title>
+                  {{ item.label }} |
+                  Revenue: {{ formatCurrency(item.revenue) }} |
+                  Orders: {{ item.orders }}
+                </title>
+              </circle>
+
+              <!-- ORDERS POINT -->
+              <circle
+                [attr.cx]="item.x"
+                [attr.cy]="item.orderY"
+                r="5"
+                class="orders-point interactive-point"
+                (mouseenter)="showTrendTooltip(item)"
+                (focus)="showTrendTooltip(item)"
+                tabindex="0"
+                [attr.aria-label]="item.label + ': Revenue ' + formatCurrency(item.revenue) + ', ' + item.orders + ' orders'">
+
+                <title>
+                  {{ item.label }} |
+                  Revenue: {{ formatCurrency(item.revenue) }} |
+                  Orders: {{ item.orders }}
+                </title>
+              </circle>
+
+            </ng-container>
+
+          </svg>
+
+          <!-- COMBINED TOOLTIP -->
+          <div
+            class="trend-tooltip"
+            *ngIf="hoveredTrend as item"
+            [style.left.%]="getTooltipLeft(item)"
+            [style.top.px]="getTooltipTop(item)">
+
+            <strong>{{ item.label }}</strong>
+
+            <div>
+              <span class="tooltip-dot revenue-legend"></span>
+              Revenue:
+              <b>{{ formatCurrency(item.revenue) }}</b>
+            </div>
+
+            <div>
+              <span class="tooltip-dot orders-legend"></span>
+              Orders:
+              <b>{{ item.orders }}</b>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- X AXIS LABELS -->
+        <div
+          class="chart-months"
+          [style.gridTemplateColumns]="'repeat(' + trendData.length + ', 1fr)'">
+
+          <span *ngFor="let item of trendData">
+            {{ item.label }}
+          </span>
+
+        </div>
+
+        <!-- ACTUAL VALUES -->
+        <div class="monthly-table">
+
+          <div *ngFor="let item of trendData">
+
+            <span>{{ item.label }}</span>
+
+            <strong>
+              {{ formatCurrency(item.revenue) }}
+            </strong>
+
+            <small>
+              {{ item.orders }}
+              {{ item.orders === 1 ? 'order' : 'orders' }}
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="empty-state" *ngIf="!trendData.length">
+        No trend data available.
+      </div>
+
+    </section>
+
+
+    <!-- ========================================
+         ORDER STATUS AND CUSTOMER ANALYTICS
+    ========================================= -->
+
+    <div class="charts-grid">
+
+      <!-- ORDER STATUS -->
+      <section class="chart-card">
+
+        <div class="chart-heading">
+
+          <div>
+            <h3>Order Status Distribution</h3>
+            <p>Overview of all orders</p>
+          </div>
+
+        </div>
+
+        <div class="status-chart-content">
+
+          <div
+            class="pie-chart"
+            [style.background]="statusGradient">
+
+            <div class="pie-chart-center">
+
+              <strong>{{ totalOrders }}</strong>
+              <span>Total Orders</span>
+
+            </div>
+
+          </div>
+
+          <div class="status-legend">
+
+            <div
+              class="legend-item"
+              *ngFor="let status of orderStatuses">
+
+              <span
+                class="legend-dot"
+                [style.background]="status.color">
+              </span>
+
+              <span class="legend-name">
+                {{ status.name }}
+              </span>
+
+              <strong>{{ status.count }}</strong>
+
+            </div>
+
+            <p *ngIf="!orderStatuses.length">
+              No order data available.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- CUSTOMER ANALYTICS -->
+      <section class="chart-card">
+
+        <div class="chart-heading">
+
+          <div>
+            <h3>Customer Analytics</h3>
+            <p>Customer purchasing activity</p>
+          </div>
+
+        </div>
+
+        <div class="customer-stat">
+
+          <div>
+            <span>Registered Customers</span>
+            <strong>{{ totalUsers }}</strong>
+          </div>
+
+          <i class="bi bi-people"></i>
+
+        </div>
+
+        <div class="customer-stat">
+
+          <div>
+            <span>Customers with Orders</span>
+            <strong>{{ purchasingCustomers }}</strong>
+          </div>
+
+          <i class="bi bi-bag-check"></i>
+
+        </div>
+
+        <div class="customer-stat">
+
+          <div>
+            <span>Repeat Customers</span>
+            <strong>{{ repeatCustomers }}</strong>
+          </div>
+
+          <i class="bi bi-arrow-repeat"></i>
+
+        </div>
+
+        <div class="customer-stat">
+
+          <div>
+            <span>Customers without Orders</span>
+            <strong>{{ totalUsers - purchasingCustomers }}</strong>
+          </div>
+
+          <i class="bi bi-person-dash"></i>
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- ========================================
+         TOP SELLING PRODUCTS
+    ========================================= -->
+
+    <section class="chart-card">
+
+      <div class="chart-heading">
+
+        <div>
+          <h3>Top Selling Products</h3>
+          <p>Top 5 products ranked by quantity sold</p>
+        </div>
+
+      </div>
+
+      <div
+        class="top-products-chart"
+        *ngIf="topProducts.length">
+
+        <div class="product-chart-legend">
+
+          <span>
+            <i></i>
+            Units sold
+          </span>
+
+        </div>
+
+        <div class="product-bar-chart">
+
+          <div
+            class="product-bar-column"
+            *ngFor="let product of topProducts; let i = index">
+
+            <strong class="product-bar-value">
+              {{ product.quantity }}
+            </strong>
+
+            <div class="product-bar-area">
+
+              <div
+                class="product-bar"
+                [style.height.%]="product.percentage"
+                [title]="product.quantity + ' units sold'">
+              </div>
+
+            </div>
+
+            <span
+              class="product-bar-name"
+              [title]="product.name">
+
+              {{ product.name }}
+
+            </span>
+
+            <small class="product-bar-revenue">
+              {{ formatCurrency(product.revenue) }}
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="empty-state" *ngIf="!topProducts.length">
+
+        <i class="bi bi-box"></i>
+        <p>No product sales data available.</p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================================
+         CATEGORY PERFORMANCE
+    ========================================= -->
+
+    <section class="chart-card">
+
+      <div class="chart-heading">
+
+        <div>
+          <h3>Category Performance</h3>
+          <p>Sales value by product category</p>
+        </div>
+
+      </div>
+
+      <div
+        class="category-list"
+        *ngIf="categories.length">
+
+        <div
+          class="category-row"
+          *ngFor="let category of categories">
+
+          <div class="category-information">
+
+            <div>
+
+              <strong>{{ category.name }}</strong>
+
+              <span>
+                {{ category.quantity }} units sold
+              </span>
+
+            </div>
+
+            <strong>
+              {{ formatCurrency(category.revenue) }}
+            </strong>
+
+          </div>
+
+          <div class="product-progress">
+
+            <div
+              class="category-progress"
+              [style.width.%]="category.percentage"
+              [style.background]="category.color">
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="empty-state" *ngIf="!categories.length">
+        No category sales data available.
+      </div>
+
+    </section>
+
+
+    <!-- ========================================
+         RECENT ORDERS AND LOW STOCK
+    ========================================= -->
+
+    <div class="dashboard-bottom-grid">
+
+      <!-- RECENT ORDERS -->
+      <section class="chart-card recent-orders-card">
+
+        <div class="chart-heading">
+
+          <div>
+            <h3>Recent Orders</h3>
+            <p>Latest five customer orders</p>
+          </div>
+
+          <a
+            routerLink="/admin/orders"
+            class="view-all-link">
+
+            View All
+            <i class="bi bi-arrow-right"></i>
+
+          </a>
+
+        </div>
+
+        <div
+          class="recent-orders-table"
+          *ngIf="recentOrders.length">
+
+          <div class="recent-order-row recent-order-header">
+
+            <span>Order</span>
+            <span>Customer</span>
+            <span>Date</span>
+            <span>Amount</span>
+            <span>Status</span>
+
+          </div>
+
+          <div
+            class="recent-order-row"
+            *ngFor="let order of recentOrders">
+
+            <strong class="order-number">
+              {{ getOrderDisplayNumber(order) }}
+            </strong>
+
+            <span class="order-customer">
+              {{ order.customerName || 'Customer' }}
+            </span>
+
+            <span class="order-date">
+              {{ formatOrderDate(order.createdAt) }}
+            </span>
+
+            <strong class="order-amount">
+              {{ formatCurrency(order.totalAmount || 0) }}
+            </strong>
+
+            <span
+              class="order-status"
+              [ngClass]="getStatusClass(order.status)">
+
+              {{ order.status || 'Unknown' }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+        <div
+          class="empty-state"
+          *ngIf="!recentOrders.length">
+
+          <i class="bi bi-receipt"></i>
+          <p>No orders available yet.</p>
+
+        </div>
+
+      </section>
+
+
+      <!-- LOW STOCK PRODUCTS -->
+      <section class="chart-card low-stock-card">
+
+        <div class="chart-heading">
+
+          <div>
+            <h3>Low Stock Products</h3>
+            <p>Products with {{ lowStockLimit }} or fewer units</p>
+          </div>
+
+          <a
+            routerLink="/admin/products"
+            class="view-all-link">
+
+            View All
+            <i class="bi bi-arrow-right"></i>
+
+          </a>
+
+        </div>
+
+        <div
+          class="stock-list"
+          *ngIf="lowStockProducts.length">
+
+          <div
+            class="stock-item"
+            *ngFor="let product of lowStockProducts">
+
+                <!-- Product Image -->
+                <div class="stock-product-image">
+                  <img
+                    [src]="product.image"
+                    [alt]="product.name"
+                    (error)=" $any($event.target).src = 'assets/images/product-placeholder.png' "
+                  />
+                </div>
+
+            <div class="stock-product-details">
+
+              <strong>{{ product.name }}</strong>
+
+              <span>{{ product.brand || 'SUNSTYLE' }}</span>
+
+            </div>
+
+            <div
+              class="stock-quantity"
+              [class.out-of-stock]="product.stock === 0"
+              [class.critical-stock]="product.stock > 0 && product.stock <= 2">
+
+              <strong>{{ product.stock }}</strong>
+
+              <span>
+                {{ product.stock === 0 ? 'Out of stock' : 'Units left' }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div
+          class="empty-state"
+          *ngIf="!lowStockProducts.length">
+
+          <i class="bi bi-check-circle"></i>
+          <p>All products have sufficient stock.</p>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </ng-container>
+
+</div>

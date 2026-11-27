@@ -1,0 +1,154 @@
+<section class="track-order-page container">
+
+  @if (loading) {
+
+    <div class="page-message">
+      Loading tracking information...
+    </div>
+
+  } @else if (errorMessage) {
+
+    <div class="page-message error-message">
+      {{ errorMessage }}
+
+      <a routerLink="/orders">
+        Back to My Orders
+      </a>
+    </div>
+
+  } @else if (order) {
+
+    <div class="track-order-heading">
+
+      <div>
+        <h1>Track Your Order</h1>
+        <p>Order #{{ order.id }}</p>
+      </div>
+
+      <a routerLink="/orders" class="back-btn">
+        ← My Orders
+      </a>
+
+    </div>
+
+    <!-- CANCELLED ORDER -->
+
+    @if (order.status === 'Cancelled') {
+
+      <div class="status-card cancelled">
+
+        <div class="status-icon">
+          ✕
+        </div>
+
+        <h2>Order Cancelled</h2>
+
+        <p>
+          This order has been cancelled.
+        </p>
+
+        <div class="current-status">
+          Current Status:
+          <strong>{{ order.status }}</strong>
+        </div>
+
+      </div>
+
+    } @else {
+
+      <!-- CURRENT ORDER STATUS -->
+
+      <div class="status-card">
+
+        <div class="status-icon">
+          ✓
+        </div>
+
+        <h2>{{ order.status }}</h2>
+
+        <p>
+          @switch (order.status) {
+
+            @case ('Pending') {
+              Your order has been placed and is waiting for confirmation.
+            }
+
+            @case ('Confirmed') {
+              Your order has been confirmed and is being prepared.
+            }
+
+            @case ('Shipped') {
+              Your order has been shipped and is on its way.
+            }
+
+            @case ('Delivered') {
+              Your order has been successfully delivered.
+            }
+
+            @default {
+              Your order status is currently being updated.
+            }
+
+          }
+        </p>
+
+      </div>
+
+      <!-- TRACKING TIMELINE -->
+
+      <div class="tracking-card">
+
+        <h2>Order Progress</h2>
+
+        <div class="tracking-timeline">
+
+          @for (
+            stage of trackingStages;
+            track stage;
+            let i = $index
+          ) {
+
+            <div
+              class="tracking-step"
+              [class.completed]="isStageCompleted(stage)"
+              [class.current]="i === currentStageIndex">
+
+              <div class="tracking-circle">
+
+                @if (isStageCompleted(stage)) {
+                  ✓
+                } @else {
+                  {{ i + 1 }}
+                }
+
+              </div>
+
+              <div class="tracking-info">
+
+                <strong>{{ stage }}</strong>
+
+                @if (i === currentStageIndex) {
+                  <span class="stage-label">
+                    Current Status
+                  </span>
+                }
+
+              </div>
+
+              @if (i < trackingStages.length - 1) {
+                <div class="tracking-line"></div>
+              }
+
+            </div>
+
+          }
+
+        </div>
+
+      </div>
+
+    }
+
+  }
+
+</section>

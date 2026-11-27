@@ -1,0 +1,380 @@
+<section class="cart-page container">
+
+  <!-- CART HEADER -->
+  <div class="cart-header">
+
+    <div>
+      <h1>Shopping Cart</h1>
+
+      <p>
+        Your selected sunglasses are waiting for you.
+      </p>
+
+      <small class="cart-limit-info">
+        {{ cartProductCount }} / {{ MAX_CART_PRODUCTS }}
+        different products in your cart
+      </small>
+
+    </div>
+
+    @if (cartItems.length > 0) {
+
+      <button
+        class="clear-cart-btn"
+        type="button"
+        (click)="confirmClearCart()">
+
+        <i class="bi bi-trash"></i>
+        Clear Cart
+
+      </button>
+
+    }
+
+  </div>
+
+  <!-- LOADING -->
+  @if (loading && cartItems.length === 0) {
+
+    <div class="cart-loading">
+
+      <div class="spinner"></div>
+
+      <p>Loading your cart...</p>
+
+    </div>
+
+  }
+
+  <!-- EMPTY CART -->
+  @else if (cartItems.length === 0) {
+
+    <div class="empty-cart">
+
+      <div class="empty-icon">
+        <i class="bi bi-cart3"></i>
+      </div>
+
+      <h2>Your cart is empty!</h2>
+
+      <p>
+        You haven't added any sunglasses to your cart yet.
+      </p>
+
+      <a
+        routerLink="/"
+        class="continue-btn">
+
+        Continue Shopping
+
+      </a>
+
+    </div>
+
+  }
+
+  <!-- CART WITH PRODUCTS -->
+  @else {
+
+    <div class="cart-layout">
+
+      <!-- CART ITEMS -->
+      <div class="cart-items">
+
+        @for (item of cartItems; track item.product.id) {
+
+          <div class="cart-item">
+
+            <!-- PRODUCT IMAGE -->
+            <div class="cart-item-image">
+
+             <a [routerLink]="['/product', item.product.id]">
+              <img
+                [src]="item.product.image"
+                [alt]="item.product.name"
+              >
+            </a>
+
+            </div>
+
+            <!-- PRODUCT DETAILS -->
+            <div class="cart-info">
+
+              <span class="brand">
+                {{ item.product.brand }}
+              </span>
+
+              <h3>
+                {{ item.product.name }}
+              </h3>
+
+              <p class="category">
+                {{ item.product.category }}
+              </p>
+
+              <p class="unit-price">
+                ₹{{ item.product.price }}
+              </p>
+
+              <!-- QUANTITY CONTROL -->
+              <div class="quantity-control">
+
+                <!-- DECREASE -->
+                <button
+                  type="button"
+                  (click)="decreaseQuantity(item)"
+                  [disabled]="item.quantity <= 1">
+
+                  −
+
+                </button>
+
+                <!-- QUANTITY -->
+                <span>
+                  {{ item.quantity }}
+                </span>
+
+                <!-- INCREASE -->
+                <button
+                  type="button"
+                  (click)="increaseQuantity(item)"
+                  [disabled]="!canIncreaseQuantity(item)">
+
+                  +
+
+                </button>
+
+              </div>
+
+              <!-- QUANTITY LIMIT MESSAGE -->
+              @if (item.quantity >= MAX_PRODUCT_QUANTITY) {
+
+                <small class="quantity-limit-message">
+                  Maximum {{ MAX_PRODUCT_QUANTITY }} units allowed
+                </small>
+
+              }
+
+              <!-- STOCK LIMIT MESSAGE -->
+              @else if (item.quantity >= item.product.stock) {
+
+                <small class="quantity-limit-message">
+                  Maximum available stock reached
+                </small>
+
+              }
+
+            </div>
+
+            <!-- ITEM ACTIONS -->
+            <div class="cart-actions">
+
+              <strong class="item-total">
+                ₹{{ item.product.price * item.quantity }}
+              </strong>
+
+              <button
+                type="button"
+                class="remove-btn"
+                (click)="confirmRemoveItem(item)">
+
+                <i class="bi bi-trash"></i>
+                Remove
+
+              </button>
+
+            </div>
+
+          </div>
+
+        }
+
+        <!-- CART PRODUCT LIMIT MESSAGE -->
+        @if (isCartProductLimitReached) {
+
+          <div class="cart-limit-message">
+
+            <i class="bi bi-info-circle"></i>
+
+            <p>
+              You have reached the maximum limit of
+              {{ MAX_CART_PRODUCTS }} different products in your cart.
+            </p>
+
+          </div>
+
+        }
+
+      </div>
+
+      <!-- ORDER SUMMARY -->
+      <aside class="order-summary">
+
+        <h2>Order Summary</h2>
+
+        <!-- CHECKOUT -->
+        <a
+          routerLink="/checkout"
+          class="checkout-btn">
+
+          Proceed to Checkout
+
+        </a>
+
+        <!-- TOTAL ITEMS -->
+        <div class="summary-row">
+
+          <span>Total Items</span>
+
+          <span>{{ totalItems }}</span>
+
+        </div>
+
+        <!-- DIFFERENT PRODUCTS -->
+        <div class="summary-row">
+
+          <span>Different Products</span>
+
+          <span>
+            {{ cartProductCount }} / {{ MAX_CART_PRODUCTS }}
+          </span>
+
+        </div>
+
+        <!-- SUBTOTAL -->
+        <div class="summary-row">
+
+          <span>Subtotal</span>
+
+          <span>₹{{ subtotal }}</span>
+
+        </div>
+
+        <!-- SHIPPING -->
+        <div class="summary-row">
+
+          <span>Shipping</span>
+
+          <span>Calculated at checkout</span>
+
+        </div>
+
+        <hr>
+
+        <!-- TOTAL -->
+        <div class="summary-total">
+
+          <span>Subtotal</span>
+
+          <strong>₹{{ subtotal }}</strong>
+
+        </div>
+
+        <!-- CONTINUE SHOPPING -->
+        <a
+          routerLink="/"
+          class="continue-shopping">
+
+          Continue Shopping
+
+        </a>
+
+      </aside>
+
+    </div>
+
+  }
+
+</section>
+
+
+<!-- ============================================ -->
+<!-- CONFIRMATION MODAL -->
+<!-- ============================================ -->
+
+@if (showConfirmationModal) {
+
+  <div
+    class="confirmation-overlay"
+    (click)="cancelConfirmation()">
+
+    <div
+      class="confirmation-modal"
+      (click)="$event.stopPropagation()">
+
+      <!-- ICON -->
+      <div class="confirmation-icon">
+
+        <i
+          class="bi"
+          [class.bi-trash]="confirmationType === 'remove'"
+          [class.bi-cart-x]="confirmationType === 'clear'">
+        </i>
+
+      </div>
+
+      <!-- TITLE -->
+      <h3>
+
+        @if (confirmationType === 'remove') {
+          Remove Item?
+        }
+
+        @if (confirmationType === 'clear') {
+          Clear Cart?
+        }
+
+      </h3>
+
+      <!-- MESSAGE -->
+      <p>
+
+        @if (confirmationType === 'remove') {
+
+          Are you sure you want to remove
+
+          <strong>
+            {{ itemToRemove?.product?.name }}
+          </strong>
+
+          from your cart?
+
+        }
+
+        @if (confirmationType === 'clear') {
+
+          Are you sure you want to remove all products
+          from your shopping cart?
+
+        }
+
+      </p>
+
+      <!-- ACTION BUTTONS -->
+      <div class="confirmation-actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancelConfirmation()">
+
+          Cancel
+
+        </button>
+
+        <button
+          type="button"
+          class="confirm-btn"
+          (click)="confirmAction()">
+
+          Remove
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

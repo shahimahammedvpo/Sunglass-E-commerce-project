@@ -1,0 +1,153 @@
+
+.confirmation-page {
+  padding-top: 50px;
+  padding-bottom: 70px;
+}
+
+.confirmation-card {
+  max-width: 700px;
+  margin: auto;
+  padding: 35px;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin: 22px 0;
+  }
+}
+
+.success-icon {
+  width: 75px;
+  height: 75px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8f5e9;
+  color: #198754;
+  border-radius: 50%;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.success-text {
+  text-align: center;
+  color: #777;
+  margin: 15px 0 25px;
+}
+
+.order-number,
+.order-status {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  background: #f8f7f4;
+  border-radius: 7px;
+  margin-bottom: 12px;
+}
+
+.address-details {
+  line-height: 1.8;
+  color: #666;
+
+  p {
+    margin: 3px 0;
+  }
+}
+
+.ordered-item {
+  display: grid;
+  grid-template-columns: 65px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+
+  img {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 7px;
+  }
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  span {
+    color: #777;
+    font-size: 13px;
+  }
+}
+
+.amount-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 15px 0;
+}
+
+.final-total {
+  font-size: 20px;
+  font-weight: 700;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.payment-info {
+  padding: 12px;
+  background: #f8f7f4;
+  border-radius: 7px;
+  margin: 20px 0;
+}
+
+.home-btn {
+  display: block;
+  text-align: center;
+  padding: 14px;
+  margin-top: 25px;
+  background: #222;
+  color: white;
+  border-radius: 7px;
+  text-decoration: none;
+
+  &:hover {
+    background: #a17b4c;
+  }
+}
+
+.loading,
+.error-message {
+  text-align: center;
+  padding: 80px 15px;
+}
+
+.error-message {
+  color: #c0392b;
+}
+
+@media (max-width: 500px) {
+  .confirmation-card {
+    padding: 20px;
+  }
+
+  .ordered-item {
+    grid-template-columns: 50px 1fr auto;
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+}

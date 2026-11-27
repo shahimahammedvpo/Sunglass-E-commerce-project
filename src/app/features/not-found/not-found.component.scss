@@ -1,0 +1,322 @@
+/* ==================== NOT FOUND PAGE ==================== */
+
+.not-found-page {
+  min-height: 75vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 60px 20px;
+
+  background: #fafafa;
+}
+
+
+/* ==================== CONTAINER ==================== */
+
+.not-found-container {
+  width: 100%;
+  max-width: 900px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+}
+
+
+/* ==================== ERROR ILLUSTRATION ==================== */
+
+.error-illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+
+  margin-bottom: 30px;
+}
+
+
+.error-number {
+  font-size: clamp(100px, 18vw, 180px);
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  color: #171717;
+
+  letter-spacing: -10px;
+}
+
+
+.error-glasses {
+  width: 130px;
+  height: 130px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f5eee4;
+
+  border-radius: 50%;
+
+  color: #b58b53;
+
+  font-size: 85px;
+
+  margin: 0 10px;
+
+  i {
+    transform: rotate(-10deg);
+  }
+}
+
+
+/* ==================== ERROR CONTENT ==================== */
+
+.error-content {
+  max-width: 650px;
+}
+
+
+.error-label {
+  display: inline-block;
+
+  color: #b58b53;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  margin-bottom: 15px;
+}
+
+
+.error-content h1 {
+  font-size: clamp(30px, 5vw, 48px);
+
+  font-weight: 800;
+
+  line-height: 1.2;
+
+  color: #171717;
+
+  margin-bottom: 20px;
+
+  span {
+    display: block;
+
+    color: #b58b53;
+  }
+}
+
+
+.error-content p {
+  max-width: 550px;
+
+  margin: 0 auto 30px;
+
+  color: #777;
+
+  font-size: 16px;
+
+  line-height: 1.8;
+}
+
+
+/* ==================== ACTION BUTTONS ==================== */
+
+.error-actions {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 15px;
+
+  flex-wrap: wrap;
+}
+
+
+.home-btn,
+.products-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 14px 25px;
+
+  border-radius: 7px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition: all 0.3s ease;
+}
+
+
+/* HOME BUTTON */
+
+.home-btn {
+  background: #171717;
+
+  color: white;
+
+  border: 1px solid #171717;
+
+  &:hover {
+    background: #b58b53;
+
+    border-color: #b58b53;
+
+    color: white;
+
+    transform: translateY(-2px);
+  }
+}
+
+
+/* PRODUCTS BUTTON */
+
+.products-btn {
+  background: white;
+
+  color: #171717;
+
+  border: 1px solid #ddd;
+
+  &:hover {
+    background: #f5eee4;
+
+    color: #b58b53;
+
+    border-color: #b58b53;
+
+    transform: translateY(-2px);
+  }
+}
+
+
+/* ==================== HELP MESSAGE ==================== */
+
+.error-help {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  margin-top: 35px;
+
+  color: #999;
+
+  font-size: 13px;
+
+  i {
+    color: #b58b53;
+  }
+}
+
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 768px) {
+
+  .not-found-page {
+    min-height: 65vh;
+
+    padding: 45px 20px;
+  }
+
+  .error-illustration {
+    gap: 8px;
+  }
+
+  .error-number {
+    letter-spacing: -5px;
+  }
+
+  .error-glasses {
+    width: 100px;
+    height: 100px;
+
+    font-size: 65px;
+  }
+
+  .error-content h1 {
+    font-size: 36px;
+  }
+
+  .error-content p {
+    font-size: 15px;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .not-found-page {
+    padding: 40px 15px;
+  }
+
+  .error-illustration {
+    margin-bottom: 25px;
+  }
+
+  .error-number {
+    font-size: 100px;
+  }
+
+  .error-glasses {
+    width: 75px;
+    height: 75px;
+
+    font-size: 50px;
+
+    margin: 0 5px;
+  }
+
+  .error-content h1 {
+    font-size: 30px;
+  }
+
+  .error-content p {
+    font-size: 14px;
+  }
+
+  .error-actions {
+    flex-direction: column;
+
+    width: 100%;
+  }
+
+  .home-btn,
+  .products-btn {
+    width: 100%;
+  }
+
+  .error-help {
+    font-size: 12px;
+
+    text-align: center;
+  }
+
+}

@@ -1,0 +1,181 @@
+
+<section class="order-details-page container">
+
+  @if (loading) {
+
+    <div class="page-message">
+      Loading order details...
+    </div>
+
+  } @else if (errorMessage) {
+
+    <div class="page-message error-message">
+
+      {{ errorMessage }}
+
+      <a routerLink="/orders">
+        Back to My Orders
+      </a>
+
+    </div>
+
+  } @else if (order) {
+
+    <!-- PAGE HEADING -->
+
+    <div class="details-heading">
+
+      <div>
+        <h1>Order Details</h1>
+        <p>Order #{{ order.orderNumber }}</p>
+      </div>
+
+      <a routerLink="/orders" class="back-btn">
+        ← My Orders
+      </a>
+
+    </div>
+
+    <!-- CANCELLED ORDER MESSAGE -->
+
+    @if (order.status === 'Cancelled') {
+
+      <div class="cancelled-banner">
+
+        <strong>Order Cancelled</strong>
+
+        <p>
+          This order has been cancelled.
+        </p>
+
+      </div>
+
+    }
+
+    <!-- ORDER INFORMATION -->
+
+    <div class="details-card">
+
+      <h2>Order Information</h2>
+
+      <div class="info-row">
+        <span>Order Number</span>
+        <strong>#{{ order.orderNumber }}</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Order Date</span>
+        <strong>
+          {{ order.createdAt | date:'dd MMM yyyy, h:mm a' }}
+        </strong>
+      </div>
+
+      <div class="info-row">
+        <span>Order Status</span>
+        <strong>{{ order.status }}</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Payment Method</span>
+        <strong>{{ order.paymentMethod }}</strong>
+      </div>
+
+    </div>
+
+    <!-- ORDERED PRODUCTS -->
+
+    <div class="details-card">
+
+      <h2>Ordered Products</h2>
+
+      @for (item of order.items; track item.product.id) {
+
+        <div class="details-product">
+
+          <img
+            [src]="item.product.image"
+            [alt]="item.product.name">
+
+          <div class="product-info">
+
+            <strong>
+              {{ item.product.name }}
+            </strong>
+
+            <span>
+              Quantity: {{ item.quantity }}
+            </span>
+
+            <span>
+              ₹{{ item.product.price }} each
+            </span>
+
+          </div>
+
+          <strong>
+            ₹{{ item.product.price * item.quantity }}
+          </strong>
+
+        </div>
+
+      }
+
+    </div>
+
+    <!-- DELIVERY ADDRESS -->
+
+    <div class="details-card">
+
+      <h2>Delivery Address</h2>
+
+      <strong>
+        {{ order.shippingAddress.fullName }}
+      </strong>
+
+      <p>
+        {{ order.shippingAddress.phone }}
+      </p>
+
+      <p>
+        {{ order.shippingAddress.addressLine }}
+      </p>
+
+      <p>
+        {{ order.shippingAddress.city }},
+        {{ order.shippingAddress.state }} -
+        {{ order.shippingAddress.postalCode }}
+      </p>
+
+    </div>
+
+    <!-- PAYMENT SUMMARY -->
+
+    <div class="details-card">
+
+      <h2>Payment Summary</h2>
+
+      <div class="info-row">
+        <span>Subtotal</span>
+        <strong>₹{{ order.subtotal }}</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Shipping</span>
+        <strong>₹{{ order.shippingCharge }}</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Discount</span>
+        <strong>-₹{{ order.discount }}</strong>
+      </div>
+
+      <div class="info-row final-total">
+        <span>Total Amount</span>
+        <strong>₹{{ order.totalAmount }}</strong>
+      </div>
+
+    </div>
+
+  }
+
+</section>

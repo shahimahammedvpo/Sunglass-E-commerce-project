@@ -1,0 +1,66 @@
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { Address } from '../models/address.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AddressService {
+
+  private http = inject(HttpClient);
+
+  private apiUrl = 'http://localhost:3000/addresses';
+
+  // Get all addresses belonging to a user
+  getAddresses(userId: number): Observable<Address[]> {
+
+    return this.http.get<Address[]>(
+      `${this.apiUrl}?userId=${userId}`
+    );
+
+  }
+
+  // Get a specific address
+  getAddressById(id: number): Observable<Address> {
+
+    return this.http.get<Address>(
+      `${this.apiUrl}/${id}`
+    );
+
+  }
+
+  // Add new address
+  addAddress(address: Address): Observable<Address> {
+
+    return this.http.post<Address>(
+      this.apiUrl,
+      address
+    );
+
+  }
+
+  // Update address
+  updateAddress(
+    id: number,
+    address: Address
+  ): Observable<Address> {
+
+    return this.http.put<Address>(
+      `${this.apiUrl}/${id}`,
+      address
+    );
+
+  }
+
+  // Delete address
+  deleteAddress(id: number): Observable<void> {
+
+    return this.http.delete<void>(
+      `${this.apiUrl}/${id}`
+    );
+
+  }
+
+}

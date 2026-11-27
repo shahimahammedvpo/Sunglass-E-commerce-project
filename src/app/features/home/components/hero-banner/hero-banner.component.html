@@ -1,0 +1,105 @@
+<section class="hero-section" *ngIf="heroBanner as hero">
+
+  <div class="container">
+
+    <div class="row align-items-center">
+
+      <!-- LEFT CONTENT -->
+
+      <div class="col-lg-6 hero-content">
+
+        <span class="hero-label">
+          {{ hero.label }}
+        </span>
+
+        <h1>
+          {{ hero.title }}
+        </h1>
+
+        <p>
+          {{ hero.subtitle }}
+        </p>
+
+        <!-- BUTTONS -->
+
+        <div class="hero-buttons">
+
+          <a
+            [routerLink]="hero.shopButtonLink"
+            class="shop-btn"
+          >
+            {{ hero.shopButtonText }}
+          </a>
+
+          <a
+            [routerLink]="hero.exploreButtonLink"
+            [fragment]="hero.exploreFragment"
+            class="explore-btn"
+          >
+            {{ hero.exploreButtonText }}
+          </a>
+
+        </div>
+
+        <!-- STATISTICS -->
+
+        <div class="hero-stats">
+
+          <div *ngFor="let stat of hero.stats">
+
+            <h3>{{ stat.value }}</h3>
+
+            <span>{{ stat.label }}</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT IMAGE -->
+
+      <div class="col-lg-6">
+
+        <div class="hero-image">
+
+          <img
+            [src]="hero.image"
+            [alt]="hero.imageAlt"
+          >
+
+          <!-- FLOATING CARD -->
+
+          <div class="floating-card">
+
+            <span>
+              {{ hero.floatingCard.label }}
+            </span>
+
+            <h4>
+              {{ hero.floatingCard.title }}
+            </h4>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- LOADING -->
+
+<div class="container py-5 text-center" *ngIf="loading">
+  <p>Loading hero banner...</p>
+</div>
+
+<!-- ERROR -->
+
+<div class="container py-5 text-center" *ngIf="errorMessage">
+  <p>{{ errorMessage }}</p>
+</div>

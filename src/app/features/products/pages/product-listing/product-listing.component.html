@@ -1,0 +1,717 @@
+<section id="products" class="container product-listing py-5">
+
+  <!-- ==================== HEADER ==================== -->
+
+  <div class="listing-header">
+
+    <div class="listing-title">
+
+      <span class="section-label">
+        SUNSTYLE COLLECTION
+      </span>
+
+      <h2>All Sunglasses</h2>
+
+      <p>
+        Find the perfect sunglasses for your style.
+      </p>
+
+    </div>
+
+
+    <!-- ==================== SORT DROPDOWN ==================== -->
+
+    <div
+      class="sort-container custom-dropdown"
+      (click)="$event.stopPropagation()"
+    >
+
+      <label class="sort-label">
+        Sort By:
+      </label>
+
+      <div class="sort-dropdown-wrapper">
+
+        <button
+          type="button"
+          class="sort-dropdown-trigger"
+          [class.active]="activeDropdown === 'sort'"
+          (click)="toggleDropdown('sort')"
+        >
+
+          <span>
+            {{ sortLabel }}
+          </span>
+
+          <i
+            class="bi bi-chevron-down"
+            [class.rotate]="activeDropdown === 'sort'"
+          ></i>
+
+        </button>
+
+
+        <!-- SORT OPTIONS -->
+
+        @if (activeDropdown === 'sort') {
+
+          <div class="sort-dropdown-menu">
+
+            @for (option of sortOptions; track option.value) {
+
+              <button
+                type="button"
+                class="sort-dropdown-option"
+                [class.selected]="sortBy === option.value"
+                (click)="selectSort(option.value)"
+              >
+
+                <span>
+                  {{ option.label }}
+                </span>
+
+                @if (sortBy === option.value) {
+
+                  <i class="bi bi-check2"></i>
+
+                }
+
+              </button>
+
+            }
+
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==================== LOADING ==================== -->
+
+  @if (loading) {
+
+    <div class="loading-container text-center p-5">
+
+      <div class="spinner-border text-dark"></div>
+
+      <h4 class="mt-3">
+        Loading products...
+      </h4>
+
+      <p>
+        Please wait while we load our collection.
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- ==================== ERROR ==================== -->
+
+  @if (error) {
+
+    <div class="alert alert-danger">
+
+      <div class="error-content">
+
+        <i class="bi bi-exclamation-circle"></i>
+
+        <span>
+          {{ error }}
+        </span>
+
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-outline-danger ms-3"
+        (click)="loadProducts()"
+      >
+
+        <i class="bi bi-arrow-clockwise"></i>
+
+        Retry
+
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- ==================== PRODUCTS ==================== -->
+
+  @if (!loading && !error) {
+
+
+    <!-- ==================== FILTER SECTION ==================== -->
+
+    <div class="filter-section">
+
+
+      <!-- ==================== SEARCH ==================== -->
+
+      <div class="filter-search-wrapper">
+
+        <i class="bi bi-search"></i>
+
+        <input
+          type="text"
+          class="filter-search"
+          placeholder="Search product or brand..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()"
+        />
+
+        @if (searchTerm) {
+
+          <button
+            type="button"
+            class="search-clear-btn"
+            (click)="searchTerm = ''; onSearchChange()"
+            aria-label="Clear search"
+          >
+
+            <i class="bi bi-x-circle"></i>
+
+          </button>
+
+        }
+
+      </div>
+
+
+      <!-- ==================== CATEGORY DROPDOWN ==================== -->
+
+      <div
+        class="custom-dropdown category-dropdown"
+        (click)="$event.stopPropagation()"
+      >
+
+        <button
+          type="button"
+          class="dropdown-trigger"
+          [class.active]="activeDropdown === 'category'"
+          (click)="toggleDropdown('category')"
+        >
+
+          <span>
+
+            {{
+              selectedCategory === 'All'
+                ? 'All Categories'
+                : selectedCategory
+            }}
+
+          </span>
+
+          <i
+            class="bi bi-chevron-down"
+            [class.rotate]="activeDropdown === 'category'"
+          ></i>
+
+        </button>
+
+
+        @if (activeDropdown === 'category') {
+
+          <div class="dropdown-menu-custom">
+
+            @for (category of categories; track category) {
+
+              <button
+                type="button"
+                class="dropdown-option"
+                [class.selected]="selectedCategory === category"
+                (click)="selectCategory(category)"
+              >
+
+                <span>
+
+                  {{
+                    category === 'All'
+                      ? 'All Categories'
+                      : category
+                  }}
+
+                </span>
+
+                @if (selectedCategory === category) {
+
+                  <i class="bi bi-check2"></i>
+
+                }
+
+              </button>
+
+            }
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <!-- ==================== BRAND DROPDOWN ==================== -->
+
+      <div
+        class="custom-dropdown brand-dropdown"
+        (click)="$event.stopPropagation()"
+      >
+
+        <button
+          type="button"
+          class="dropdown-trigger"
+          [class.active]="activeDropdown === 'brand'"
+          (click)="toggleDropdown('brand')"
+        >
+
+          <span>
+
+            {{
+              selectedBrand === 'All'
+                ? 'All Brands'
+                : selectedBrand
+            }}
+
+          </span>
+
+          <i
+            class="bi bi-chevron-down"
+            [class.rotate]="activeDropdown === 'brand'"
+          ></i>
+
+        </button>
+
+
+        @if (activeDropdown === 'brand') {
+
+          <div class="dropdown-menu-custom">
+
+            @for (brand of brandOptions; track brand) {
+
+              <button
+                type="button"
+                class="dropdown-option"
+                [class.selected]="selectedBrand === brand"
+                (click)="selectBrand(brand)"
+              >
+
+                <span>
+
+                  {{
+                    brand === 'All'
+                      ? 'All Brands'
+                      : brand
+                  }}
+
+                </span>
+
+                @if (selectedBrand === brand) {
+
+                  <i class="bi bi-check2"></i>
+
+                }
+
+              </button>
+
+            }
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <!-- ==================== CLEAR FILTERS ==================== -->
+
+      <button
+        type="button"
+        class="clear-filters-btn"
+        (click)="clearFilters()"
+      >
+
+        <i class="bi bi-x-circle"></i>
+
+        Clear Filters
+
+      </button>
+
+    </div>
+
+
+    <!-- ==================== RESULT COUNT ==================== -->
+
+    <div class="result-count">
+
+      <p>
+
+        Showing
+
+        <strong>
+          {{ startItem }} - {{ endItem }}
+        </strong>
+
+        of
+
+        <strong>
+          {{ filteredProducts.length }}
+        </strong>
+
+        products
+
+      </p>
+
+    </div>
+
+
+    <!-- ==================== PRODUCT GRID ==================== -->
+
+    <div class="product-grid">
+
+      @for (
+        product of paginatedProducts;
+        track product.id
+      ) {
+
+        <div class="product-card">
+
+
+          <!-- ==================== PRODUCT IMAGE ==================== -->
+
+          <div class="product-image-wrapper">
+
+            <a
+              [routerLink]="['/product', product.id]"
+              class="product-image-link"
+            >
+
+              <img
+                [src]="product.image"
+                [alt]="product.name"
+                class="product-image"
+                loading="lazy"
+              />
+
+            </a>
+
+
+            <!-- ==================== WISHLIST ==================== -->
+
+            <button
+              type="button"
+              class="wishlist-heart"
+              [class.active]="isInWishlist(product.id)"
+              (click)="toggleWishlist(product)"
+              [attr.aria-label]="
+                isInWishlist(product.id)
+                  ? 'Remove from wishlist'
+                  : 'Add to wishlist'
+              "
+            >
+
+              @if (isInWishlist(product.id)) {
+
+                <i class="bi bi-heart-fill"></i>
+
+              } @else {
+
+                <i class="bi bi-heart"></i>
+
+              }
+
+            </button>
+
+
+            <!-- ==================== STOCK BADGE ==================== -->
+
+            @if (product.stock < 1) {
+
+              <span class="product-stock-badge out-of-stock-badge">
+                Out of Stock
+              </span>
+
+            } @else if (product.stock <= 5) {
+
+              <span class="product-stock-badge low-stock-badge">
+                Only {{ product.stock }} left
+              </span>
+
+            }
+
+          </div>
+
+
+          <!-- ==================== PRODUCT INFO ==================== -->
+
+          <div class="product-info">
+
+
+            <!-- ==================== BRAND ==================== -->
+
+            <span class="brand-name">
+              {{ product.brand }}
+            </span>
+
+
+            <!-- ==================== PRODUCT NAME ==================== -->
+
+            <h3>
+              {{ product.name }}
+            </h3>
+
+
+            <!-- ==================== CATEGORY ==================== -->
+
+            <p class="product-category">
+              {{ product.category }}
+            </p>
+
+
+            <!-- ==================== RATING ==================== -->
+
+            <div class="rating">
+
+              <span class="rating-star">
+                ⭐
+              </span>
+
+              <strong>
+                {{ product.rating }}
+              </strong>
+
+              <span class="review-count">
+                ({{ product.reviewCount }} reviews)
+              </span>
+
+            </div>
+
+
+            <!-- ==================== PRICE ==================== -->
+
+            <div class="price">
+
+              <span class="current-price">
+                ₹{{ product.price }}
+              </span>
+
+              @if (product.originalPrice > product.price) {
+
+                <del class="original-price">
+                  ₹{{ product.originalPrice }}
+                </del>
+
+              }
+
+            </div>
+
+
+            <!-- ==================== STOCK ==================== -->
+
+            <p
+              class="stock"
+              [class.out-of-stock]="product.stock < 1"
+              [class.low-stock]="product.stock > 0 && product.stock <= 5"
+            >
+
+              <i
+                class="bi"
+                [class.bi-check-circle-fill]="product.stock > 0"
+                [class.bi-x-circle-fill]="product.stock < 1"
+              ></i>
+
+              {{
+                product.stock > 0
+                  ? 'In Stock'
+                  : 'Out of Stock'
+              }}
+
+            </p>
+
+
+            <!-- ==================== ADD TO CART ==================== -->
+
+           <button
+              type="button"
+              class="add-to-cart-btn"
+              (click)="addToCart(product)"
+              [disabled]="product.stock < 1">
+
+              @if (isInCart(product.id)) {
+                <i class="bi bi-cart-check"></i>
+                Go to Cart
+              } @else {
+                <i class="bi bi-cart-plus"></i>
+                Add to Cart
+              }
+
+            </button>
+
+
+            <!-- ==================== BUY NOW ==================== -->
+
+            <button
+              type="button"
+              class="buy-now-btn"
+              (click)="buyNow(product)"
+              [disabled]="product.stock < 1"
+            >
+
+              <i class="bi bi-lightning-fill"></i>
+
+              Buy Now
+
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      <!-- ==================== EMPTY STATE ==================== -->
+
+      @if (paginatedProducts.length === 0) {
+
+        <div class="empty-products">
+
+          <div class="empty-icon">
+
+            <i class="bi bi-search"></i>
+
+          </div>
+
+          <h3>
+            No products found!
+          </h3>
+
+          <p>
+            Try another search or category.
+          </p>
+
+          <button
+            type="button"
+            class="clear-filters-btn"
+            (click)="clearFilters()"
+          >
+
+            <i class="bi bi-x-circle"></i>
+
+            Clear Filters
+
+          </button>
+
+        </div>
+
+      }
+
+    </div>
+
+
+    <!-- ==================== PAGINATION ==================== -->
+
+    @if (totalPages > 1) {
+
+      <div class="pagination-container">
+
+
+        <!-- ==================== PREVIOUS ==================== -->
+
+        <button
+          type="button"
+          class="pagination-btn previous-btn"
+          [disabled]="currentPage === 1"
+          (click)="previousPage()"
+        >
+
+          <i class="bi bi-chevron-left"></i>
+
+          <span>
+            Previous
+          </span>
+
+        </button>
+
+
+        <!-- ==================== PAGE NUMBERS ==================== -->
+
+        <div class="pagination-pages">
+
+          @for (
+            page of pageNumbers;
+            track page
+          ) {
+
+            <button
+              type="button"
+              class="pagination-page"
+              [class.active]="currentPage === page"
+              [attr.aria-current]="
+                currentPage === page
+                  ? 'page'
+                  : null
+              "
+              (click)="goToPage(page)"
+            >
+
+              {{ page }}
+
+            </button>
+
+          }
+
+        </div>
+
+
+        <!-- ==================== NEXT ==================== -->
+
+        <button
+          type="button"
+          class="pagination-btn next-btn"
+          [disabled]="currentPage === totalPages"
+          (click)="nextPage()"
+        >
+
+          <span>
+            Next
+          </span>
+
+          <i class="bi bi-chevron-right"></i>
+
+        </button>
+
+      </div>
+
+
+      <!-- ==================== PAGE INFORMATION ==================== -->
+
+      <div class="pagination-info">
+
+        Page
+
+        <strong>
+          {{ currentPage }}
+        </strong>
+
+        of
+
+        <strong>
+          {{ totalPages }}
+        </strong>
+
+      </div>
+
+    }
+
+  }
+
+</section>
